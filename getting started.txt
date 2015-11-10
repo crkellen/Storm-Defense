@@ -1,0 +1,7 @@
+STEPS TO DO BEFORE TESTING AND LAUNCHING YOUR GAME
+---------------------------------------------------------------------------------------------
+* Change the name of gametemplate.py and two lines in app.yaml(locations described in file)
+   to [Your game name]
+* Change template.html name to something suitable for your game's main html file and replace 
+  the line containing template.html in gametemplate.py to [name you chose].html
+---------------------------------------------------------------------------------------------

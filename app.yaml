@@ -1,0 +1,30 @@
+#### Change application name to game name
+application: mainstormdefense
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+- url: /stylesheets
+  static_dir: stylesheets
+
+- url: /scripts
+  static_dir: scripts
+
+- url: /images
+  static_dir: images
+
+#### Change script to game name
+- url: /.*
+  script: mainstormdefense.app
+
+libraries:
+- name: webapp2
+  version: latest
+- name: jinja2
+  version: latest

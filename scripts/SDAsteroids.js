@@ -81,20 +81,20 @@ Asteroid.prototype.spawn = function(speed, frame, size) {
 	this.y = -105;
 };
 
-Asteroid.prototype.moveAst = function(dT) { //TODO movement calc
+Asteroid.prototype.moveAst = function(dT) { //TODO movement calc -- Make this function only move, not check for earth collision. No collision detection
 	switch( this.moveType ) {
 		case 0:
 			console.log("ERROR: Moving unset Asteroid");
 			break;
 		case 1:
 			//Move Asteroid Straight Down
-			//this.y += (dT/10000)+1;
+			//this.y += (dT/10000)+1; -------Useless
 			this.y++;
 			if( this.y > 500 ) {
 				//COLLISION WITH EARTH
 				//TODO asteroid impact
 				this.isAlive = 0;
-				Game.astNum--;
+				Game.numAst--;
 				this.x = -500;
 				this.y = -500;
 			}
@@ -107,7 +107,7 @@ Asteroid.prototype.moveAst = function(dT) { //TODO movement calc
 				//COLLISION WITH EARTH
 				//TODO asteroid impact
 				this.isAlive = 0;
-				Game.astNum--;
+				Game.numAst--;
 				this.x = -500;
 				this.y = -500;
 			}
@@ -120,7 +120,7 @@ Asteroid.prototype.moveAst = function(dT) { //TODO movement calc
 				//COLLISION WITH EARTH
 				//TODO asteroid impact
 				this.isAlive = 0;
-				Game.astNum--;
+				Game.numAst--;
 				this.x = -500;
 				this.y = -500;
 			}

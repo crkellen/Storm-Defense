@@ -600,6 +600,44 @@ var Game = {
 		}
 	},
 	
+	SpawnAsteroids: function(eTime) {
+		//Elapsed Time should already be in milliseconds
+		/*
+		if( eTime <= 3 seconds ) {
+			return;
+		} else if( eTime >= 3seconds && eTime <= 10 seconds ) {
+			this.level = 1;
+			this.levelShow = 1;
+		} else if( eTime >= 10 seconds && eTime <= 1 minute ) {
+			this.levelShow = 0;
+			this.minAst = 1;
+			this.maxAst = 1;
+			
+			if( this.numAst <= MIN_ASTEROIDS && this.numAst <= MAX_ASTEROIDS ) { //TODO level/time based
+				for( var i = this.numAst; i < MAX_ASTEROIDS; i++ ) { //TODO level/time based
+					if( this.asteroids[i].isAlive === 0 ) {
+						var speed = Math.floor(Math.random()*5 );
+						var frame = Math.floor(Math.random()*30);
+						var size  = Math.floor(Math.random()*3 );
+					
+						this.asteroids[i].isAlive  = 1;
+						this.asteroids[i].speed    = speed;
+						this.asteroids[i].frame    = frame;
+						this.asteroids[i].astSize  = size;
+						this.asteroids[i].moveType = 1;
+						this.asteroids[i].x = 400;
+						this.asteroids[i].y = 20
+						//this.asteroids[i].spawn(speed, frame, size);
+						
+						this.numAst++; //TODO remove this shit?
+					}
+				}
+			}
+		}
+		
+		*/
+	},
+	
 	Update: function() {
 		if( Game.gameState === Game.STATE_MENU ) { //MENU UPDATE
 			Game.menu.DrawMenu();
@@ -613,11 +651,14 @@ var Game = {
 			
 			//GAME TIME INITIAL SET
 			if( this.gameInitTime === 0 ) {
-				this.gameInitTime = new Date().getTime();
+				var d = new Date();
+				//getTime() / 10000 = Time in milliseconds
+				this.gameInitTime = Math.round( d.getTime() / 10000 );
 			}
 			
 			//TIME CALCULATION
-			this.curTime += new Date().getTime();
+			var d = new Date();
+			this.curTime += Math.round( d.getTime() / 10000 );
 			this.dTime = (this.curTime - this.prevTime);
 			if( this.dTime > this.delay ) {
 				this.prevTime = this.curTime;
@@ -654,7 +695,9 @@ var Game = {
 			}
 			
 			//ASTEROID CREATION
-			if( Game.numAst < MIN_ASTEROIDS && Game.numAst < MAX_ASTEROIDS ) { //TODO level/time based
+			//Game.spawnAsteroids(this.curTime - this.gameInitTime);
+			
+			if( Game.numAst <= MIN_ASTEROIDS && Game.numAst <= MAX_ASTEROIDS ) { //TODO level/time based
 				for( var i = Game.numAst; i < MAX_ASTEROIDS; i++ ) { //TODO level/time based
 					var speed = Math.floor((Math.random()*5));
 					var frame = Math.floor(Math.random()*30);

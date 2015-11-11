@@ -6,8 +6,8 @@ var CANVAS_TUTORIAL_ID	= "canvasTutorial";
 var CANVAS_SCORE_ID  	= "canvasScore"
 var WORLD_HEIGHT 	  = 720;
 var WORLD_WIDTH		  = 1280;
-var MAX_ASTEROIDS 	  = 4;
-var MIN_ASTEROIDS	  = 1;
+var MAX_ASTEROIDS 	  = 4; //TODO remove this shit
+var MIN_ASTEROIDS	  = 1; //TODO remove this shit
 var MAX_LASERS		  = 10;
 var OK_MIN_SCREEN_RATIO = 1.33;  
 var OK_MAX_SCREEN_RATIO = 1.35;
@@ -68,13 +68,20 @@ var Game = {
 	
 	gameHeight:		WORLD_HEIGHT,
 	gameWidth:		WORLD_WIDTH,
-	numAst:			0,
+	numAst:			0, //TODO I hate this shit, remove it
 	asteroids:  	[],
 	lasers:			[],
 	curLaser:		-1,
 	dTheta:			0,
 	pLevel:         20, //default 20 out of 100
 	pScore:			0, //Start with score of zero
+	
+	//Time Variables
+	gameInitTime:	0, //The first time that the game starts
+	curTime:		0,
+	prevTime:		0,
+	dTime:			0,
+	delay:			0,
 
 	playerTheta:	90*(Math.PI/180),
 	laserTheta:		0,
@@ -511,9 +518,9 @@ var Game = {
 					}
 				}
 				break;
-			case 81:
-				Game.gameState = Game.STATE_GAMEOVER;
-				break;
+			// case 81: TODO - REMOVE COMPLETELY
+				// Game.gameState = Game.STATE_GAMEOVER;
+				// break;
 			default: break;
 		}
 	},
@@ -604,6 +611,18 @@ var Game = {
 				this.bkgPlaying = 1;
 			}
 			
+			//GAME TIME INITIAL SET
+			if( this.gameInitTime === 0 ) {
+				this.gameInitTime = new Date().getTime();
+			}
+			
+			//TIME CALCULATION
+			this.curTime += new Date().getTime();
+			this.dTime = (this.curTime - this.prevTime);
+			if( this.dTime > this.delay ) {
+				this.prevTime = this.curTime;
+			}
+			
 			//IONO STATE UPDATE
 			if( Game.pLevel < 10 ) {
 				Game.ionoState = 0;
@@ -635,20 +654,21 @@ var Game = {
 			}
 			
 			//ASTEROID CREATION
-			if( Game.numAst < MIN_ASTEROIDS && Game.numAst < MAX_ASTEROIDS ) {
-				for( var i = Game.numAst; i < MAX_ASTEROIDS; i++ ) {
+			if( Game.numAst < MIN_ASTEROIDS && Game.numAst < MAX_ASTEROIDS ) { //TODO level/time based
+				for( var i = Game.numAst; i < MAX_ASTEROIDS; i++ ) { //TODO level/time based
 					var speed = Math.floor((Math.random()*5));
-					var flip  = Math.floor(Math.random()*1);
 					var frame = Math.floor(Math.random()*30);
 					var size  = Math.floor(Math.random()*3);
 					if( Game.asteroids[i].isAlive === 0 ) {
 						Game.asteroids[i].isAlive = 1;
-						Game.asteroids[i].speed = speed;
-						Game.asteroids[i].flip = flip;
-						Game.asteroids[i].frame = frame;
+						Game.asteroids[i].speed   = speed;
+						Game.asteroids[i].frame   = frame;
 						Game.asteroids[i].astSize = size;
-						Game.asteroids[i].spawn();
-						Game.numAst++;
+						Game.asteroids[i].moveType = 1;
+						Game.asteroids[i].x = 400;
+						Game.asteroids[i].y = 20
+						//Game.asteroids[i].spawn(speed, frame, size);
+						Game.numAst++; //TODO remove this shit
 					}
 				}
 			}
@@ -666,7 +686,7 @@ var Game = {
 			//ASTEROID MOVEMENT
 			for( var j = 0; j < Game.asteroids.length; j++ ) {
 				if( Game.asteroids[j].isAlive != 0 ) {
-					Game.asteroids[j].moveAst();
+					Game.asteroids[j].moveAst(this.dTime);
 				}
 			}
 			

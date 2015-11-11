@@ -5,9 +5,10 @@ function Asteroid(id, state, src, x, y, speed, flip, frame) {
 	this.x = x;
 	this.y = y;
 	this.speed = speed;
-	this.flip = flip;
 	this.frame = frame;
 	this.dFrame = 0; //Death Frame
+	this.astSize = -1;
+	this.moveType = 0; //0,1,2,3 - Unset, Straight Down, Angle from Left, Angle for Right
 	
 	this.isAlive = 0; //Start Dead
 
@@ -23,12 +24,10 @@ function Asteroid(id, state, src, x, y, speed, flip, frame) {
 	this.astImgLargeLoaded = 1;
 	this.astImgLarge = new Image();
     this.astImgLarge.src = this.src;
-	
-	this.astSize = -1;
 };
 
 //FUNCTIONS
-Asteroid.prototype.destroy = function() {
+Asteroid.prototype.destroy = function() { //TODO clarity, functionality
 	if( this.astSize != 2 ) {
 		this.state = 1;
 		Game.pScore += 100;
@@ -48,57 +47,89 @@ Asteroid.prototype.destroy = function() {
 	}
 };
 
-Asteroid.prototype.drawSelf = function(ctx) {
-	if(this.astSize === -1){
-		this.astSize = Math.floor((Math.random() * 3));	
-	}
+Asteroid.prototype.drawSelf = function(ctx) { //TODO replace with images
  	if( this.astImgLargeLoaded === 1 && this.astSize === 2 ) {
-		ctx.drawImage(this.astImgLarge, this.frame*75, 0, 75, 75, this.x, this.y, 100, 100);
+		ctx.drawImage(this.astImgLarge, this.frame*75, 0, 75, 75, this.x, this.y, 100, 100); //TODO replace with image
 	} else if( this.astImgMedLoaded === 1 && this.astSize === 1 ) {
-		ctx.drawImage(this.astImgMed, this.frame*75, 0, 75, 75, this.x, this.y, 75, 75);
+		ctx.drawImage(this.astImgMed, this.frame*75, 0, 75, 75, this.x, this.y, 75, 75); //TODO replace with image
 	} else if( this.astImgSmallLoaded === 1 && this.astSize === 0 ) {
-		ctx.drawImage(this.astImgSmall, this.frame*75, 0, 75, 75, this.x, this.y, 50, 50);
+		ctx.drawImage(this.astImgSmall, this.frame*75, 0, 75, 75, this.x, this.y, 50, 50); //TODO replace with image
 	} 
 };
 
-Asteroid.prototype.spawn = function() {
-	if( this.state === 0 || this.state === 2 ) {
-		if( this.flip === 0 ) {
-			this.x = Math.floor((Math.random() * 1280) + 200);
-			this.y = Math.floor((Math.random() * -80)-76);
-		} else if ( this.flip === 1 ) {
-			this.x = Math.floor((Math.random() * 600));
-			this.y = Math.floor((Math.random() * -80)-76);	
-		}
+Asteroid.prototype.spawn = function(speed, frame, size) {
+	this.speed 		= speed;
+	this.frame 		= frame;
+	this.astSize	= size;
+	
+	//Generate an X position
+		//Go from 0 to 1180
+	this.x = Math.floor(Math.random()*1181);
+	if( this.x <= 200 ) {
+		//Asteroid is on Left side, angle it inward
+		this.moveType = 2;
+	} else if( this.x >= 1080 ) {
+		//Asteroid is on Right side, angle it inward
+		this.moveType = 3;
+	} else {
+		//Asteroid is in middle, head down
+		this.moveType = 1;
 	}
+	
+	//Generate an Y position
+		//Spawn above the map by 105
+	this.y = -105;
 };
 
-Asteroid.prototype.moveAst = function() {
-	if( this.state === 0 || this.state == 2 ) {
-			if( this.flip === 0 ) {
-			this.x -= Math.floor((Math.random() * 2));
-		} else if( Asteroid.flip === 1 ) {
-			this.x += Math.floor((Math.random() * 2));
-		} 
-		if( this.y < 800 ) {
-			this.y += Math.floor((Math.random() * 3));
-		}
-		if( this.x < -75 || this.x > 1355 || this.y >= 720) {
-			this.isAlive = 0;
-			Game.numAst--;
-			this.x = -500;
-			this.y = -500;
-			var i = Math.floor(Math.random()*1);
-			switch( i ) {
-				case 0: this.flip = 0; break;
-				case 1: this.flip = 1; break;
-				default: console.log("ERROR: Move Asteroid"); break;
+Asteroid.prototype.moveAst = function(dT) { //TODO movement calc
+	switch( this.moveType ) {
+		case 0:
+			console.log("ERROR: Moving unset Asteroid");
+			break;
+		case 1:
+			//Move Asteroid Straight Down
+			//this.y += (dT/10000)+1;
+			this.y++;
+			if( this.y > 500 ) {
+				//COLLISION WITH EARTH
+				//TODO asteroid impact
+				this.isAlive = 0;
+				Game.astNum--;
+				this.x = -500;
+				this.y = -500;
 			}
-		}
+			break;
+		case 2:
+			//Move Asteroid Inward from Left
+			this.x += (dT/10000)+0.2;
+			this.y += (dT/10000)+1;
+			if( this.y > 700 ) {
+				//COLLISION WITH EARTH
+				//TODO asteroid impact
+				this.isAlive = 0;
+				Game.astNum--;
+				this.x = -500;
+				this.y = -500;
+			}
+			break;
+		case 3:
+			//Move Asteroid Inward from Right
+			this.x -= (dT/10000)+0.2;
+			this.y += (dT/10000)+1;
+			if( this.y > 700 ) {
+				//COLLISION WITH EARTH
+				//TODO asteroid impact
+				this.isAlive = 0;
+				Game.astNum--;
+				this.x = -500;
+				this.y = -500;
+			}
+			break;
+		default: console.log("ERROR: Move Asteroid - Move Type");
 	}
 };
 
-Asteroid.prototype.isColliding = function(x, y, object) {
+Asteroid.prototype.isColliding = function(x, y, object) { //TODO earth collision
 	switch( this.astSize ) {
 		case 0: //SMALL
 			if( object === "player" ) {

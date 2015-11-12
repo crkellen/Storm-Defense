@@ -25,23 +25,31 @@ POWER_LEVEL_IMG		= 'images/ionoFillImg.png';
 POWER_CONTAINER_IMG	= 'images/ionoContainerImg.png';
 ASTEROID1_DEATH_IMG_SRC	= 'images/asteroid1ExplosionImg.png';
 ASTEROID_IMPACT_IMG_SRC	= 'images/asteroidImpactImg.png';
-//CONSTANT MENU IMG
-MENU_IMG_SRC			 = 'images/mainMenuImg.png';
+//CONSTANT LOADING IMG
+LOADING_BKG			= 'loadingBkgImg.png';
+LOADING_CONTAINER 	= 'loadingContainerImg.png';
+LOADING_BAR			= 'loadingBarImg.png';
+//CONSTANT MENU BKG IMG
+MENU_IMG_SRC			 = 'images/mainMenuBgImg.png';
 CREDITS_IMG_SRC		 	 = 'images/creditsBgImg.png';
 TUTORIAL_IMG_SRC		 = 'images/instructBgImg.png';
-SCORE_IMG_SRC			 = 'images/instructBgImg.png';
+SCORE_IMG_SRC			 = 'images/topscoresBgImg.png';
 //CONSTANT BUTTON IMG
 BUTTON_PLAY_IMG_SRC 	 = 'images/playButtonImg.png';
 BUTTON_CREDITS_IMG_SRC   = 'images/creditsButtonImg.png';
-BUTTON_SCORE_IMG_SRC     = 'images/leaderboardsButtonImg.png';
-BUTTON_TUTORIAL_IMG_SRC  = 'images/instructButtonImg.png';
-BUTTON_BACK_IMG_SRC      = 'images/backButton.png';
-//CONSTANT HOVER IMG
+BUTTON_SCORE_IMG_SRC     = 'images/scoreButtonImg.png';
+BUTTON_TUTORIAL_IMG_SRC  = 'images/tutorialButtonImg.png';
+BUTTON_BACK_IMG_SRC      = 'images/backButtonImg.png';
+BUTTON_MENU_IMG_SRC		 = 'images/menuButtonImg.png';
+BUTTON_OPTIONS_IMG_SRC	 = 'images/optionsButtonImg.png';
+//CONSTANT HOVER IMG HOVER IS ACTUALLY CLICK
 BUTTON_PLAY_HOVER		 = 'images/playButtonClickImg.png';
 BUTTON_CREDITS_HOVER	 = 'images/creditsButtonClickImg.png';
-BUTTON_SCORE_HOVER	 	 = 'images/leaderboardsButtonClickImg.png';
-BUTTON_TUTORIAL_HOVER    = 'images/instructButtonClickImg.png';
+BUTTON_SCORE_HOVER	 	 = 'images/scoreButtonClickImg.png';
+BUTTON_TUTORIAL_HOVER    = 'images/tutorialButtonClickImg.png';
 BUTTON_BACK_HOVER	 	 = 'images/backButtonClickImg.png';
+BUTTON_MENU_CLICK		 = 'images/menuButtonClickImg.png';
+BUTTON_OPTIONS_CLICK	 = 'images/optionsButtonClickImg.png';
 //CONSTANT AUDIO SOURCES
 AUDIO_BKG_SRC		= 'sounds/bkg.mp3';
 AUDIO_PFIRE_SRC		= 'sounds/shoot1.mp3';
@@ -381,7 +389,7 @@ var Game = {
 			ctx.translate(this.aimingX, this.aimingY);
 			ctx.rotate(-this.playerTheta);
 			ctx.translate(36, 0);
-			ctx.drawImage(this.aimingImg, 0, this.aimingFrame*11, 200, 9, 0, 0, 200, 9);
+			ctx.drawImage(this.aimingImg, 0, this.aimingFrame*5, 200, 5, 0, 0, 200, 5);
 			ctx.restore();
 			if( this.aimingFrameTick === 5 ) {
 				this.aimingFrame += 1;

@@ -1,14 +1,16 @@
-function Asteroid(id, state, src, x, y, speed, flip, frame) {
+function Asteroid(id, state, src, speed, flip, frame) {
 	this.id = id; //Position in Array
 	this.state = state; //0,1,2 - Normal, Destroyed, Destroyed Large
 	this.src = src;
-	this.x = x;
-	this.y = y;
 	this.speed = speed;
 	this.frame = frame;
+	this.x = 0; //Actual Position
+	this.y = 0; //Actual Position
+	this.dx = 0; //Direction
+	this.dy = 0; //Direction
+	this.direction = 0;
 	this.dFrame = 0; //Death Frame
 	this.astSize = -1;
-	this.moveType = 0; //0,1,2,3 - Unset, Straight Down, Angle from Left, Angle for Right
 	
 	this.isAlive = 0; //Start Dead
 
@@ -63,79 +65,39 @@ Asteroid.prototype.spawn = function(speed, frame, size) {
 	this.astSize	= size;
 	
 	//Generate an X position
-		//Go from 0 to 1180
+		//Go from 0 to 1180 to keep it on map
 	this.x = Math.floor(Math.random()*1181);
-	if( this.x <= 200 ) {
-		//Asteroid is on Left side, angle it inward
-		this.moveType = 2;
-	} else if( this.x >= 1080 ) {
-		//Asteroid is on Right side, angle it inward
-		this.moveType = 3;
-	} else {
-		//Asteroid is in middle, head down
-		this.moveType = 1;
-	}
-	
 	//Generate an Y position
 		//Spawn above the map by 105
 	this.y = -105;
+	
+	var tx = ( (640)-50 + (Math.random()*100) );
+	var ty = 720;
+	
+	this.dx = tx - this.x;
+	this.dy = ty - this.y;
+	
+	var magni = Math.sqrt( this.dx*this.dx + this.dy*this.dy );
+	
+	this.dx = this.dx / (magni);
+	this.dy = this.dy / (magni);
 };
 
-Asteroid.prototype.moveAst = function(dT) { //TODO movement calc -- Make this function only move, not check for earth collision. No collision detection
-	switch( this.moveType ) {
-		case 0:
-			console.log("ERROR: Moving unset Asteroid");
-			break;
-		case 1:
-			//Move Asteroid Straight Down
-			//this.y += (dT/10000)+1; -------Useless
-			this.y++;
-			if( this.y > 500 ) {
-				//COLLISION WITH EARTH
-				//TODO asteroid impact
-				this.isAlive = 0;
-				Game.numAst--;
-				this.x = -500;
-				this.y = -500;
-			}
-			break;
-		case 2:
-			//Move Asteroid Inward from Left
-			this.x += (dT/10000)+0.2;
-			this.y += (dT/10000)+1;
-			if( this.y > 700 ) {
-				//COLLISION WITH EARTH
-				//TODO asteroid impact
-				this.isAlive = 0;
-				Game.numAst--;
-				this.x = -500;
-				this.y = -500;
-			}
-			break;
-		case 3:
-			//Move Asteroid Inward from Right
-			this.x -= (dT/10000)+0.2;
-			this.y += (dT/10000)+1;
-			if( this.y > 700 ) {
-				//COLLISION WITH EARTH
-				//TODO asteroid impact
-				this.isAlive = 0;
-				Game.numAst--;
-				this.x = -500;
-				this.y = -500;
-			}
-			break;
-		default: console.log("ERROR: Move Asteroid - Move Type");
+Asteroid.prototype.moveAst = function(dT) { //TODO movement calc
+	this.x += this.dx * this.speed;
+	this.y += this.dy * this.speed;
+	
+	//Earth Collision Detection
+	if( this.y >= 680 ) {
+		this.destroy(); //TODO - This is temp
 	}
 };
 
-Asteroid.prototype.isColliding = function(x, y, object) { //TODO earth collision
+Asteroid.prototype.isColliding = function(x, y, object) {
 	switch( this.astSize ) {
 		case 0: //SMALL
 			if( object === "player" ) {
 				return !( x+75 < this.x+5 || this.x+40 < x || y+50 < this.y+5 || this.y+40 < y);
-			} else if ( object === "earth" ) { //TODO - REMOVE COMPLETELY
-				return !( x+900 < this.x+5 || this.x+40 < x || y+100 < this.y+5 || this.y+40 < y);
 			} else if ( object === "laser" ) {
 				return !( x+10 < this.x+5 || this.x+40 < x || y+10 < this.y+5 || this.y+40 < y);
 			} else {
@@ -145,8 +107,6 @@ Asteroid.prototype.isColliding = function(x, y, object) { //TODO earth collision
 		case 1: //MEDIUM
 			if( object === "player" ) {
 				return !( x+75 < this.x+10 || this.x+55 < x || y+50 < this.y+10 || this.y+55 < y);
-			} else if ( object === "earth" ) { //TODO - REMOVE COMPLETELY
-				return !( x+900 < this.x+10 || this.x+55 < x || y+100 < this.y+10 || this.y+55 < y);
 			} else if ( object === "laser" ) {
 				return !( x+10 < this.x+10 || this.x+55 < x || y+10 < this.y+10 || this.y+55 < y);
 			} else {
@@ -156,8 +116,6 @@ Asteroid.prototype.isColliding = function(x, y, object) { //TODO earth collision
 		case 2: //LARGE
 			if( object === "player" ) {
 				return !( x+75 < this.x+20 || this.x+65 < x || y+50 < this.y+15 || this.y+75 < y);
-			} else if ( object === "earth" ) { //TODO - REMOVE COMPLETELY
-				return !( x+900 < this.x+20 || this.x+65 < x || y+100 < this.y+15 || this.y+75 < y);
 			} else if ( object === "laser" ) {
 				return !( x+10 < this.x+20 || this.x+65 < x || y+10 < this.y+15 || this.y+75 < y);
 			} else {

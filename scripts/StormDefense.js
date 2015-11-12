@@ -6,9 +6,8 @@ var CANVAS_TUTORIAL_ID	= "canvasTutorial";
 var CANVAS_SCORE_ID  	= "canvasScore"
 var WORLD_HEIGHT 	  = 720;
 var WORLD_WIDTH		  = 1280;
-var MAX_ASTEROIDS 	  = 4; //TODO remove this shit
-var MIN_ASTEROIDS	  = 1; //TODO remove this shit
 var MAX_LASERS		  = 10;
+var MAX_ASTEROIDS	  = 10;
 var OK_MIN_SCREEN_RATIO = 1.33;  
 var OK_MAX_SCREEN_RATIO = 1.35;
 //CONSTANT IMG SOURCES
@@ -68,7 +67,9 @@ var Game = {
 	
 	gameHeight:		WORLD_HEIGHT,
 	gameWidth:		WORLD_WIDTH,
-	numAst:			0, //TODO I hate this shit, remove it
+	numAst:			0,
+	minAst:			0,
+	maxAst:			0,
 	asteroids:  	[],
 	lasers:			[],
 	curLaser:		-1,
@@ -77,11 +78,14 @@ var Game = {
 	pScore:			0, //Start with score of zero
 	
 	//Time Variables
-	gameInitTime:	0, //The first time that the game starts
 	curTime:		0,
 	prevTime:		0,
-	dTime:			0,
-	delay:			0,
+	deltaTime:		0,
+	totalTime:		0,
+	
+	//Level Variables
+	level:			0,
+	levelShow:		0,
 
 	playerTheta:	90*(Math.PI/180),
 	laserTheta:		0,
@@ -254,7 +258,7 @@ var Game = {
 		
 		//Asteroid Init
 		for( var m = 0; m < MAX_ASTEROIDS; m++ ) {
-			this.asteroids[m] = new Asteroid(m, 0, ASTEROID1_IMG_SRC, 0, 0, 0, 0, 0);
+			this.asteroids[m] = new Asteroid(m, 0, ASTEROID1_IMG_SRC, 0, 0, 0);
 		}
 		//Laser Init
 		for( var n = 0; n < MAX_LASERS; n++ ) {
@@ -581,9 +585,6 @@ var Game = {
 	CollisionDetection: function() {
 		for( var i = 0; i < Game.asteroids.length; i++ ) {
 			if( Game.asteroids[i].isAlive != 0 && Game.asteroids[i].state === 0 ) {
-				if( Game.asteroids[i].isColliding(150, Game.earthY+30, "earth") ) {
-					Game.GameOver();
-				}
 				if( Game.asteroids[i].isColliding(Game.playerX-36, Game.playerY-36, "player") ) {
 					Game.asteroids[i].destroy();
 					Game.gameState = Game.STATE_DEAD;
@@ -600,42 +601,35 @@ var Game = {
 		}
 	},
 	
-	SpawnAsteroids: function(eTime) {
-		//Elapsed Time should already be in milliseconds
-		/*
-		if( eTime <= 3 seconds ) {
+	SpawnAsteroids: function(tTime) {
+		if( tTime <= 3 ) {
 			return;
-		} else if( eTime >= 3seconds && eTime <= 10 seconds ) {
+		} else if( tTime >= 3 && tTime <= 10 ) {
 			this.level = 1;
 			this.levelShow = 1;
-		} else if( eTime >= 10 seconds && eTime <= 1 minute ) {
+		} else if( tTime >= 10 && tTime <= 60 ) {
 			this.levelShow = 0;
 			this.minAst = 1;
 			this.maxAst = 1;
-			
-			if( this.numAst <= MIN_ASTEROIDS && this.numAst <= MAX_ASTEROIDS ) { //TODO level/time based
-				for( var i = this.numAst; i < MAX_ASTEROIDS; i++ ) { //TODO level/time based
-					if( this.asteroids[i].isAlive === 0 ) {
-						var speed = Math.floor(Math.random()*5 );
-						var frame = Math.floor(Math.random()*30);
-						var size  = Math.floor(Math.random()*3 );
-					
-						this.asteroids[i].isAlive  = 1;
-						this.asteroids[i].speed    = speed;
-						this.asteroids[i].frame    = frame;
-						this.asteroids[i].astSize  = size;
-						this.asteroids[i].moveType = 1;
-						this.asteroids[i].x = 400;
-						this.asteroids[i].y = 20
-						//this.asteroids[i].spawn(speed, frame, size);
-						
-						this.numAst++; //TODO remove this shit?
+			//Spawn Asteroids
+			if( Game.numAst <= this.minAst && Game.numAst <= MAX_ASTEROIDS ) {
+				for( var i = Game.numAst; i < this.maxAst; i++ ) { //FIX
+					var speed = Math.floor((Math.random())+1);
+					var frame = Math.floor(Math.random()*30);
+					var size  = Math.floor(Math.random()*3);
+					if( Game.asteroids[i].isAlive === 0 ) {
+						Game.asteroids[i].isAlive = 1;
+						Game.asteroids[i].speed   = speed;
+						Game.asteroids[i].frame   = frame;
+						Game.asteroids[i].astSize = size;
+						Game.asteroids[i].spawn(speed, frame, size);
+						Game.numAst++;
 					}
 				}
 			}
+		} else {
+			console.log("Level 2");
 		}
-		
-		*/
 	},
 	
 	Update: function() {
@@ -648,21 +642,16 @@ var Game = {
 				this.audioBKG.loop = true;
 				this.bkgPlaying = 1;
 			}
-			
-			//GAME TIME INITIAL SET
-			if( this.gameInitTime === 0 ) {
-				var d = new Date();
-				//getTime() / 10000 = Time in milliseconds
-				this.gameInitTime = Math.round( d.getTime() / 10000 );
-			}
-			
+
 			//TIME CALCULATION
-			var d = new Date();
-			this.curTime += Math.round( d.getTime() / 10000 );
-			this.dTime = (this.curTime - this.prevTime);
-			if( this.dTime > this.delay ) {
-				this.prevTime = this.curTime;
+			newDate  = new Date();
+			this.prevTime = this.curTime;
+            this.curTime  = newDate.getTime() / 1000.0;  // end time in seconds
+            this.deltaTime = (this.curTime - this.prevTime) // delta time in seconds
+			if( this.deltaTime > 30 ) {
+				this.deltaTime = 0;
 			}
+			this.totalTime += this.deltaTime; //Total playtime in seconds
 			
 			//IONO STATE UPDATE
 			if( Game.pLevel < 10 ) {
@@ -695,26 +684,7 @@ var Game = {
 			}
 			
 			//ASTEROID CREATION
-			//Game.spawnAsteroids(this.curTime - this.gameInitTime);
-			
-			if( Game.numAst <= MIN_ASTEROIDS && Game.numAst <= MAX_ASTEROIDS ) { //TODO level/time based
-				for( var i = Game.numAst; i < MAX_ASTEROIDS; i++ ) { //TODO level/time based
-					var speed = Math.floor((Math.random()*5));
-					var frame = Math.floor(Math.random()*30);
-					var size  = Math.floor(Math.random()*3);
-					if( Game.asteroids[i].isAlive === 0 ) {
-						Game.asteroids[i].isAlive = 1;
-						Game.asteroids[i].speed   = speed;
-						Game.asteroids[i].frame   = frame;
-						Game.asteroids[i].astSize = size;
-						Game.asteroids[i].moveType = 1;
-						Game.asteroids[i].x = 400;
-						Game.asteroids[i].y = 20
-						//Game.asteroids[i].spawn(speed, frame, size);
-						Game.numAst++; //TODO remove this shit
-					}
-				}
-			}
+			Game.SpawnAsteroids(this.totalTime);
 			
 			//LASER COORD UPDATE
 			for( var i = 0; i < Game.lasers.length; i++ ) {

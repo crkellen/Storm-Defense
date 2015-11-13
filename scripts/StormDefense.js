@@ -26,9 +26,15 @@ POWER_CONTAINER_IMG	= 'images/ionoContainerImg.png';
 ASTEROID1_DEATH_IMG_SRC	= 'images/asteroid1ExplosionImg.png';
 ASTEROID_IMPACT_IMG_SRC	= 'images/asteroidImpactImg.png';
 //CONSTANT LOADING IMG
-LOADING_BKG			= 'loadingBkgImg.png';
-LOADING_CONTAINER 	= 'loadingContainerImg.png';
-LOADING_BAR			= 'loadingBarImg.png';
+LOADING_BKG_IMG_SRC			= 'loadingBkgImg.png';
+LOADING_CONTAINER_IMG_SRC 	= 'loadingContainerImg.png';
+LOADING_BAR_IMG_SRC			= 'loadingBarImg.png';
+//CONSTANT LEVEL IMG
+LEVEL1_IMG_SRC	= 'images/level1Img.png';
+LEVEL2_IMG_SRC	= 'images/level2Img.png';
+LEVEL3_IMG_SRC	= 'images/level3Img.png';
+LEVEL4_IMG_SRC	= 'images/level4Img.png';
+LEVEL5_IMG_SRC	= 'images/level5Img.png';
 //CONSTANT MENU BKG IMG
 MENU_IMG_SRC			 = 'images/mainMenuBgImg.png';
 CREDITS_IMG_SRC		 	 = 'images/creditsBgImg.png';
@@ -71,6 +77,7 @@ var Game = {
 	STATE_DEAD:		6,
 	STATE_GAMEOVER:	999,
 	gameState:		0,
+	gameLoadedAmt:	0,
 	isInitialized:	0,
 	
 	gameHeight:		WORLD_HEIGHT,
@@ -123,6 +130,16 @@ var Game = {
 	powerContainerImg:  0,
 	asteroid1DeathImgLoaded:	0,
 	asteroidImpactImgLoaded:	0,
+	//Loading Image Checks
+	loadingBkgImgLoaded:		0,
+	loadingContainerImgLoaded:	0,
+	loadingBarImgLoaded:		0,
+	//Level Image Checks
+	level1ImgLoaded:	0,
+	level2ImgLoaded:	0,
+	level3ImgLoaded:	0,
+	level4ImgLoaded:	0,
+	level5ImgLoaded:	0,
 	//Menu Image Checks
 	menuImgLoaded:		0,
 	creditsImgLoaded:	0,
@@ -172,96 +189,135 @@ var Game = {
 	score: new theScore(SCORE_IMG_SRC, BUTTON_BACK_IMG_SRC, BUTTON_BACK_HOVER),
 	
 	Init: function() {
-		Game.gameState = Game.STATE_MENU;
-		
 		var gameCanvas = document.getElementById(CANVAS_GAME_ID);
 		var gameCTX = gameCanvas.getContext("2d");
 		var menuCanvas = document.getElementById(CANVAS_MENU_ID);
 		var menuCTX = menuCanvas.getContext("2d");
+		console.log("1");
+		//Loading Background
+		this.loadingBkgImg = new Image();
+		this.loadingBkgImg.onload = function () { 	Game.loadingBkgImgLoaded = 1; Game.gameLoadedAmt++; };
+        this.loadingBkgImg.src = LOADING_BKG_IMG_SRC;
+		//Loading Container
+		this.loadingContainerImg = new Image();
+		this.loadingContainerImg.onload = function () { 	Game.loadingContainerImgLoaded = 1; Game.gameLoadedAmt++; };
+        this.loadingContainerImg.src = LOADING_CONTAINER_IMG_SRC;
+		//Loading Bar
+		this.loadingBarImg = new Image();
+		this.loadingBarImg.onload = function () { 	Game.loadingBarImgLoaded = 1; Game.gameLoadedAmt++; };
+        this.loadingBarImg.src = LOADING_BAR_IMG_SRC;
+		
+		menuCTX.drawImage(this.loadingBkgImg, 0, 0);
+		menuCTX.drawImage(this.loadingContainerImg, 5, 5);
+		menuCTX.drawImage(this.loadingBarImg, 6, 6);
+		
+		Game.gameState = Game.STATE_MENU;
 		
 		//IMAGE CREATION AND LOAD
 		//Background
 		this.bkgImg = new Image();
-		this.bkgImg.onload = function () { 	Game.bkgImgLoaded = 1; };
+		this.bkgImg.onload = function () { 	Game.bkgImgLoaded = 1; Game.gameLoadedAmt++; };
         this.bkgImg.src = BKG_IMG_SRC;
 		//Player
 		this.playerImg = new Image();
-		this.playerImg.onload = function () { 	Game.playerImgLoaded = 1; };
+		this.playerImg.onload = function () { 	Game.playerImgLoaded = 1; Game.gameLoadedAmt++; };
         this.playerImg.src = PLAYER_IMG_SRC;
 		//Asteroid1
 		this.asteroid1Img = new Image();
-		this.asteroid1Img.onload = function () { 	Game.asteroid1ImgLoaded = 1; };
+		this.asteroid1Img.onload = function () {Game.asteroid1ImgLoaded = 1; Game.gameLoadedAmt++; };
         this.asteroid1Img.src = ASTEROID1_IMG_SRC;
 		//Earth1
 		this.earthImg1 = new Image();
-		this.earthImg1.onload = function () { 	Game.earthImg1Loaded = 1; };
+		this.earthImg1.onload = function () { 	Game.earthImg1Loaded = 1; Game.gameLoadedAmt++; };
         this.earthImg1.src = EARTH_IMG_SRC1;
 		//Earth2
 		this.earthImg2 = new Image();
-		this.earthImg2.onload = function () { 	Game.earthImg2Loaded = 1; };
+		this.earthImg2.onload = function () { 	Game.earthImg2Loaded = 1; Game.gameLoadedAmt++; };
         this.earthImg2.src = EARTH_IMG_SRC2;
 		//Earth3
 		this.earthImg3 = new Image();
-		this.earthImg3.onload = function () { 	Game.earthImg3Loaded = 1; };
+		this.earthImg3.onload = function () { 	Game.earthImg3Loaded = 1; Game.gameLoadedAmt++; };
         this.earthImg3.src = EARTH_IMG_SRC3;
 		//Earth4
 		this.earthImg4 = new Image();
-		this.earthImg4.onload = function () { 	Game.earthImg4Loaded = 1; };
+		this.earthImg4.onload = function () { 	Game.earthImg4Loaded = 1; Game.gameLoadedAmt++; };
         this.earthImg4.src = EARTH_IMG_SRC4;
 		//Laser
 		this.laserImg = new Image();
-		this.laserImg.onload = function () { 	Game.laserImgLoaded = 1; };
+		this.laserImg.onload = function () { 	Game.laserImgLoaded = 1; Game.gameLoadedAmt++; };
         this.laserImg.src = LASER_IMG_SRC;
 		//Aiming
 		this.aimingImg = new Image();
-		this.aimingImg.onload = function () { 	Game.aimingImgLoaded = 1; };
+		this.aimingImg.onload = function () { 	Game.aimingImgLoaded = 1; Game.gameLoadedAmt++; };
         this.aimingImg.src = AIMING_IMG_SRC;
 		//Ionosphere
 		this.ionoImg = new Image();
-		this.ionoImg.onload = function () { 	Game.ionoImgLoaded = 1; };
+		this.ionoImg.onload = function () { 	Game.ionoImgLoaded = 1; Game.gameLoadedAmt++; };
         this.ionoImg.src = IONO_IMG_SRC;
 		//PowerBar
 		this.powerBarImg = new Image();
-		this.powerBarImg.onload = function () { 	Game.powerImgLoaded = 1; };
+		this.powerBarImg.onload = function () { Game.powerImgLoaded = 1; Game.gameLoadedAmt++; };
         this.powerBarImg.src = POWER_LEVEL_IMG	;
 		//Power Container
 		this.powerContainer = new Image();
-		this.powerContainer.onload = function () { 	Game.powerContainerImg = 1; };
+		this.powerContainer.onload = function () { 		Game.powerContainerImg = 1; Game.gameLoadedAmt++; };
         this.powerContainer.src = POWER_CONTAINER_IMG;
 		//Asteroid1Death
 		this.asteroid1DeathImg = new Image();
-		this.asteroid1DeathImg.onload = function () { 	Game.asteroid1DeathImgLoaded = 1; };
+		this.asteroid1DeathImg.onload = function () { 	Game.asteroid1DeathImgLoaded = 1; Game.gameLoadedAmt++; };
         this.asteroid1DeathImg.src = ASTEROID1_DEATH_IMG_SRC;
 		//AsteroidImpact
 		this.asteroidImpactImg = new Image();
-		this.asteroidImpactImg.onload = function () { 	Game.asteroidImpactImgLoaded = 1; };
+		this.asteroidImpactImg.onload = function () { 	Game.asteroidImpactImgLoaded = 1; Game.gameLoadedAmt++; };
         this.asteroidImpactImg.src = ASTEROID_IMPACT_IMG_SRC;
+		
+		//LEVEL IMAGES CREATION AND LOAD
+		//Level 1
+		this.level1Img = new Image();
+		this.level1Img.onload = function () { 	Game.level1ImgLoaded = 1; Game.gameLoadedAmt++; };
+        this.level1Img.src = LEVEL1_IMG_SRC;
+		//Level 2
+		this.level2Img = new Image();
+		this.level2Img.onload = function () { 	Game.level2ImgLoaded = 1; Game.gameLoadedAmt++; };
+        this.level2Img.src = LEVEL2_IMG_SRC;
+		//Level 3
+		this.level3Img = new Image();
+		this.level3Img.onload = function () { 	Game.level3ImgLoaded = 1; Game.gameLoadedAmt++; };
+        this.level3Img.src = LEVEL3_IMG_SRC;
+		//Level 4
+		this.level4Img = new Image();
+		this.level4Img.onload = function () { 	Game.level4ImgLoaded = 1; Game.gameLoadedAmt++; };
+        this.level4Img.src = LEVEL4_IMG_SRC;
+		//Level 5
+		this.level5Img = new Image();
+		this.level5Img.onload = function () { 	Game.level5ImgLoaded = 1; Game.gameLoadedAmt++; };
+        this.level5Img.src = LEVEL5_IMG_SRC;
 		
 		//SOUND CREATION AND LOAD
 		//Background Music
 		this.audioBKG = new Audio();
-		this.audioBKG.onload = function() { Game.audioBKGLoaded = 1; };
+		this.audioBKG.onload = function() { Game.audioBKGLoaded = 1; Game.gameLoadedAmt++; };
 		this.audioBKG.src = AUDIO_BKG_SRC;
 		this.audioBKG.volume = 0.2;
 		//Player Fire
 		this.audioPFire = new Audio();
-		this.audioPFire.onload = function() { Game.audioPFireLoaded = 1; };
+		this.audioPFire.onload = function() { Game.audioPFireLoaded = 1; Game.gameLoadedAmt++; };
 		this.audioPFire.src = AUDIO_PFIRE_SRC;
 		//Player Hit
 		this.audioPHit = new Audio();
-		this.audioPHit.onload = function() { Game.audioPHitLoaded = 1; };
+		this.audioPHit.onload = function() { Game.audioPHitLoaded = 1; Game.gameLoadedAmt++; };
 		this.audioPHit.src = AUDIO_PHIT_SRC;
 		//Earth Hit
 		this.audioEHit = new Audio();
-		this.audioEHit.onload = function() { Game.audioEHitLoaded = 1; };
+		this.audioEHit.onload = function() { Game.audioEHitLoaded = 1; Game.gameLoadedAmt++; };
 		this.audioEHit.src = AUDIO_EHIT_SRC;
 		//Charge
 		this.audioCharge = new Audio();
-		this.audioCharge.onload = function() { Game.audioChargeLoaded = 1; };
+		this.audioCharge.onload = function() { Game.audioChargeLoaded = 1; Game.gameLoadedAmt++; };
 		this.audioCharge.src = AUDIO_CHARGE_SRC;
 		//Asteroid Hit
 		this.audioAHit = new Audio();
-		this.audioAHit.onload = function() { Game.audioAHitLoaded = 1; };
+		this.audioAHit.onload = function() { Game.audioAHitLoaded = 1; Game.gameLoadedAmt++; };
 		this.audioAHit.src = AUDIO_AHIT_SRC;
 		
 		//Asteroid Init
@@ -291,7 +347,15 @@ var Game = {
 		scoreCanvas.addEventListener('mousemove', this.score.doMouseOver, false);
 		
 		menuCanvas.style.display = 'block';
-		this.isInitialized = 1;
+		// if( Game.gameLoadedAmt < 23 ) {
+			// Game.isInitialized = 1;
+		// }
+		var dumber = 0;
+		while (( Game.gameLoadedAmt < 23 ) && (dumber < 10000000) ){
+			Game.isInitialized = 0;
+			dumber++;
+		}
+		Game.isInitialized = 1;
 	},
 	
 	DrawScreen: function() {
@@ -308,6 +372,37 @@ var Game = {
 		}
 		//SCORE
 		ctx.fillText("Score: " + Game.pScore, 10, 25);
+		//LEVEL
+		if( this.levelShow === 1 ) {
+			switch( this.level ) {
+				case 1:
+					if( this.level1ImgLoaded != 0 ) {
+						ctx.drawImage(this.level1Img, 550, 160);
+					}
+					break;
+				case 2:
+					if( this.level2ImgLoaded != 0 ) {
+						ctx.drawImage(this.level2Img, 550, 160);
+					}
+					break;
+				case 3:
+					if( this.level3ImgLoaded != 0 ) {
+						ctx.drawImage(this.level3Img, 550, 160);
+					}
+					break;
+				case 4:
+					if( this.level4ImgLoaded != 0 ) {
+						ctx.drawImage(this.level4Img, 550, 160);
+					}
+					break;
+				case 5:
+					if( this.level5ImgLoaded != 0 ) {
+						ctx.drawImage(this.level5Img, 550, 160);
+					}
+					break;
+				default: console.log("ERROR: Level Draw"); break;
+			}
+		}
 		//EARTH
 		if( Game.earthImg1Loaded != 0 && Game.earthImg2Loaded != 0 && Game.earthImg3Loaded != 0 && Game.earthImg4Loaded != 0 ) {
 			switch( this.earthSheetNum ) {
@@ -389,7 +484,7 @@ var Game = {
 			ctx.translate(this.aimingX, this.aimingY);
 			ctx.rotate(-this.playerTheta);
 			ctx.translate(36, 0);
-			ctx.drawImage(this.aimingImg, 0, this.aimingFrame*5, 200, 5, 0, 0, 200, 5);
+			ctx.drawImage(this.aimingImg, 0, this.aimingFrame*5, 200, 3, 0, 0, 200, 3);
 			ctx.restore();
 			if( this.aimingFrameTick === 5 ) {
 				this.aimingFrame += 1;
@@ -611,6 +706,8 @@ var Game = {
 	
 	SpawnAsteroids: function(tTime) {
 		if( tTime <= 3 ) {
+			this.minAst = 0;
+			this.maxAst = 0;
 			return;
 		} else if( tTime >= 3 && tTime <= 10 ) {
 			this.level = 1;
@@ -619,24 +716,52 @@ var Game = {
 			this.levelShow = 0;
 			this.minAst = 1;
 			this.maxAst = 1;
-			//Spawn Asteroids
-			if( Game.numAst <= this.minAst && Game.numAst <= MAX_ASTEROIDS ) {
-				for( var i = Game.numAst; i < this.maxAst; i++ ) { //FIX
-					var speed = Math.floor((Math.random())+1);
-					var frame = Math.floor(Math.random()*30);
-					var size  = Math.floor(Math.random()*3);
-					if( Game.asteroids[i].isAlive === 0 ) {
-						Game.asteroids[i].isAlive = 1;
-						Game.asteroids[i].speed   = speed;
-						Game.asteroids[i].frame   = frame;
-						Game.asteroids[i].astSize = size;
-						Game.asteroids[i].spawn(speed, frame, size);
-						Game.numAst++;
-					}
+		} else if( tTime >= 60 && tTime <= 65 ) {
+			this.level = 2;
+			this.levelShow = 1;
+		} else if( tTime >= 65 && tTime <= 90 ) {
+			this.levelShow = 0;
+			this.minAst = 1;
+			this.maxAst = 3;
+		} else if( tTime >= 90 && tTime <= 95 ) {
+			this.level = 3;
+			this.levelShow = 1;
+		} else if( tTime >= 95 && tTime <= 120 ) {
+			this.levelShow = 0;
+			this.minAst = 2;
+			this.maxAst = 4;
+		} else if( tTime >= 120 && tTime <= 125 ) {
+			this.level = 4;
+			this.levelShow = 1;
+		} else if( tTime >= 125 && tTime <= 160 ) {
+			this.levelShow = 0;
+			this.minAst = 2;
+			this.maxAst = 6;
+		} else if( tTime >= 160 && tTime <= 165 ) {
+			this.level = 5;
+			this.levelShow = 1;
+		} else if( tTime >= 165 && tTime <= 200 ) {
+			this.levelShow = 0;
+			this.minAst = 3;
+			this.maxAst = 6;
+		} else {
+			console.log("YOU WIN.");
+		}
+		//Spawn Asteroids
+		if( Game.numAst <= this.minAst && Game.numAst <= MAX_ASTEROIDS ) {
+			for( var i = Game.numAst; i < this.maxAst; i++ ) {
+				var speed = Math.floor((Math.random())+1);
+				var frame = Math.floor(Math.random()*30);
+				var size  = Math.floor(Math.random()*3);
+				if( Game.asteroids[i].isAlive === 0 ) {
+					Game.asteroids[i].isAlive = 1;
+					Game.asteroids[i].speed   = speed;
+					Game.asteroids[i].frame   = frame;
+					Game.asteroids[i].astSize = size;
+					Game.asteroids[i].spawn(speed, frame, size);
+					Game.numAst++;
 				}
 			}
-		} else {
-			console.log("Level 2");
 		}
 	},
 	
@@ -699,8 +824,8 @@ var Game = {
 				if( Game.lasers[i].y < -1 ) {
 					Game.lasers[i].destroy();
 				} else {
-					Game.lasers[i].x += Math.cos(Game.lasers[i].theta)*2.5;
-					Game.lasers[i].y += Math.sin(Game.lasers[i].theta)*2.5;
+					Game.lasers[i].x += Math.cos(Game.lasers[i].theta)*3.5;
+					Game.lasers[i].y += Math.sin(Game.lasers[i].theta)*3.5;
 				}
 			}
 			
@@ -823,10 +948,15 @@ function doKeyup(e) {
 };
 
 window.onload = function() {
-	Game.Init();
+	//while( Game.isInitialized != 1 ) {
+		Game.Init();
+	//}
 	doResize();
 	// Start Game Loop
-	runGame();
+	if( Game.isInitialized === 1 ) {
+		runGame();
+	}
+	else{ alert("nuts"); }
 };
 
 function runGame() {

@@ -514,6 +514,12 @@ var Game = {
 			for( var i = 0; i < Game.asteroids.length; i++ ) {
 				if( Game.asteroids[i].isAlive != 0 && Game.asteroids[i].state === 0 || Game.asteroids[i].state === 2 ) {
 					Game.asteroids[i].drawSelf(ctx);
+					if( this.frameTick === 10 ) {
+						Game.asteroids[i].frame += 1;
+					}
+					if( Game.asteroids[i].frame >= 30 ) {
+						Game.asteroids[i].frame = 0;
+					}
 				}
 				if( Game.asteroids[i].state === 1 || Game.asteroids[i].state === 2 ) {
 					switch( Game.asteroids[i].astSize ) {
@@ -539,11 +545,15 @@ var Game = {
 						}
 					}
 				}
-				if( this.frameTick === 10 ) {
-					Game.asteroids[i].frame += 1;
-				}
-				if( Game.asteroids[i].frame >= 30 ) {
-					Game.asteroids[i].frame = 0;
+				if( Game.asteroids[i].state === 3 ) {
+					ctx.drawImage(this.asteroidImpactImg, Game.asteroids[i].iFrame*75, 0, 75, 75, Game.asteroids[i].x, Game.asteroids[i].y, 75, 75);
+					Game.asteroids[i].iFrame++;
+					if( Game.asteroids[i].iFrame >= 120 ) {
+						Game.asteroids[i].iFrame = 0;
+						Game.asteroids[i].isAlive = 0;
+						Game.asteroids[i].state = 0;
+						Game.numAst--;
+					}
 				}
 			}
 		}
@@ -630,9 +640,6 @@ var Game = {
 					}
 				}
 				break;
-			// case 81: TODO - REMOVE COMPLETELY
-				// Game.gameState = Game.STATE_GAMEOVER;
-				// break;
 			default: break;
 		}
 	},
@@ -836,7 +843,7 @@ var Game = {
 			
 			//ASTEROID MOVEMENT
 			for( var j = 0; j < Game.asteroids.length; j++ ) {
-				if( Game.asteroids[j].isAlive != 0 ) {
+				if( Game.asteroids[j].isAlive != 0 && Game.asteroids[j].state != 3 ) {
 					Game.asteroids[j].moveAst(this.dTime);
 				}
 			}

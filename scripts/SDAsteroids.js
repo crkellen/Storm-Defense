@@ -10,6 +10,7 @@ function Asteroid(id, state, src, speed, flip, frame) {
 	this.dy = 0; //Direction
 	this.direction = 0;
 	this.dFrame = 0; //Death Frame
+	this.iFrame = 0; //Impact Frame
 	this.astSize = -1;
 	
 	this.isAlive = 0; //Start Dead
@@ -29,7 +30,7 @@ function Asteroid(id, state, src, speed, flip, frame) {
 };
 
 //FUNCTIONS
-Asteroid.prototype.destroy = function() { //TODO clarity, functionality
+Asteroid.prototype.destroy = function() {
 	if( this.astSize != 2 ) {
 		this.state = 1;
 		Game.pScore += 100;
@@ -80,13 +81,13 @@ Asteroid.prototype.spawn = function(speed, frame, size) {
 	this.dy = this.dy / (magni);
 };
 
-Asteroid.prototype.moveAst = function(dT) { //TODO movement calc
+Asteroid.prototype.moveAst = function(dT) {
 	this.x += this.dx * this.speed;
 	this.y += this.dy * this.speed;
 	
 	//Earth Collision Detection
-	if( this.y >= 680 ) {
-		this.destroy(); //TODO - This is temp
+	if( this.y >= 620 ) {
+		this.state = 3;
 	}
 };
 

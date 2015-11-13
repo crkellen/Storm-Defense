@@ -512,7 +512,7 @@ var Game = {
 		//ASTEROIDS
 		if( Game.asteroid1ImgLoaded != 0 ) {
 			for( var i = 0; i < Game.asteroids.length; i++ ) {
-				if( Game.asteroids[i].isAlive != 0 ) {
+				if( Game.asteroids[i].isAlive != 0 && Game.asteroids[i].state === 0 || Game.asteroids[i].state === 2 ) {
 					Game.asteroids[i].drawSelf(ctx);
 				}
 				if( Game.asteroids[i].state === 1 || Game.asteroids[i].state === 2 ) {
@@ -531,7 +531,12 @@ var Game = {
 					Game.asteroids[i].dFrame++;
 					if( Game.asteroids[i].dFrame >= 60 ) {
 						Game.asteroids[i].dFrame = 0;
-						Game.asteroids[i].state = 0;
+						if( Game.asteroids[i].state === 2 ) {
+							Game.asteroids[i].state = 0;
+						} else if( Game.asteroids[i].state != 2 ) {
+							Game.asteroids[i].isAlive = 0;
+							Game.asteroids[i].state = 0;
+						}
 					}
 				}
 				if( this.frameTick === 10 ) {

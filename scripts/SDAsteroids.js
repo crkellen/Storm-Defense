@@ -33,18 +33,15 @@ Asteroid.prototype.destroy = function() { //TODO clarity, functionality
 	if( this.astSize != 2 ) {
 		this.state = 1;
 		Game.pScore += 100;
-		this.isAlive = 0;
 		Game.numAst--;
 		return;
 	}
-	Game.numAst--;
 	if( this.astSize === 2 ) {
 		this.state = 2;
 		this.astSize = 0;
 		Game.pScore += 50;
 		this.x += 15;
 		this.y += 15;
-		Game.numAst++;
 		return;
 	}
 };
@@ -106,18 +103,18 @@ Asteroid.prototype.isColliding = function(x, y, object) {
 			break;
 		case 1: //MEDIUM
 			if( object === "player" ) {
-				return !( x+75 < this.x+10 || this.x+55 < x || y+50 < this.y+10 || this.y+55 < y);
+				return !( x+75 < this.x+10 || this.x+60 < x || y+50 < this.y+10 || this.y+55 < y);
 			} else if ( object === "laser" ) {
-				return !( x+10 < this.x+10 || this.x+55 < x || y+10 < this.y+10 || this.y+55 < y);
+				return !( x+10 < this.x+10 || this.x+60 < x || y+10 < this.y+10 || this.y+55 < y);
 			} else {
 				console.log("ERROR: Object Type - Collision Detection (Small)");
 			}
 			break;
 		case 2: //LARGE
 			if( object === "player" ) {
-				return !( x+75 < this.x+20 || this.x+65 < x || y+50 < this.y+15 || this.y+75 < y);
+				return !( x+75 < this.x+20 || this.x+70 < x || y+50 < this.y+15 || this.y+75 < y);
 			} else if ( object === "laser" ) {
-				return !( x+10 < this.x+20 || this.x+65 < x || y+10 < this.y+15 || this.y+75 < y);
+				return !( x+10 < this.x+20 || this.x+70 < x || y+10 < this.y+15 || this.y+75 < y);
 			} else {
 				console.log("ERROR: Object Type - Collision Detection (Small)");
 			}

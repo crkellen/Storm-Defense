@@ -335,7 +335,7 @@ var Game = {
 		
 		//Asteroid Init
 		for( var m = 0; m < MAX_ASTEROIDS; m++ ) {
-			this.asteroids[m] = new Asteroid(m, 0, ASTEROID1_IMG_SRC, ASTEROID2_IMG_SRC, ASTEROID3_IMG_SRC, 0, 0, 0);
+			this.asteroids[m] = new Asteroid(m, 0, ASTEROID1_IMG_SRC, ASTEROID2_IMG_SRC, ASTEROID3_IMG_SRC, 0, 0);
 		}
 		//Laser Init
 		for( var n = 0; n < MAX_LASERS; n++ ) {

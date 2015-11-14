@@ -1,4 +1,4 @@
-function Asteroid(id, state, sSrc, mSrc, lSrc, speed, flip, frame) {
+function Asteroid(id, state, sSrc, mSrc, lSrc, speed, frame) {
 	this.id = id; //Position in Array
 	this.state = state; //0,1,2 - Normal, Destroyed, Destroyed Large
 	this.sSrc = sSrc;

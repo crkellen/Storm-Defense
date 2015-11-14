@@ -14,6 +14,8 @@ var OK_MAX_SCREEN_RATIO = 1.35;
 BKG_IMG_SRC			= 'images/bkgImg.png';
 PLAYER_IMG_SRC  	= 'images/playerImg.png';
 ASTEROID1_IMG_SRC 	= 'images/asteroid1Img.png';
+ASTEROID2_IMG_SRC	= 'images/asteroid2Img.png';
+ASTEROID3_IMG_SRC   = 'images/asteroid3Img.png';
 EARTH_IMG_SRC1	 	= 'images/earthImg1.png';
 EARTH_IMG_SRC2 	 	= 'images/earthImg2.png';
 EARTH_IMG_SRC3	 	= 'images/earthImg3.png';
@@ -23,7 +25,7 @@ AIMING_IMG_SRC 		= 'images/aimingImg.png';
 IONO_IMG_SRC		= 'images/ionoImg.png';
 POWER_LEVEL_IMG		= 'images/ionoFillImg.png';
 POWER_CONTAINER_IMG	= 'images/ionoContainerImg.png';
-ASTEROID1_DEATH_IMG_SRC	= 'images/asteroid1ExplosionImg.png';
+ASTEROID_DEATH_IMG_SRC	= 'images/asteroidDeathImg.png';
 ASTEROID_IMPACT_IMG_SRC	= 'images/asteroidImpactImg.png';
 //CONSTANT LOADING IMG
 LOADING_BKG_IMG_SRC			= 'loadingBkgImg.png';
@@ -119,6 +121,8 @@ var Game = {
 	bkgImgLoaded:		0,
 	playerImgLoaded:	0,
 	asteroid1ImgLoaded:	0,
+	asteroid2ImgLoaded:	0,
+	asteroid3ImgLoaded: 0,
 	earthImg1Loaded:	0,
 	earthImg2Loaded:	0,
 	earthImg3Loaded:	0,
@@ -128,7 +132,7 @@ var Game = {
 	ionoImgLoaded:		0,
 	powerImgLoaded:     0,
 	powerContainerImg:  0,
-	asteroid1DeathImgLoaded:	0,
+	asteroidDeathImgLoaded:	0,
 	asteroidImpactImgLoaded:	0,
 	//Loading Image Checks
 	loadingBkgImgLoaded:		0,
@@ -226,6 +230,14 @@ var Game = {
 		this.asteroid1Img = new Image();
 		this.asteroid1Img.onload = function () {Game.asteroid1ImgLoaded = 1; Game.gameLoadedAmt++; };
         this.asteroid1Img.src = ASTEROID1_IMG_SRC;
+		//Asteroid2
+		this.asteroid2Img = new Image();
+		this.asteroid2Img.onload = function () {Game.asteroid2ImgLoaded = 1; Game.gameLoadedAmt++; };
+        this.asteroid2Img.src = ASTEROID2_IMG_SRC;
+		//Asteroid3
+		this.asteroid3Img = new Image();
+		this.asteroid3Img.onload = function () {Game.asteroid3ImgLoaded = 1; Game.gameLoadedAmt++; };
+        this.asteroid3Img.src = ASTEROID3_IMG_SRC;
 		//Earth1
 		this.earthImg1 = new Image();
 		this.earthImg1.onload = function () { 	Game.earthImg1Loaded = 1; Game.gameLoadedAmt++; };
@@ -257,15 +269,15 @@ var Game = {
 		//PowerBar
 		this.powerBarImg = new Image();
 		this.powerBarImg.onload = function () { Game.powerImgLoaded = 1; Game.gameLoadedAmt++; };
-        this.powerBarImg.src = POWER_LEVEL_IMG	;
+        this.powerBarImg.src = POWER_LEVEL_IMG;
 		//Power Container
 		this.powerContainer = new Image();
-		this.powerContainer.onload = function () { 		Game.powerContainerImg = 1; Game.gameLoadedAmt++; };
+		this.powerContainer.onload = function () { 	Game.powerContainerImg = 1; Game.gameLoadedAmt++; };
         this.powerContainer.src = POWER_CONTAINER_IMG;
-		//Asteroid1Death
-		this.asteroid1DeathImg = new Image();
-		this.asteroid1DeathImg.onload = function () { 	Game.asteroid1DeathImgLoaded = 1; Game.gameLoadedAmt++; };
-        this.asteroid1DeathImg.src = ASTEROID1_DEATH_IMG_SRC;
+		//AsteroidDeath
+		this.asteroidDeathImg = new Image();
+		this.asteroidDeathImg.onload = function () { 	Game.asteroidDeathImgLoaded = 1; Game.gameLoadedAmt++; };
+        this.asteroidDeathImg.src = ASTEROID_DEATH_IMG_SRC;
 		//AsteroidImpact
 		this.asteroidImpactImg = new Image();
 		this.asteroidImpactImg.onload = function () { 	Game.asteroidImpactImgLoaded = 1; Game.gameLoadedAmt++; };
@@ -322,7 +334,7 @@ var Game = {
 		
 		//Asteroid Init
 		for( var m = 0; m < MAX_ASTEROIDS; m++ ) {
-			this.asteroids[m] = new Asteroid(m, 0, ASTEROID1_IMG_SRC, 0, 0, 0);
+			this.asteroids[m] = new Asteroid(m, 0, ASTEROID1_IMG_SRC, ASTEROID2_IMG_SRC, ASTEROID3_IMG_SRC, 0, 0, 0);
 		}
 		//Laser Init
 		for( var n = 0; n < MAX_LASERS; n++ ) {
@@ -377,7 +389,7 @@ var Game = {
 			switch( this.level ) {
 				case 1:
 					if( this.level1ImgLoaded != 0 ) {
-						ctx.drawImage(this.level1Img, 550, 160);
+						ctx.drawImage(this.level1Img, 450, 160);
 					}
 					break;
 				case 2:
@@ -510,27 +522,27 @@ var Game = {
 			}
 		}
 		//ASTEROIDS
-		if( Game.asteroid1ImgLoaded != 0 ) {
+		if( Game.asteroid1ImgLoaded != 0 && Game.asteroid2ImgLoaded != 0 && Game.asteroid3ImgLoaded != 0 ) {
 			for( var i = 0; i < Game.asteroids.length; i++ ) {
 				if( Game.asteroids[i].isAlive != 0 && Game.asteroids[i].state === 0 || Game.asteroids[i].state === 2 ) {
 					Game.asteroids[i].drawSelf(ctx);
 					if( this.frameTick === 10 ) {
 						Game.asteroids[i].frame += 1;
 					}
-					if( Game.asteroids[i].frame >= 30 ) {
+					if( Game.asteroids[i].frame >= 60 ) {
 						Game.asteroids[i].frame = 0;
 					}
 				}
 				if( Game.asteroids[i].state === 1 || Game.asteroids[i].state === 2 ) {
 					switch( Game.asteroids[i].astSize ) {
 						case 0:
-							ctx.drawImage(this.asteroid1DeathImg, Game.asteroids[i].dFrame*100, 0, 100, 100, Game.asteroids[i].x-30, Game.asteroids[i].y-30, 100, 100);
+							ctx.drawImage(this.asteroidDeathImg, Game.asteroids[i].dFrame*100, 0, 100, 100, Game.asteroids[i].x-30, Game.asteroids[i].y-30, 100, 100);
 							break;
 						case 1:
-							ctx.drawImage(this.asteroid1DeathImg, Game.asteroids[i].dFrame*100, 0, 100, 100, Game.asteroids[i].x-15, Game.asteroids[i].y-15, 100, 100);
+							ctx.drawImage(this.asteroidDeathImg, Game.asteroids[i].dFrame*100, 0, 100, 100, Game.asteroids[i].x-15, Game.asteroids[i].y-15, 100, 100);
 							break;
 						case 2:
-							ctx.drawImage(this.asteroid1DeathImg, Game.asteroids[i].dFrame*100, 0, 100, 100, Game.asteroids[i].x, Game.asteroids[i].y, 100, 100);
+							ctx.drawImage(this.asteroidDeathImg, Game.asteroids[i].dFrame*100, 0, 100, 100, Game.asteroids[i].x, Game.asteroids[i].y, 100, 100);
 							break;
 						default: console.log("ERROR: Asteroid Drawing Death Size");
 					}
@@ -763,7 +775,7 @@ var Game = {
 		if( Game.numAst <= this.minAst && Game.numAst <= MAX_ASTEROIDS ) {
 			for( var i = Game.numAst; i < this.maxAst; i++ ) {
 				var speed = Math.floor((Math.random())+1);
-				var frame = Math.floor(Math.random()*30);
+				var frame = Math.floor(Math.random()*60);
 				var size  = Math.floor(Math.random()*3);
 				if( Game.asteroids[i].isAlive === 0 ) {
 					Game.asteroids[i].isAlive = 1;
@@ -960,15 +972,12 @@ function doKeyup(e) {
 };
 
 window.onload = function() {
-	//while( Game.isInitialized != 1 ) {
-		Game.Init();
-	//}
+	Game.Init();
 	doResize();
 	// Start Game Loop
 	if( Game.isInitialized === 1 ) {
 		runGame();
 	}
-	else{ alert("nuts"); }
 };
 
 function runGame() {

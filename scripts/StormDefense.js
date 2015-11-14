@@ -176,6 +176,7 @@ var Game = {
 	earthSheetNum:		1,
 	ionoState:			1,
 	frameTick:			0,
+	asteroidFrameTick:	0,
 	aimingFrameTick:	0,
 	laserFrameTick:		0,
 	earthFrame:			0,
@@ -526,7 +527,7 @@ var Game = {
 			for( var i = 0; i < Game.asteroids.length; i++ ) {
 				if( Game.asteroids[i].isAlive != 0 && Game.asteroids[i].state === 0 || Game.asteroids[i].state === 2 ) {
 					Game.asteroids[i].drawSelf(ctx);
-					if( this.frameTick === 10 ) {
+					if( this.asteroidFrameTick === 1 ) {
 						Game.asteroids[i].frame += 1;
 					}
 					if( Game.asteroids[i].frame >= 60 ) {
@@ -571,15 +572,19 @@ var Game = {
 		}
 		//SPRITE SHEET FRAMES
 		this.frameTick += 1;
+		this.asteroidFrameTick +=1;
 		this.aimingFrameTick += 1;
 		this.laserFrameTick += 1;
-		if( this.frameTick > 10 ) {
+		if( this.frameTick >= 10 ) {
 			this.frameTick = 0;
 		}
-		if( this.aimingFrameTick > 5 ) {
+		if( this.asteroidFrameTick >= 5 ) {
+			this.asteroidFrameTick = 0;
+		}
+		if( this.aimingFrameTick >= 5 ) {
 			this.aimingFrameTick = 0;
 		}
-		if( this.laserFrameTick > 2 ) {
+		if( this.laserFrameTick >= 2 ) {
 			this.laserFrameTick = 0;
 		}
 	},

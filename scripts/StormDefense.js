@@ -42,6 +42,10 @@ MENU_IMG_SRC			 = 'images/mainMenuBgImg.png';
 CREDITS_IMG_SRC		 	 = 'images/creditsBgImg.png';
 TUTORIAL_IMG_SRC		 = 'images/instructBgImg.png';
 SCORE_IMG_SRC			 = 'images/topscoresBgImg.png';
+MENU_EARTH1				 = 'images/menuEarth1.png';
+MENU_EARTH2				 = 'images/menuEarth2.png';
+MENU_EARTH3				 = 'images/menuEarth3.png';
+MENU_EARTH4				 = 'images/menuEarth4.png';
 //CONSTANT BUTTON IMG
 BUTTON_PLAY_IMG_SRC 	 = 'images/playButtonImg.png';
 BUTTON_CREDITS_IMG_SRC   = 'images/creditsButtonImg.png';
@@ -50,12 +54,12 @@ BUTTON_TUTORIAL_IMG_SRC  = 'images/tutorialButtonImg.png';
 BUTTON_BACK_IMG_SRC      = 'images/backButtonImg.png';
 BUTTON_MENU_IMG_SRC		 = 'images/menuButtonImg.png';
 BUTTON_OPTIONS_IMG_SRC	 = 'images/optionsButtonImg.png';
-//CONSTANT HOVER IMG HOVER IS ACTUALLY CLICK
-BUTTON_PLAY_HOVER		 = 'images/playButtonClickImg.png';
-BUTTON_CREDITS_HOVER	 = 'images/creditsButtonClickImg.png';
-BUTTON_SCORE_HOVER	 	 = 'images/scoreButtonClickImg.png';
-BUTTON_TUTORIAL_HOVER    = 'images/tutorialButtonClickImg.png';
-BUTTON_BACK_HOVER	 	 = 'images/backButtonClickImg.png';
+//CONSTANT CLICK IMG
+BUTTON_PLAY_CLICK		 = 'images/playButtonClickImg.png';
+BUTTON_CREDITS_CLICK	 = 'images/creditsButtonClickImg.png';
+BUTTON_SCORE_CLICK	 	 = 'images/scoreButtonClickImg.png';
+BUTTON_TUTORIAL_CLICK    = 'images/tutorialButtonClickImg.png';
+BUTTON_BACK_CLICK	 	 = 'images/backButtonClickImg.png';
 BUTTON_MENU_CLICK		 = 'images/menuButtonClickImg.png';
 BUTTON_OPTIONS_CLICK	 = 'images/optionsButtonClickImg.png';
 //CONSTANT AUDIO SOURCES
@@ -149,21 +153,24 @@ var Game = {
 	creditsImgLoaded:	0,
 	tutorialImgLoaded:	0,
 	scoreImgLoaded:		0,
+	//Menu Earth Variables
+	menuEarthSheetNum:	1,
+	menuEarthFrame:		0,
+	menuEarthFrameTick:	0,
+	menuEarthImg1Loaded:0,
+	menuEarthImg2Loaded:0,
+	menuEarthImg3Loaded:0,
+	menuEarthImg4Loaded:0,
 	//Button Images
 	backButtonImgLoaded:			0,
-	backButtonHoverImgLoaded:		0,
 	backButtonClickImgLoaded:		0,
 	playButtonImgLoaded:			0,
-	playButtonHoverImgLoaded:		0,
 	playButtonClickImgLoaded:		0,
 	creditsButtonImgLoaded:			0,
-	creditsButtonHoverImgLoaded:	0,
 	creditsButtonClickImgLoaded:	0,
 	tutorialButtonImgLoaded:		0,
-	tutorialButtonHoverImgLoaded:	0,
 	tutorialButtonClickImgLoaded:	0,
 	scoreButtonImgLoaded:			0,
-	scoreButtonHoverImgLoaded:		0,
 	scoreButtonClickImgLoaded:		0,
 	//Audio Checks
 	audioBKGLoaded:		0,
@@ -188,10 +195,11 @@ var Game = {
 	laserFrame:			0,
 	
 	//Menu Instantiations
-	menu: new theMainMenu(MENU_IMG_SRC, BUTTON_PLAY_IMG_SRC, BUTTON_CREDITS_IMG_SRC, BUTTON_SCORE_IMG_SRC, BUTTON_TUTORIAL_IMG_SRC, BUTTON_PLAY_HOVER, BUTTON_CREDITS_HOVER, BUTTON_SCORE_HOVER, BUTTON_TUTORIAL_HOVER),
-	credits: new theCredits(CREDITS_IMG_SRC, BUTTON_BACK_IMG_SRC, BUTTON_BACK_HOVER),
-	tutorial: new theTutorial(TUTORIAL_IMG_SRC, BUTTON_BACK_IMG_SRC, BUTTON_BACK_HOVER),
-	score: new theScore(SCORE_IMG_SRC, BUTTON_BACK_IMG_SRC, BUTTON_BACK_HOVER),
+	menu: new theMainMenu(MENU_IMG_SRC, BUTTON_PLAY_IMG_SRC, BUTTON_CREDITS_IMG_SRC, BUTTON_SCORE_IMG_SRC, BUTTON_TUTORIAL_IMG_SRC, BUTTON_PLAY_CLICK,
+				BUTTON_CREDITS_CLICK, BUTTON_SCORE_CLICK, BUTTON_TUTORIAL_CLICK),
+	credits: new theCredits(CREDITS_IMG_SRC, BUTTON_BACK_IMG_SRC, BUTTON_BACK_CLICK),
+	tutorial: new theTutorial(TUTORIAL_IMG_SRC, BUTTON_BACK_IMG_SRC, BUTTON_BACK_CLICK),
+	score: new theScore(SCORE_IMG_SRC, BUTTON_BACK_IMG_SRC, BUTTON_BACK_CLICK),
 	
 	Init: function() {
 		var gameCanvas = document.getElementById(CANVAS_GAME_ID);
@@ -283,6 +291,24 @@ var Game = {
 		this.asteroidImpactImg = new Image();
 		this.asteroidImpactImg.onload = function () { 	Game.asteroidImpactImgLoaded = 1; Game.gameLoadedAmt++; };
         this.asteroidImpactImg.src = ASTEROID_IMPACT_IMG_SRC;
+		
+		//MENU EARTH IMAGES CREATION AND LOAD
+		//menuEarth1
+		this.menuEarthImg1 = new Image();
+		this.menuEarthImg1.onload = function () { 	Game.menuEarthImg1Loaded = 1; Game.gameLoadedAmt++; };
+        this.menuEarthImg1.src = MENU_EARTH1;
+		//menuEarth2
+		this.menuEarthImg2 = new Image();
+		this.menuEarthImg2.onload = function () { 	Game.menuEarthImg2Loaded = 1; Game.gameLoadedAmt++; };
+        this.menuEarthImg2.src = MENU_EARTH2;
+		//menuEarth3
+		this.menuEarthImg3 = new Image();
+		this.menuEarthImg3.onload = function () { 	Game.menuEarthImg3Loaded = 1; Game.gameLoadedAmt++; };
+        this.menuEarthImg3.src = MENU_EARTH3;
+		//menuEarth4
+		this.menuEarthImg4 = new Image();
+		this.menuEarthImg4.onload = function () { 	Game.menuEarthImg4Loaded = 1; Game.gameLoadedAmt++; };
+        this.menuEarthImg4.src = MENU_EARTH4;
 		
 		//LEVEL IMAGES CREATION AND LOAD
 		//Level 1
@@ -499,7 +525,7 @@ var Game = {
 			ctx.translate(36, 0);
 			ctx.drawImage(this.aimingImg, 0, this.aimingFrame*5, 200, 3, 0, 0, 200, 3);
 			ctx.restore();
-			if( this.aimingFrameTick === 5 ) {
+			if( this.aimingFrameTick === 1 ) {
 				this.aimingFrame += 1;
 			}
 			if( this.aimingFrame >= 5 ) {
@@ -796,7 +822,21 @@ var Game = {
 	
 	Update: function() {
 		if( Game.gameState === Game.STATE_MENU ) { //MENU UPDATE
-			Game.menu.DrawMenu();
+			Game.menu.DrawMenu(Game.menuEarthSheetNum, Game.menuEarthFrame, Game.menuEarthFrameTick, Game.menuEarthImg1, Game.menuEarthImg2, Game.menuEarthImg3, Game.menuEarthImg4);
+			if( Game.menuEarthFrameTick === 1 ) {
+				Game.menuEarthFrame += 1;
+			}
+			if( Game.menuEarthFrame >= 60 ) {
+				Game.menuEarthSheetNum++;
+				if( Game.menuEarthSheetNum == 5 ) {
+					Game.menuEarthSheetNum = 1;
+				}
+				Game.menuEarthFrame = 0;
+			}
+			Game.menuEarthFrameTick++;
+			if( Game.menuEarthFrameTick >= 10 ) {
+				Game.menuEarthFrameTick = 0;
+			}
 		} else if( Game.gameState === Game.STATE_PLAYING || Game.gameState === Game.STATE_FIRE || Game.gameState === Game.STATE_DEAD ) { //GAME UPDATE UPDATE		
 			//START BACKGROUND MUSIC
 			if( this.bkgPlaying === 0 ) {

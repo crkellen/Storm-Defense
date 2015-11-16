@@ -1,6 +1,6 @@
 // JavaScript Document
 
-function tutorialButton(imgSource, imgSrcOnHover)
+function tutorialButton(imgSource, imgSrcOnClick)
 {
     // public member variables
 	this.boxColor          = "rgb(200, 200, 200)";
@@ -14,7 +14,7 @@ function tutorialButton(imgSource, imgSrcOnHover)
 	this.src               = "none";
 	this.img               = null;
 	this.imgMainSrc        = null;
-	this.imgHoverSrc       = null;
+	this.imgClickSrc       = null;
 	this.imgLoaded         = 0;
 	if(imgSource){
 		this.img = new Image();
@@ -59,7 +59,7 @@ tutorialButton.prototype.drawButton = function(tutorialContext)
 	}
 };
 
-function theTutorial(backImage, buttonBack, buttonBackHover)
+function theTutorial(backImage, buttonBack, buttonBackClick)
 {
     //console.log("DEBUG: backImage sent = " + backImage);
     var tutorialBckgrndLoaded = 0; // 0 means false, private var
@@ -92,7 +92,7 @@ function theTutorial(backImage, buttonBack, buttonBackHover)
 		
 		if ( backButton.coordsAreInside(mousePos.x, mousePos.y) )
 		{
-			backButton.img.src = buttonBackHover;
+			backButton.img.src = buttonBackClick;
 		}
 		else {
 			backButton.img.src = buttonBack;

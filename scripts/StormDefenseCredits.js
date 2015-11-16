@@ -1,6 +1,6 @@
 // JavaScript Document
 
-function creditsButton(imgSource, imgSrcOnHover)
+function creditsButton(imgSource, imgSrcOnClick)
 {
     // public member variables
 	this.boxColor          = "rgb(200, 200, 200)";
@@ -14,7 +14,7 @@ function creditsButton(imgSource, imgSrcOnHover)
 	this.src               = "none";
 	this.img               = null;
 	this.imgMainSrc        = null;
-	this.imgHoverSrc       = null;
+	this.imgClickSrc       = null;
 	this.imgLoaded         = 0;
 	if(imgSource){
 		this.img = new Image();
@@ -59,7 +59,7 @@ creditsButton.prototype.drawButton = function(creditsContext)
 	}
 };
 
-function theCredits(backImage, buttonBack, buttonBackHover)
+function theCredits(backImage, buttonBack, buttonBackClick)
 {
     //console.log("DEBUG: backImage sent = " + backImage);
     var creditsBckgrndLoaded = 0; // 0 means false, private var
@@ -92,7 +92,7 @@ function theCredits(backImage, buttonBack, buttonBackHover)
 		
 		if ( menuButton.coordsAreInside(mousePos.x, mousePos.y) )
 		{
-			menuButton.img.src = buttonBackHover;
+			menuButton.img.src = buttonBackClick;
 		}
 		else {
 			menuButton.img.src = buttonBack;

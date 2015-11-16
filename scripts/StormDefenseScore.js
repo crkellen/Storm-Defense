@@ -14,7 +14,7 @@ function scoreButton(imgSource)
 	this.src               = "none";
 	this.img               = null;
 	this.imgMainSrc        = null;
-	this.imgHoverSrc       = null;
+	this.imgClickSrc       = null;
 	this.imgLoaded         = 0;
 	if(imgSource){
 		this.img = new Image();
@@ -59,7 +59,7 @@ scoreButton.prototype.drawButton = function(scoreContext)
 	}
 };
 
-function theScore(backImage, buttonBack, buttonBackHover)
+function theScore(backImage, buttonBack, buttonBackClick)
 {
     //console.log("DEBUG: backImage sent = " + backImage);
     var scoreBckgrndLoaded = 0; // 0 means false, private var
@@ -89,7 +89,7 @@ function theScore(backImage, buttonBack, buttonBackHover)
 
 		if ( backButton.coordsAreInside(mousePos.x, mousePos.y) )
 		{
-			backButton.img.src = buttonBackHover;
+			backButton.img.src = buttonBackClick;
 		}
 		else {
 			backButton.img.src = buttonBack;

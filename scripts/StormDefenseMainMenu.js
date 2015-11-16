@@ -1,6 +1,6 @@
 // JavaScript Document
 
-function menuButton(imgSource, imgSrcOnHover)
+function menuButton(imgSource, imgSrcOnClick)
 {
     // public member variables
 	this.boxColor          = "rgb(200, 200, 200)";
@@ -14,7 +14,7 @@ function menuButton(imgSource, imgSrcOnHover)
 	this.src               = "none";
 	this.img               = null;
 	this.imgMainSrc        = null;
-	this.imgHoverSrc       = null;
+	this.imgClickSrc       = null;
 	this.imgLoaded         = 0;
 	if(imgSource){
 		this.img = new Image();
@@ -59,12 +59,12 @@ menuButton.prototype.drawButton = function(menuContext)
 	}
 };
 
-function theMainMenu(backImage, buttonMenuImg, buttonCreditsImg, buttonScoreImg, buttonTutorialImg, buttonPlayHover, buttonCreditsHover, buttonScoreHover, buttonTutorialHover)
+function theMainMenu(backImage, buttonMenuImg, buttonCreditsImg, buttonScoreImg, buttonTutorialImg, buttonPlayClick, buttonCreditsClick,
+		buttonScoreClick, buttonTutorialClick, menuEarth1, menuEarth2, menuEarth3, menuEarth4)
 {
     var menuBckgrndLoaded = 0; 
     this.menuBckgrndImg = new Image();
-    this.menuBckgrndImg.onload = function () { 	menuBckgrndLoaded = 1; };
-                                                
+    this.menuBckgrndImg.onload = function () { 	menuBckgrndLoaded = 1; };                        
     this.menuBckgrndImg.src = backImage;
 	
     var playButton = new menuButton(buttonMenuImg);
@@ -85,7 +85,7 @@ function theMainMenu(backImage, buttonMenuImg, buttonCreditsImg, buttonScoreImg,
     // ----------------------------------------------------------------------------
     // Draw the Menu Screen
     // ----------------------------------------------------------------------------
-    this.DrawMenu = function()
+    this.DrawMenu = function(menuEarthSheetNum, menuEarthFrame, menuEarthFrameTick, menuEarth1, menuEarth2, menuEarth3, menuEarth4)
     {
         // Init Local Canvas variables
         var menuCanvas = document.getElementById(CANVAS_MENU_ID);
@@ -97,6 +97,21 @@ function theMainMenu(backImage, buttonMenuImg, buttonCreditsImg, buttonScoreImg,
 		scoreButton.drawButton(menuCtx);
 		tutorialButton.drawButton(menuCtx);
 		
+		switch( menuEarthSheetNum ) {
+			case 1:
+				menuCtx.drawImage(menuEarth1, 0, menuEarthFrame*300, 300, 300, 640, 150, 300, 300);
+				break;
+			case 2:
+				menuCtx.drawImage(menuEarth2, 0, menuEarthFrame*300, 300, 300, 640, 150, 300, 300);
+				break;
+			case 3:
+				menuCtx.drawImage(menuEarth3, 0, menuEarthFrame*300, 300, 300, 640, 150, 300, 300);
+				break;
+			case 4:
+				menuCtx.drawImage(menuEarth4, 0, menuEarthFrame*300, 300, 300, 640, 150, 300, 300);
+				break;
+			default: console.log("ERROR: menuEarth Sheet Number");
+		}
 	};
 	
 	this.doMouseOver = function(evt)
@@ -105,16 +120,16 @@ function theMainMenu(backImage, buttonMenuImg, buttonCreditsImg, buttonScoreImg,
 		var mousePos = Game.getMousePos(menuCanvas, evt);
 		
 		if ( playButton.coordsAreInside(mousePos.x, mousePos.y) ){
-			playButton.img.src = buttonPlayHover;
+			playButton.img.src = buttonPlayClick;
 		}
 		else if ( tutorialButton.coordsAreInside(mousePos.x, mousePos.y) ){
-			tutorialButton.img.src = buttonTutorialHover;
+			tutorialButton.img.src = buttonTutorialClick;
 		} 
 		else if ( creditsButton.coordsAreInside(mousePos.x, mousePos.y) ){
-			creditsButton.img.src = buttonCreditsHover;
+			creditsButton.img.src = buttonCreditsClick;
 		}
 		else if ( scoreButton.coordsAreInside(mousePos.x, mousePos.y) ){
-			scoreButton.img.src = buttonScoreHover;
+			scoreButton.img.src = buttonScoreClick;
 		}
 		else {
 			playButton.img.src = buttonMenuImg;

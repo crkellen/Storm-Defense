@@ -1,9 +1,6 @@
-function Asteroid(id, state, sSrc, mSrc, lSrc, speed, frame) {
+function Asteroid(id, state, speed, frame) {
 	this.id = id; //Position in Array
 	this.state = state; //0,1,2 - Normal, Destroyed, Destroyed Large
-	this.sSrc = sSrc;
-	this.mSrc = mSrc;
-	this.lSrc = lSrc;
 	this.speed = speed;
 	this.frame = frame;
 	this.x = 0; //Actual Position
@@ -16,19 +13,6 @@ function Asteroid(id, state, sSrc, mSrc, lSrc, speed, frame) {
 	this.astSize = -1;
 	
 	this.isAlive = 0; //Start Dead
-
-	//TODO - Fix the loaded's so they work properly
-	this.astImgSmallLoaded = 1;
-	this.astImgSmall = new Image();
-    this.astImgSmall.src = this.sSrc;
-	
-	this.astImgMedLoaded = 1;
-	this.astImgMed = new Image();
-    this.astImgMed.src = this.mSrc;
-	
-	this.astImgLargeLoaded = 1;
-	this.astImgLarge = new Image();
-    this.astImgLarge.src = this.lSrc;
 };
 
 //FUNCTIONS
@@ -49,13 +33,13 @@ Asteroid.prototype.destroy = function() {
 	}
 };
 
-Asteroid.prototype.drawSelf = function(ctx) { //TODO replace with images
- 	if( this.astImgLargeLoaded === 1 && this.astSize === 2 ) {
-		ctx.drawImage(this.astImgLarge, this.frame*150, 0, 150, 150, this.x, this.y, 100, 100); //TODO replace with image
-	} else if( this.astImgMedLoaded === 1 && this.astSize === 1 ) {
-		ctx.drawImage(this.astImgMed, this.frame*75, 0, 75, 75, this.x, this.y, 75, 75); //TODO replace with image
-	} else if( this.astImgSmallLoaded === 1 && this.astSize === 0 ) {
-		ctx.drawImage(this.astImgSmall, this.frame*75, 0, 75, 75, this.x, this.y, 50, 50); //TODO replace with image
+Asteroid.prototype.drawSelf = function(ctx, aSImg, aMImg, aLImg) {
+ 	if( this.astSize === 0 ) {
+		ctx.drawImage(aSImg, this.frame*75, 0, 75, 75, this.x, this.y, 50, 50);
+	} else if( this.astSize === 1 ) {
+		ctx.drawImage(aMImg, this.frame*75, 0, 75, 75, this.x, this.y, 75, 75);
+	} else if( this.astSize === 2 ) {		
+		ctx.drawImage(aLImg, this.frame*150, 0, 150, 150, this.x, this.y, 100, 100);
 	} 
 };
 

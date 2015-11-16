@@ -8,60 +8,64 @@ var WORLD_HEIGHT 	  = 720;
 var WORLD_WIDTH		  = 1280;
 var MAX_LASERS		  = 10;
 var MAX_ASTEROIDS	  = 10;
+var MAX_PARTICLES	  = 10;
 var OK_MIN_SCREEN_RATIO = 1.33;  
 var OK_MAX_SCREEN_RATIO = 1.35;
 //CONSTANT IMG SOURCES
-BKG_IMG_SRC			= 'images/bkgImg.png';
-PLAYER_IMG_SRC  	= 'images/playerImg.png';
-ASTEROID1_IMG_SRC 	= 'images/asteroid1Img.png';
-ASTEROID2_IMG_SRC	= 'images/asteroid2Img.png';
-ASTEROID3_IMG_SRC   = 'images/asteroid3Img.png';
-EARTH_IMG_SRC1	 	= 'images/earthImg1.png';
-EARTH_IMG_SRC2 	 	= 'images/earthImg2.png';
-EARTH_IMG_SRC3	 	= 'images/earthImg3.png';
-EARTH_IMG_SRC4 	 	= 'images/earthImg4.png';
-LASER_IMG_SRC 	 	= 'images/laserImg.png';
-AIMING_IMG_SRC 		= 'images/aimingImg.png';
-IONO_IMG_SRC		= 'images/ionoImg.png';
-POWER_LEVEL_IMG		= 'images/ionoFillImg.png';
-POWER_CONTAINER_IMG	= 'images/ionoContainerImg.png';
-ASTEROID_DEATH_IMG_SRC	= 'images/asteroidDeathImg.png';
-ASTEROID_IMPACT_IMG_SRC	= 'images/asteroidImpactImg.png';
+BKG_IMG_SRC			= 'images/ingamebg/bkgImg.png';
+PLAYER_IMG_SRC  	= 'images/player/playerImg.png';
+ASTEROID1_IMG_SRC 	= 'images/asteroids/asteroid1Img.png';
+ASTEROID2_IMG_SRC	= 'images/asteroids/asteroid2Img.png';
+ASTEROID3_IMG_SRC   = 'images/asteroids/asteroid3Img.png';
+EARTH_IMG_SRC1	 	= 'images/earth/earthImg1.png';
+EARTH_IMG_SRC2 	 	= 'images/earth/earthImg2.png';
+EARTH_IMG_SRC3	 	= 'images/earth/earthImg3.png';
+EARTH_IMG_SRC4 	 	= 'images/earth/earthImg4.png';
+LASER_IMG_SRC 	 	= 'images/player/laserImg.png';
+AIMING_IMG_SRC 		= 'images/player/aimingImg.png';
+IONO_IMG_SRC		= 'images/ionosphere/ionoImg.png';
+POWER_LEVEL_IMG		= 'images/ionosphere/ionoFillImg.png';
+POWER_CONTAINER_IMG	= 'images/ionosphere/ionoContainerImg.png';
+ASTEROID_DEATH_IMG_SRC	= 'images/asteroids/asteroidDeathImg.png';
+ASTEROID_IMPACT_IMG_SRC	= 'images/asteroids/asteroidImpactImg.png';
+//PARTICLE IMAGES
+	//TODO - Do we need multiple images for colors?
+PARTICLE_IMG_SRC	= 'images/particles/particleImg.png';
 //CONSTANT LOADING IMG
-LOADING_BKG_IMG_SRC			= 'loadingBkgImg.png';
-LOADING_CONTAINER_IMG_SRC 	= 'loadingContainerImg.png';
-LOADING_BAR_IMG_SRC			= 'loadingBarImg.png';
+LOADING_BKG_IMG_SRC			= 'images/loading/loadingBkgImg.png';
+LOADING_CONTAINER_IMG_SRC 	= 'images/loading/loadingContainerImg.png';
+LOADING_BAR_IMG_SRC			= 'images/loading/loadingBarImg.png';
 //CONSTANT LEVEL IMG
-LEVEL1_IMG_SRC	= 'images/level1Img.png';
-LEVEL2_IMG_SRC	= 'images/level2Img.png';
-LEVEL3_IMG_SRC	= 'images/level3Img.png';
-LEVEL4_IMG_SRC	= 'images/level4Img.png';
-LEVEL5_IMG_SRC	= 'images/level5Img.png';
+LEVEL1_IMG_SRC	= 'images/ingamebg/level1Img.png';
+LEVEL2_IMG_SRC	= 'images/ingamebg/level2Img.png';
+LEVEL3_IMG_SRC	= 'images/ingamebg/level3Img.png';
+LEVEL4_IMG_SRC	= 'images/ingamebg/level4Img.png';
+LEVEL5_IMG_SRC	= 'images/ingamebg/level5Img.png';
 //CONSTANT MENU BKG IMG
-MENU_IMG_SRC			 = 'images/mainMenuBgImg.png';
-CREDITS_IMG_SRC		 	 = 'images/creditsBgImg.png';
-TUTORIAL_IMG_SRC		 = 'images/instructBgImg.png';
-SCORE_IMG_SRC			 = 'images/topscoresBgImg.png';
-MENU_EARTH1				 = 'images/menuEarth1.png';
-MENU_EARTH2				 = 'images/menuEarth2.png';
-MENU_EARTH3				 = 'images/menuEarth3.png';
-MENU_EARTH4				 = 'images/menuEarth4.png';
+MENU_IMG_SRC			 = 'images/menus/mainMenuBgImg.png';
+CREDITS_IMG_SRC		 	 = 'images/menus/creditsBgImg.png';
+TUTORIAL_IMG_SRC		 = 'images/menus/instructBgImg.png';
+SCORE_IMG_SRC			 = 'images/menus/topscoresBgImg.png';
+MENU_EARTH1				 = 'images/menuearth/menuEarth1.png';
+MENU_EARTH2				 = 'images/menuearth/menuEarth2.png';
+MENU_EARTH3				 = 'images/menuearth/menuEarth3.png';
+MENU_EARTH4				 = 'images/menuearth/menuEarth4.png';
 //CONSTANT BUTTON IMG
-BUTTON_PLAY_IMG_SRC 	 = 'images/playButtonImg.png';
-BUTTON_CREDITS_IMG_SRC   = 'images/creditsButtonImg.png';
-BUTTON_SCORE_IMG_SRC     = 'images/scoreButtonImg.png';
-BUTTON_TUTORIAL_IMG_SRC  = 'images/tutorialButtonImg.png';
-BUTTON_BACK_IMG_SRC      = 'images/backButtonImg.png';
-BUTTON_MENU_IMG_SRC		 = 'images/menuButtonImg.png';
-BUTTON_OPTIONS_IMG_SRC	 = 'images/optionsButtonImg.png';
+BUTTON_PLAY_IMG_SRC 	 = 'images/buttons/playButtonImg.png';
+BUTTON_CREDITS_IMG_SRC   = 'images/buttons/creditsButtonImg.png';
+BUTTON_SCORE_IMG_SRC     = 'images/buttons/scoreButtonImg.png';
+BUTTON_TUTORIAL_IMG_SRC  = 'images/buttons/tutorialButtonImg.png';
+BUTTON_BACK_IMG_SRC      = 'images/buttons/backButtonImg.png';
+BUTTON_MENU_IMG_SRC		 = 'images/buttons/menuButtonImg.png';
+BUTTON_OPTIONS_IMG_SRC	 = 'images/buttons/optionsButtonImg.png';
 //CONSTANT CLICK IMG
-BUTTON_PLAY_CLICK		 = 'images/playButtonClickImg.png';
-BUTTON_CREDITS_CLICK	 = 'images/creditsButtonClickImg.png';
-BUTTON_SCORE_CLICK	 	 = 'images/scoreButtonClickImg.png';
-BUTTON_TUTORIAL_CLICK    = 'images/tutorialButtonClickImg.png';
-BUTTON_BACK_CLICK	 	 = 'images/backButtonClickImg.png';
-BUTTON_MENU_CLICK		 = 'images/menuButtonClickImg.png';
-BUTTON_OPTIONS_CLICK	 = 'images/optionsButtonClickImg.png';
+BUTTON_PLAY_CLICK		 = 'images/buttons/playButtonClickImg.png';
+BUTTON_CREDITS_CLICK	 = 'images/buttons/creditsButtonClickImg.png';
+BUTTON_SCORE_CLICK	 	 = 'images/buttons/scoreButtonClickImg.png';
+BUTTON_TUTORIAL_CLICK    = 'images/buttons/tutorialButtonClickImg.png';
+BUTTON_BACK_CLICK	 	 = 'images/buttons/backButtonClickImg.png';
+BUTTON_MENU_CLICK		 = 'images/buttons/menuButtonClickImg.png';
+BUTTON_OPTIONS_CLICK	 = 'images/buttons/optionsButtonClickImg.png';
 //CONSTANT AUDIO SOURCES
 AUDIO_BKG_SRC		= 'sounds/bkg.mp3';
 AUDIO_PFIRE_SRC		= 'sounds/shoot1.mp3';
@@ -93,6 +97,7 @@ var Game = {
 	maxAst:			0,
 	asteroids:  	[],
 	lasers:			[],
+	particles:		[],
 	curLaser:		-1,
 	dTheta:			0,
 	pLevel:         20, //default 20 out of 100
@@ -137,7 +142,9 @@ var Game = {
 	powerImgLoaded:     0,
 	powerContainerImg:  0,
 	asteroidDeathImgLoaded:	0,
-	asteroidImpactImgLoaded:	0,
+	asteroidImpactImgLoaded:0,
+	//Particle Image Checks
+	particleImageLoaded:	0,
 	//Loading Image Checks
 	loadingBkgImgLoaded:		0,
 	loadingContainerImgLoaded:	0,
@@ -184,15 +191,14 @@ var Game = {
 	ionoState:			1,
 	frameTick:			0,
 	asteroidFrameTick:	0,
+	particleFrameTick:	0,
 	aimingFrameTick:	0,
 	laserFrameTick:		0,
 	earthFrame:			0,
 	playerFrame:		0,
 	playerFireFrame:	70,
 	playerDeathFrame:	60,
-	asteroidFrame:		0,
 	aimingFrame:		0,
-	laserFrame:			0,
 	
 	//Menu Instantiations
 	menu: new theMainMenu(MENU_IMG_SRC, BUTTON_PLAY_IMG_SRC, BUTTON_CREDITS_IMG_SRC, BUTTON_SCORE_IMG_SRC, BUTTON_TUTORIAL_IMG_SRC, BUTTON_PLAY_CLICK,
@@ -292,6 +298,12 @@ var Game = {
 		this.asteroidImpactImg.onload = function () { 	Game.asteroidImpactImgLoaded = 1; Game.gameLoadedAmt++; };
         this.asteroidImpactImg.src = ASTEROID_IMPACT_IMG_SRC;
 		
+		//PARTICLES IMAGES CREATION AND LOAD
+		//Particle Base
+		this.particleImg = new Image();
+		this.particleImg.onload = function () {	Game.particleImageLoaded = 1; Game.gameLoadedAmt++; };
+		this.particleImg.src = PARTICLE_IMG_SRC;
+		
 		//MENU EARTH IMAGES CREATION AND LOAD
 		//menuEarth1
 		this.menuEarthImg1 = new Image();
@@ -361,11 +373,15 @@ var Game = {
 		
 		//Asteroid Init
 		for( var m = 0; m < MAX_ASTEROIDS; m++ ) {
-			this.asteroids[m] = new Asteroid(m, 0, ASTEROID1_IMG_SRC, ASTEROID2_IMG_SRC, ASTEROID3_IMG_SRC, 0, 0);
+			this.asteroids[m] = new Asteroid(m, 0, 0, 0);
 		}
 		//Laser Init
 		for( var n = 0; n < MAX_LASERS; n++ ) {
-			this.lasers[n] = new Laser(n, LASER_IMG_SRC, -1000, -1000, 0, 0);
+			this.lasers[n] = new Laser(n, 0, 0);
+		}
+		//Particles Init
+		for( var o = 0; o < MAX_PARTICLES; o++ ) {
+			this.particles[o] = new Particle(o, 0, 0, 0);
 		}
 		
 		//MENU LISTENERS
@@ -537,7 +553,7 @@ var Game = {
 			for( var i = 0; i < Game.asteroids.length; i++ ) {
 				if( Game.lasers[i].isAlive != 0 ) {
 					ctx.save();
-					Game.lasers[i].drawSelf(ctx);
+					Game.lasers[i].drawSelf(ctx, this.laserImg);
 					ctx.restore();
 				}
 				if( this.laserFrameTick === 1 && Game.lasers[i].isAlive === 1 ) {
@@ -552,7 +568,7 @@ var Game = {
 		if( Game.asteroid1ImgLoaded != 0 && Game.asteroid2ImgLoaded != 0 && Game.asteroid3ImgLoaded != 0 ) {
 			for( var i = 0; i < Game.asteroids.length; i++ ) {
 				if( Game.asteroids[i].isAlive != 0 && Game.asteroids[i].state === 0 || Game.asteroids[i].state === 2 ) {
-					Game.asteroids[i].drawSelf(ctx);
+					Game.asteroids[i].drawSelf(ctx, this.asteroid1Img, this.asteroid2Img, this.asteroid3Img);
 					if( this.asteroidFrameTick === 1 ) {
 						Game.asteroids[i].frame += 1;
 					}
@@ -596,9 +612,24 @@ var Game = {
 				}
 			}
 		}
+		//PARTICLES
+		if( Game.particleImgLoaded != 0 ) {
+			for( var i = 0; i < Game.particles.length; i++ ) {
+				if( Game.particles[i].isAlive === 1 ) {
+					Game.particles[i].drawSelf(ctx, this.particleImg);
+					if( this.particleFrameTick === 1 ) {
+						Game.particles[i].frame += 1;
+					}
+					if( Game.particles[i].frame >= 30 ) {
+						Game.particles[i].frame = 0;
+					}
+				}
+			}
+		}
 		//SPRITE SHEET FRAMES
 		this.frameTick += 1;
-		this.asteroidFrameTick +=1;
+		this.asteroidFrameTick += 1;
+		this.particleFrameTick += 1;
 		this.aimingFrameTick += 1;
 		this.laserFrameTick += 1;
 		if( this.frameTick >= 10 ) {
@@ -606,6 +637,9 @@ var Game = {
 		}
 		if( this.asteroidFrameTick >= 5 ) {
 			this.asteroidFrameTick = 0;
+		}
+		if( this.particleFrameTick >= 5 ) {
+			this.particleFrameTick = 0;
 		}
 		if( this.aimingFrameTick >= 5 ) {
 			this.aimingFrameTick = 0;
@@ -741,6 +775,7 @@ var Game = {
 	},
 	
 	CollisionDetection: function() {
+		//Asteroids
 		for( var i = 0; i < Game.asteroids.length; i++ ) {
 			if( Game.asteroids[i].isAlive != 0 && Game.asteroids[i].state === 0 ) {
 				if( Game.asteroids[i].isColliding(Game.playerX-36, Game.playerY-36, "player") ) {
@@ -753,6 +788,23 @@ var Game = {
 						Game.asteroids[i].destroy();
 						this.audioAHit.play();
 						Game.lasers[j].destroy();
+					}
+				}
+			}
+		}
+		//Particles
+		for( var i = 0; i < Game.particles.length; i++ ) {
+			if( Game.particles[i].isAlive != 0 ) {
+				if( Game.particles[i].isColliding(Game.playerX-36, Game.playerY-36, "player") ) {
+					Game.particles[i].destroy();
+					//Add in Particle Collect Noise
+					//Add Power to LaserCharge
+					//Add Check for overcharge
+				}
+				for( var j = 0; j < Game.lasers.length; j++ ) {
+					if( Game.particles[i].isColliding(Game.lasers[j].x-20, Game.lasers[j].y-40, "laser") ) {
+						Game.particles[i].destroy();
+						//TODO - Decide if we want a sound here
 					}
 				}
 			}

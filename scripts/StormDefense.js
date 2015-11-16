@@ -84,7 +84,8 @@ var Game = {
 	STATE_TUTORIAL:	3,	
 	STATE_SCORE:	4,
 	STATE_FIRE:		5,
-	STATE_DEAD:		6,
+	STATE_DYING:	6,
+	STATE_DEAD:		7,
 	STATE_GAMEOVER:	999,
 	gameState:		0,
 	gameLoadedAmt:	0,
@@ -498,7 +499,7 @@ var Game = {
 			ctx.drawImage(this.powerBarImg, 0, 0, (this.pLevel*10)+1, 15, 140, 702, (this.pLevel*10)+1, 15);
 		}
 		//PLAYER
-		if( Game.playerImgLoaded != 0 ) {
+		if( Game.playerImgLoaded != 0 && Game.gameState != Game.STATE_DEAD ) {
 			//GET THE PLAYER TO THE POSITION WE WANT HIM FIRST
 			ctx.save();
 			ctx.translate(1355*Math.cos(this.playerTheta), -1355*Math.sin(this.playerTheta));
@@ -515,12 +516,13 @@ var Game = {
 					Game.gameState = Game.STATE_PLAYING;
 					this.playerFireFrame = 70;
 				}
-			} else if( Game.gameState === Game.STATE_DEAD ) {
+			} else if( Game.gameState === Game.STATE_DYING ) {
 				ctx.drawImage(this.playerImg, 0, this.playerDeathFrame*75, 75, 75, 0, 0, 75, 75);
-				if( this.playerDeathFrame < 69 ) {
-					if( this.frameTick === 1 ) {
-						this.playerDeathFrame++;
-					}
+				if( this.frameTick === 1 ) {
+					this.playerDeathFrame++;
+				}
+				if( this.playerDeathFrame >= 69 ) {
+					Game.gameState = Game.STATE_DEAD;
 				}
 			} else {
 				ctx.drawImage(this.playerImg, 0, this.playerFrame*75, 75, 75, 0, 0, 75, 75);
@@ -653,11 +655,13 @@ var Game = {
 		switch(event.keyCode) {
 			//Left Shift - Charge
 			case 16:
-				Game.CalcPowerLevel();
+				if( Game.gameState === Game.STATE_PLAYING ) {
+					Game.CalcPowerLevel();
+				}
 				break;
 			//Spacebar - Shoot
 			case 32:
-				if( Game.gameState != Game.STATE_FIRE ) {
+				if( Game.gameState === Game.STATE_PLAYING ) {
 					Game.ShootLaser();
 				}
 				break;
@@ -681,17 +685,19 @@ var Game = {
 				break;
             //Up -- Shoot
             case 38:
-				if( Game.gameState != Game.STATE_FIRE ) {
+				if( Game.gameState === Game.STATE_PLAYING ) {
 					Game.ShootLaser();
 				}
 				break;
             //Down -- Charge
             case 40:
-				Game.CalcPowerLevel();
+				if( Game.gameState === Game.STATE_PLAYING ) {
+					Game.CalcPowerLevel();
+				}
 				break;
 			//W -- Shoot
 			case 87:
-				if( Game.gameState != Game.STATE_FIRE ) {
+				if( Game.gameState === Game.STATE_PLAYING ) {
 					Game.ShootLaser();
 				}
 				break;
@@ -706,7 +712,9 @@ var Game = {
 				break;
 			//S -- Charge
 			case 83:
-				Game.CalcPowerLevel();
+				if( Game.gameState === Game.STATE_PLAYING ) {
+					Game.CalcPowerLevel();
+				}
 				break;
 			//D -- Right
 			case 68:
@@ -780,7 +788,7 @@ var Game = {
 			if( Game.asteroids[i].isAlive != 0 && Game.asteroids[i].state === 0 ) {
 				if( Game.asteroids[i].isColliding(Game.playerX-36, Game.playerY-36, "player") ) {
 					Game.asteroids[i].destroy();
-					Game.gameState = Game.STATE_DEAD;
+					Game.gameState = Game.STATE_DYING;
 					this.audioPHit.play();
 				}
 				for( var j = 0; j < Game.lasers.length; j++ ) {
@@ -889,7 +897,7 @@ var Game = {
 			if( Game.menuEarthFrameTick >= 10 ) {
 				Game.menuEarthFrameTick = 0;
 			}
-		} else if( Game.gameState === Game.STATE_PLAYING || Game.gameState === Game.STATE_FIRE || Game.gameState === Game.STATE_DEAD ) { //GAME UPDATE UPDATE		
+		} else if( Game.gameState === Game.STATE_PLAYING || Game.gameState === Game.STATE_FIRE || Game.gameState === Game.STATE_DYING || Game.gameState === Game.STATE_DEAD ) { //GAME UPDATE UPDATE		
 			//START BACKGROUND MUSIC
 			if( this.bkgPlaying === 0 ) {
 				this.audioBKG.play();
@@ -919,7 +927,7 @@ var Game = {
 			Game.aimingY = Game.playerY;
 			
 			//PLAYER MOVEMENT UPDATE
-			if( Game.gameState === Game.STATE_PLAYING ) {
+			if( Game.gameState === Game.STATE_PLAYING || Game.gameState === Game.STATE_DYING ) {
 				Game.playerTheta += Game.dTheta;
 			}
 			if( Game.playerTheta > (5.0/8.0)*Math.PI ) {
@@ -1057,7 +1065,7 @@ function doClick(e) {
 };
 
 function doKeydown(e) {
-	if( Game.gameState === Game.STATE_PLAYING ) {
+	if( Game.gameState === Game.STATE_PLAYING || Game.gameState === Game.STATE_DYING ) {
 		Game.ProcessInputDown(e);
 	} else {
 		return;

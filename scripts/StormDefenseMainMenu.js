@@ -90,6 +90,8 @@ function theMainMenu(backImage, buttonMenuImg, buttonCreditsImg, buttonScoreImg,
         // Init Local Canvas variables
         var menuCanvas = document.getElementById(CANVAS_MENU_ID);
         var menuCtx = menuCanvas.getContext("2d");
+		menuCtx.fillStyle = "#333333";
+        menuCtx.fillRect(0, 0, Game.gameWidth, Game.gameHeight);
 		
 		menuCtx.drawImage(this.menuBckgrndImg, 0, 0);
 		playButton.drawButton(menuCtx);

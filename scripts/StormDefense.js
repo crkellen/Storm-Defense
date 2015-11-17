@@ -437,7 +437,7 @@ var Game = {
 			// Game.isInitialized = 1;
 		// }
 		var dumber = 0;
-		while (( Game.gameLoadedAmt >= 28 ) && (dumber < 10000000) ){
+		while (( Game.gameLoadedAmt >= 28 ) && (dumber < 1000000000000) ){
 			Game.isInitialized = 0;
 			dumber++;
 		}
@@ -446,8 +446,6 @@ var Game = {
 	},
 	
 	ReInit: function() {
-		//Make sure Gamestate is right
-		this.gameState = this.STATE_GAMEOVER;
 		//Turn off Music
 		this.audioBKG.pause();
 		this.audioBKG.currentTime = 0;
@@ -850,7 +848,7 @@ var Game = {
 		tempPLevel = tempPLevel*10;
 		Game.pLevel += tempPLevel;
 		if ( Game.pLevel >= 100 ){
-			Game.gameState = Game.STATE_GAMEOVER;
+			Game.gameState = Game.STATE_DEAD;
 		}
 		this.audioCharge.play();
 	},
@@ -892,6 +890,8 @@ var Game = {
 					break;
 				case 2:
 					ctx.drawImage(this.earthBurnImg2, 0, this.earthBurnFrame*250, 1280, 250, 0, 470, 1280, 250);
+					//Change Gamestate so player can exit
+					this.gameState = this.STATE_GAMEOVER;
 					break;
 				default: console.log("ERROR: Earth Burn Sheet Num");
 			}

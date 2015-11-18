@@ -60,7 +60,7 @@ menuButton.prototype.drawButton = function(menuContext)
 };
 
 function theMainMenu(backImage, buttonMenuImg, buttonCreditsImg, buttonScoreImg, buttonTutorialImg, buttonPlayClick, buttonCreditsClick,
-		buttonScoreClick, buttonTutorialClick, menuEarth1, menuEarth2, menuEarth3, menuEarth4)
+		buttonScoreClick, buttonTutorialClick)
 {
     var menuBckgrndLoaded = 0; 
     this.menuBckgrndImg = new Image();

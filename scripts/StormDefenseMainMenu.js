@@ -1,12 +1,12 @@
 // JavaScript Document
 
-function menuButton(imgSource, imgSrcOnClick)
+function menuButton(imgSource, imgSrcOnHover)
 {
     // public member variables
 	this.boxColor          = "rgb(200, 200, 200)";
 	this.boxShadowColor    = "rgb(100, 100, 100)";
 	this.x                 = 60;
-	this.y                 = 53;
+	this.y                 = 80;
 	this.width             = 450;
 	this.height            = 60;
 	this.text              = "Button Text";
@@ -14,9 +14,9 @@ function menuButton(imgSource, imgSrcOnClick)
 	this.src               = "none";
 	this.img               = null;
 	this.imgMainSrc        = null;
-	this.imgClickSrc       = null;
+	this.imgHoverSrc       = null;
 	this.imgLoaded         = 0;
-	if(imgSource){
+	if( imgSource ) {
 		this.img = new Image();
 		this.imgLoaded = 1;
 		this.img.src = this.imgMainSrc = imgSource;
@@ -40,27 +40,23 @@ menuButton.prototype.coordsAreInside = function(mouseX, mouseY)
 // ----------------------------------------------------------------------------
 menuButton.prototype.drawButton = function(menuContext)
 {
-	if (this.imgLoaded == 0)
-	{
+	if (this.imgLoaded == 0) {
 		menuContext.font = "30px Verdana";   // could make this a button trait
-		
 		menuContext.fillStyle = this.boxShadowColor;
 		menuContext.fillRect(this.x+2, this.y+2, this.width, this.height);
 		menuContext.fillStyle = this.boxColor;
 		menuContext.fillRect(this.x, this.y, this.width, this.height);
 		menuContext.fillStyle = this.textColor;
 		menuContext.fillText(this.text, this.x+5, this.y + this.height - 10);
-	}
-	else
-	{    
+	} else {    
 		menuContext.drawImage(this.img, 
 		                      0, 0, this.img.width, this.img.height,
 		                      this.x, this.y, this.width, this.height);
 	}
 };
 
-function theMainMenu(backImage, buttonMenuImg, buttonCreditsImg, buttonScoreImg, buttonTutorialImg, buttonPlayClick, buttonCreditsClick,
-		buttonScoreClick, buttonTutorialClick)
+function theMainMenu(backImage, buttonMenuImg, buttonCreditsImg, buttonScoreImg, buttonTutorialImg, buttonPlayHover, buttonCreditsHover,
+					buttonScoreHover, buttonTutorialHover, buttonOptionsImg, buttonOptionsHover)
 {
     var menuBckgrndLoaded = 0; 
     this.menuBckgrndImg = new Image();
@@ -72,15 +68,19 @@ function theMainMenu(backImage, buttonMenuImg, buttonCreditsImg, buttonScoreImg,
 	
 	var tutorialButton = new menuButton(buttonTutorialImg);
     tutorialButton.text = "Tutorial";
-	tutorialButton.y = 180;
+	tutorialButton.y = playButton.y + 99;
 	
 	var creditsButton = new menuButton(buttonCreditsImg);
     creditsButton.text = "Credits";
-	creditsButton.y = 295;
+	creditsButton.y = playButton.y + (99*2);
 	
 	var scoreButton = new menuButton(buttonScoreImg);
     scoreButton.text = "High Scores";
-	scoreButton.y = 410;
+	scoreButton.y = playButton.y + (99*3);
+	
+	var optionsButton = new menuButton(buttonOptionsImg);
+	optionsButton.text = "Options";
+	optionsButton.y = playButton.y + (99*4);
 	
     // ----------------------------------------------------------------------------
     // Draw the Menu Screen
@@ -98,6 +98,7 @@ function theMainMenu(backImage, buttonMenuImg, buttonCreditsImg, buttonScoreImg,
 		creditsButton.drawButton(menuCtx);
 		scoreButton.drawButton(menuCtx);
 		tutorialButton.drawButton(menuCtx);
+		optionsButton.drawButton(menuCtx);
 		
 		switch( menuEarthSheetNum ) {
 			case 1:
@@ -121,19 +122,17 @@ function theMainMenu(backImage, buttonMenuImg, buttonCreditsImg, buttonScoreImg,
 		var menuCanvas = document.getElementById(CANVAS_MENU_ID);
 		var mousePos = Game.getMousePos(menuCanvas, evt);
 		
-		if ( playButton.coordsAreInside(mousePos.x, mousePos.y) ){
-			playButton.img.src = buttonPlayClick;
-		}
-		else if ( tutorialButton.coordsAreInside(mousePos.x, mousePos.y) ){
-			tutorialButton.img.src = buttonTutorialClick;
-		} 
-		else if ( creditsButton.coordsAreInside(mousePos.x, mousePos.y) ){
-			creditsButton.img.src = buttonCreditsClick;
-		}
-		else if ( scoreButton.coordsAreInside(mousePos.x, mousePos.y) ){
-			scoreButton.img.src = buttonScoreClick;
-		}
-		else {
+		if( playButton.coordsAreInside(mousePos.x, mousePos.y) ) {
+			playButton.img.src = buttonPlayHover;
+		} else if( tutorialButton.coordsAreInside(mousePos.x, mousePos.y) ) {
+			tutorialButton.img.src = buttonTutorialHover;
+		} else if( creditsButton.coordsAreInside(mousePos.x, mousePos.y) ) {
+			creditsButton.img.src = buttonCreditsHover;
+		} else if( scoreButton.coordsAreInside(mousePos.x, mousePos.y) ) {
+			scoreButton.img.src = buttonScoreHover;
+		} else if( optionsButton.coordsAreInside(mousePos.x, mousePos.y) ) {
+			optionsButton.img.src = buttonOptionsHover;
+		} else {
 			playButton.img.src = buttonMenuImg;
 			tutorialButton.img.src = buttonTutorialImg;
 			creditsButton.img.src = buttonCreditsImg;
@@ -151,28 +150,23 @@ function theMainMenu(backImage, buttonMenuImg, buttonCreditsImg, buttonScoreImg,
 
 		var mousePos = Game.getMousePos(menuCanvas, evt);
 
-		if ( playButton.coordsAreInside(mousePos.x, mousePos.y) ){
+		if( playButton.coordsAreInside(mousePos.x, mousePos.y) ) {
 			gameCanvas.style.display    = "block";
 			menuCanvas.style.display    = "none";
 			creditsCanvas.style.display = "none";
 			Game.gameState = Game.STATE_PLAYING;
-		}
-		
-		else if ( creditsButton.coordsAreInside(mousePos.x, mousePos.y) ){
+		} else if( creditsButton.coordsAreInside(mousePos.x, mousePos.y) ) {
 			gameCanvas.style.display    = "none";
 			menuCanvas.style.display    = "none";
 			creditsCanvas.style.display = "block";
 			Game.gameState = Game.STATE_CREDITS;
-		} 
-		
-		else if ( tutorialButton.coordsAreInside(mousePos.x, mousePos.y) ){
+		} else if( tutorialButton.coordsAreInside(mousePos.x, mousePos.y) ) {
 			gameCanvas.style.display     = "none";
 			menuCanvas.style.display     = "none";
 			creditsCanvas.style.display  = "none";
 			tutorialCanvas.style.display = "block";
 			Game.gameState = Game.STATE_TUTORIAL;
-		} 
-		else if ( scoreButton.coordsAreInside(mousePos.x, mousePos.y) ){
+		} else if( scoreButton.coordsAreInside(mousePos.x, mousePos.y) ) {
 			gameCanvas.style.display     = "none";
 			menuCanvas.style.display     = "none";
 			creditsCanvas.style.display  = "none";
@@ -181,5 +175,4 @@ function theMainMenu(backImage, buttonMenuImg, buttonCreditsImg, buttonScoreImg,
 			Game.gameState = Game.STATE_SCORE;
 		} 
 	};
-    
 };

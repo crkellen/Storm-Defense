@@ -862,7 +862,9 @@ var Game = {
 			this.ctx.drawImage(this.projectedFillImg, 0, 0, 788, 30, (this.pLevel*4)+246, 702, ((this.maxChargeLevel - this.chargedLevel)*4), 30 );
 		}
 		//PLASMA METER
-		if( Game.plasmaLevel != 0 && Game.plasmaLevelImgLoaded != 0 ) {
+		if( Game.pHarvest === 0 ) {
+			
+		} else if( Game.plasmaLevel != 0 && Game.plasmaLevelImgLoaded != 0 ) {
 			this.ctx.drawImage(this.plasmaLevelImg, 200-5*Game.pHarvest, 0, 5*Game.pHarvest, 36, 1265-(Game.pHarvest*5), 13, Game.pHarvest*5, 36);
 		}
 		if( Game.plasmaContainerImgLoaded != 0 ) {
@@ -985,7 +987,7 @@ var Game = {
 						} else if( Game.gameState === Game.STATE_PLAYING && Game.pHarvest < MAX_CHARGE) {
 							Game.gameState = Game.STATE_HARVEST;
 							this.audioHarvesting.play();
-							this.audioHarvesting.loop();
+							this.audioHarvesting.loop = true;
 						}
 					}
 					break;

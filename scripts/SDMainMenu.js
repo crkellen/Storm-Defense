@@ -136,7 +136,7 @@ function theMainMenu(backImage, buttonMenuImg, buttonCreditsImg, buttonScoreImg,
 			tutorialButton.img.src = buttonTutorialImg;
 			creditsButton.img.src = buttonCreditsImg;
 			scoreButton.img.src = buttonScoreImg;
-			optionButton.img.src = buttonOptionsImg;
+			optionsButton.img.src = buttonOptionsImg;
 		}
 	};
 	

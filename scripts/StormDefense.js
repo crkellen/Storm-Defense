@@ -863,7 +863,7 @@ var Game = {
 		}
 		//PLASMA METER
 		if( Game.plasmaLevel != 0 && Game.plasmaLevelImgLoaded != 0 ) {
-			this.ctx.drawImage(this.plasmaLevelImg, 200-Game.pHarvest*5 ,0, 200, 36, 1065+(200-Game.pHarvest*5), 13, Game.pHarvest*5, 36);
+			this.ctx.drawImage(this.plasmaLevelImg, 200-5*Game.pHarvest, 0, 5*Game.pHarvest, 36, 1265-(Game.pHarvest*5), 13, Game.pHarvest*5, 36);
 		}
 		if( Game.plasmaContainerImgLoaded != 0 ) {
 			this.ctx.drawImage(this.plasmaContainerImg, 1062, 10);

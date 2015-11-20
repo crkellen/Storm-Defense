@@ -57,12 +57,25 @@ EARTHBURN_IMG_SRC2			= 'images/gameover/earthBurnImg2.png';
 //CONSTANT MENU BKG IMGS
 MENU_IMG_SRC				= 'images/menus/mainMenuBgImg.png';
 CREDITS_IMG_SRC				= 'images/menus/creditsBgImg.png';
-TUTORIAL_IMG_SRC			= 'images/menus/instructBgImg.png';
+TUTORIAL_IMG_SRC			= 'images/menus/tutorialBgImg.png';
 SCORE_IMG_SRC				= 'images/menus/topscoresBgImg.png';
 MENU_EARTH1					= 'images/menuearth/menuEarth1.png';
 MENU_EARTH2					= 'images/menuearth/menuEarth2.png';
 MENU_EARTH3					= 'images/menuearth/menuEarth3.png';
 MENU_EARTH4					= 'images/menuearth/menuEarth4.png';
+//CONSTANT TUTORIAL IMGS
+TUTORIAL_TEXT1_IMG_SRC		= 'images/tutorial/tutorialtext1Img.png';
+TUTORIAL_ANIM1_IMG_SRC		= 'images/tutorial/tutorialanimIntroImg.png';
+TUTORIAL_TEXT2_IMG_SRC		= 'images/tutorial/tutorialtext2Img.png';
+TUTORIAL_ANIM2_IMG_SRC		= 'images/tutorial/tutorialanimMovementImg.png';
+TUTORIAL_TEXT3_IMG_SRC		= 'images/tutorial/tutorialtext3Img.png';
+TUTORIAL_ANIM3_IMG_SRC		= 'images/tutorial/tutorialanimChargingImg.png';
+TUTORIAL_TEXT4_IMG_SRC		= 'images/tutorial/tutorialtext4Img.png';
+TUTORIAL_ANIM4_IMG_SRC		= 'images/tutorial/tutorialanimHarvestingImg.png';
+TUTORIAL_TEXT5_IMG_SRC		= 'images/tutorial/tutorialtext5Img.png';
+TUTORIAL_ANIM5_IMG_SRC		= 'images/tutorial/tutorialanimShootingImg.png';
+TUTORIAL_TEXT6_IMG_SRC		= 'images/tutorial/tutorialtext6Img.png';
+TUTORIAL_ANIM6_IMG_SRC		= 'images/tutorial/tutorialanimWarningImg.png';
 //CONSTANT BUTTON IMGS
 BUTTON_PLAY_IMG_SRC			= 'images/buttons/playButtonImg.png';
 BUTTON_CREDITS_IMG_SRC		= 'images/buttons/creditsButtonImg.png';
@@ -206,6 +219,19 @@ var Game = {
 	creditsImgLoaded:			0,
 	tutorialImgLoaded:			0,
 	scoreImgLoaded:				0,
+	//Tutorial Image Checks
+	tutorialtext1ImgLoaded:		0,
+	tutorialanim1ImgLoaded:		0,
+	tutorialtext2ImgLoaded:		0,
+	tutorialanim2ImgLoaded:		0,
+	tutorialtext3ImgLoaded:		0,
+	tutorialanim3ImgLoaded:		0,
+	tutorialtext4ImgLoaded:		0,
+	tutorialanim4ImgLoaded:		0,
+	tutorialtext5ImgLoaded:		0,
+	tutorialanim5ImgLoaded:		0,
+	tutorialtext6ImgLoaded:		0,
+	tutorialanim6ImgLoaded:		0,
 	//Menu Earth Variables
 	menuEarthSheetNum:			1,
 	menuEarthFrame:				0,
@@ -265,7 +291,7 @@ var Game = {
 	
 	//Menu Instantiations
 	menu: new theMainMenu(MENU_IMG_SRC, BUTTON_PLAY_IMG_SRC, BUTTON_CREDITS_IMG_SRC, BUTTON_SCORE_IMG_SRC, BUTTON_TUTORIAL_IMG_SRC, BUTTON_PLAY_HOVER,
-				BUTTON_CREDITS_HOVER, BUTTON_SCORE_HOVER, BUTTON_TUTORIAL_HOVER, BUTTON_OPTIONS_IMG_SRC, BUTTON_OPTIONS_HOVER),
+					BUTTON_CREDITS_HOVER, BUTTON_SCORE_HOVER, BUTTON_TUTORIAL_HOVER, BUTTON_OPTIONS_IMG_SRC, BUTTON_OPTIONS_HOVER),
 	credits: new theCredits(CREDITS_IMG_SRC, BUTTON_BACK_IMG_SRC, BUTTON_BACK_HOVER),
 	tutorial: new theTutorial(TUTORIAL_IMG_SRC, BUTTON_BACK_IMG_SRC, BUTTON_BACK_HOVER),
 	score: new theScore(SCORE_IMG_SRC, BUTTON_BACK_IMG_SRC, BUTTON_BACK_HOVER),
@@ -414,22 +440,80 @@ var Game = {
         this.earthBurnImg2.src = EARTHBURN_IMG_SRC2;
 		
 		//MENU EARTH IMAGES CREATION AND LOAD
-		//menuEarth1
+		//Menu Earth1
 		this.menuEarthImg1 = new Image();
 		this.menuEarthImg1.onload = function () { 	Game.menuEarthImg1Loaded = 1; Game.gameLoadedAmt++; };
         this.menuEarthImg1.src = MENU_EARTH1;
-		//menuEarth2
+		//Menu Earth2
 		this.menuEarthImg2 = new Image();
 		this.menuEarthImg2.onload = function () { 	Game.menuEarthImg2Loaded = 1; Game.gameLoadedAmt++; };
         this.menuEarthImg2.src = MENU_EARTH2;
-		//menuEarth3
+		//Menu Earth3
 		this.menuEarthImg3 = new Image();
 		this.menuEarthImg3.onload = function () { 	Game.menuEarthImg3Loaded = 1; Game.gameLoadedAmt++; };
         this.menuEarthImg3.src = MENU_EARTH3;
-		//menuEarth4
+		//Menu Earth4
 		this.menuEarthImg4 = new Image();
 		this.menuEarthImg4.onload = function () { 	Game.menuEarthImg4Loaded = 1; Game.gameLoadedAmt++; };
         this.menuEarthImg4.src = MENU_EARTH4;
+		
+		//TUTORIAL IMAGES CREATION AND LOAD
+		//Tutorial - Intro
+			//Tutorial Text 1
+			this.tutorialtextImg1 = new Image();
+			this.tutorialtextImg1.onload = function () { 	Game.tutorialtext1ImgLoaded = 1; Game.gameLoadedAmt++; };
+			this.tutorialtextImg1.src = TUTORIAL_TEXT1_IMG_SRC;
+			//Tutorial Anim 1
+			this.tutorialanimImg1 = new Image();
+			this.tutorialanimImg1.onload = function () { 	Game.tutorialanim1ImgLoaded = 1; Game.gameLoadedAmt++; };
+			this.tutorialanimImg1.src = TUTORIAL_ANIM1_IMG_SRC;
+		//Tutorial - Movement
+			//Tutorial Text 2
+			this.tutorialtextImg2 = new Image();
+			this.tutorialtextImg2.onload = function () { 	Game.tutorialtext2ImgLoaded = 1; Game.gameLoadedAmt++; };
+			this.tutorialtextImg2.src = TUTORIAL_TEXT2_IMG_SRC;
+			//Tutorial Anim 2
+			this.tutorialanimImg2 = new Image();
+			this.tutorialanimImg2.onload = function () { 	Game.tutorialanim2ImgLoaded = 1; Game.gameLoadedAmt++; };
+			this.tutorialanimImg2.src = TUTORIAL_ANIM2_IMG_SRC;
+		//Tutorial - Charging
+			//Tutorial Text 3
+			this.tutorialtextImg3 = new Image();
+			this.tutorialtextImg3.onload = function () { 	Game.tutorialtext3ImgLoaded = 1; Game.gameLoadedAmt++; };
+			this.tutorialtextImg3.src = TUTORIAL_TEXT3_IMG_SRC;
+			//Tutorial Anim 3
+			this.tutorialanimImg3 = new Image();
+			this.tutorialanimImg3.onload = function () { 	Game.tutorialanim3ImgLoaded = 1; Game.gameLoadedAmt++; };
+			this.tutorialanimImg3.src = TUTORIAL_ANIM3_IMG_SRC;
+		//Tutorial - Harvesting
+			//Tutorial Text 4
+			this.tutorialtextImg4 = new Image();
+			this.tutorialtextImg4.onload = function () { 	Game.tutorialtext4ImgLoaded = 1; Game.gameLoadedAmt++; };
+			this.tutorialtextImg4.src = TUTORIAL_TEXT4_IMG_SRC;
+			//Tutorial Anim 4
+			this.tutorialanimImg4 = new Image();
+			this.tutorialanimImg4.onload = function () { 	Game.tutorialanim4ImgLoaded = 1; Game.gameLoadedAmt++; };
+			this.tutorialanimImg4.src = TUTORIAL_ANIM4_IMG_SRC;
+		//Tutorial - Shooting
+			//Tutorial Text 5
+			this.tutorialtextImg5 = new Image();
+			this.tutorialtextImg5.onload = function () { 	Game.tutorialtext5ImgLoaded = 1; Game.gameLoadedAmt++; };
+			this.tutorialtextImg5.src = TUTORIAL_TEXT5_IMG_SRC;
+			//Tutorial Anim 5
+			this.tutorialanimImg5 = new Image();
+			this.tutorialanimImg5.onload = function () { 	Game.tutorialanim5ImgLoaded = 1; Game.gameLoadedAmt++; };
+			this.tutorialanimImg5.src = TUTORIAL_ANIM5_IMG_SRC;
+		//Tutorial - Moving
+			//Tutorial Text 6
+			this.tutorialtextImg6 = new Image();
+			this.tutorialtextImg6.onload = function () { 	Game.tutorialtext6ImgLoaded = 1; Game.gameLoadedAmt++; };
+			this.tutorialtextImg6.src = TUTORIAL_TEXT6_IMG_SRC;
+			//Tutorial Anim 6
+			this.tutorialanimImg6 = new Image();
+			this.tutorialanimImg6.onload = function () { 	Game.tutorialanim6ImgLoaded = 1; Game.gameLoadedAmt++; };
+			this.tutorialanimImg6.src = TUTORIAL_ANIM6_IMG_SRC;
+
+			
 		
 		//LEVEL IMAGES CREATION AND LOAD
 		//Level 1
@@ -896,8 +980,12 @@ var Game = {
 						if( Game.gameState === Game.STATE_HARVEST ) {
 							Game.gameState = Game.STATE_PLAYING;
 							Game.harvestTick = 0;
+							this.audioHarvesting.pause();
+							this.audioHarvesting.currentTime = 0;
 						} else if( Game.gameState === Game.STATE_PLAYING && Game.pHarvest < MAX_CHARGE) {
 							Game.gameState = Game.STATE_HARVEST;
+							this.audioHarvesting.play();
+							this.audioHarvesting.loop();
 						}
 					}
 					break;
@@ -1342,9 +1430,10 @@ var Game = {
 			Game.DrawScreen();
 		} else if( Game.gameState === Game.STATE_CREDITS ) { //CREDITS UPDATE
 			Game.credits.DrawCredits();
-		} else if(Game.gameState === Game.STATE_TUTORIAL){ //INSTRUCTIONS UPDATE
-			Game.tutorial.DrawTutorial();
-		} else if(Game.gameState === Game.STATE_SCORE){ //SCORE UPDATE
+		} else if(Game.gameState === Game.STATE_TUTORIAL) { //TUTORIAL UPDATE
+			Game.tutorial.DrawTutorial(this.tutorialtextImg1, this.tutorialanimImg1, this.tutorialtextImg2, this.tutorialanimImg2, this.tutorialtextImg3, this.tutorialanimImg3,
+						this.tutorialtextImg4, this.tutorialanimImg4, this.tutorialtextImg5, this.tutorialanimImg5, this.tutorialtextImg6, this.tutorialanimImg6);
+		} else if(Game.gameState === Game.STATE_SCORE) { //SCORE UPDATE
 			Game.score.DrawScore();
 		}else if( Game.gameState === Game.STATE_GAMEOVER || Game.STATE_DEAD ) { //GAMEOVER UPDATE
 			Game.GameOver();

@@ -1,7 +1,6 @@
 // JavaScript Document
 
-function menuButton(imgSource, imgSrcOnHover)
-{
+function menuButton(imgSource, imgSrcOnHover) {
     // public member variables
 	this.boxColor          = "rgb(200, 200, 200)";
 	this.boxShadowColor    = "rgb(100, 100, 100)";
@@ -40,7 +39,7 @@ menuButton.prototype.coordsAreInside = function(mouseX, mouseY)
 // ----------------------------------------------------------------------------
 menuButton.prototype.drawButton = function(menuContext)
 {
-	if (this.imgLoaded == 0) {
+	if (this.imgLoaded === 0) {
 		menuContext.font = "30px Verdana";   // could make this a button trait
 		menuContext.fillStyle = this.boxShadowColor;
 		menuContext.fillRect(this.x+2, this.y+2, this.width, this.height);
@@ -137,6 +136,7 @@ function theMainMenu(backImage, buttonMenuImg, buttonCreditsImg, buttonScoreImg,
 			tutorialButton.img.src = buttonTutorialImg;
 			creditsButton.img.src = buttonCreditsImg;
 			scoreButton.img.src = buttonScoreImg;
+			optionButton.img.src = buttonOptionsImg;
 		}
 	};
 	

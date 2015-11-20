@@ -1,7 +1,6 @@
 // JavaScript Document
 
-function tutorialButton(imgSource, imgSrcOnClick)
-{
+function tutorialButton(imgSource, imgSrcOnClick) {
     // public member variables
 	this.boxColor          = "rgb(200, 200, 200)";
 	this.boxShadowColor    = "rgb(100, 100, 100)";
@@ -26,8 +25,7 @@ function tutorialButton(imgSource, imgSrcOnClick)
 // ----------------------------------------------------------------------------
 // menuButton 'class' method: coordsAreInside
 // ----------------------------------------------------------------------------
-tutorialButton.prototype.coordsAreInside = function(mouseX, mouseY)
-{
+tutorialButton.prototype.coordsAreInside = function(mouseX, mouseY) {
     if (   ((mouseX > this.x) && (mouseX < (this.x + this.width))) 
 		&& ((mouseY > this.y) && (mouseY < (this.y + this.height))) )
 		return true;
@@ -38,8 +36,7 @@ tutorialButton.prototype.coordsAreInside = function(mouseX, mouseY)
 // ----------------------------------------------------------------------------
 // menuButton class method: drawButton
 // ----------------------------------------------------------------------------
-tutorialButton.prototype.drawButton = function(tutorialContext)
-{
+tutorialButton.prototype.drawButton = function(tutorialContext) {
 	if (this.imgLoaded == 0)
 	{
 		tutorialContext.font = "30px Verdana";   // could make this a button trait
@@ -59,13 +56,10 @@ tutorialButton.prototype.drawButton = function(tutorialContext)
 	}
 };
 
-function theTutorial(backImage, buttonBack, buttonBackClick)
-{
-    //console.log("DEBUG: backImage sent = " + backImage);
+function theTutorial(backImage, buttonBack, buttonBackClick) {
     var tutorialBckgrndLoaded = 0; // 0 means false, private var
     this.tutorialBckgrndImg = new Image();
     this.tutorialBckgrndImg.onload = function () { 	tutorialBckgrndLoaded = 1; };
-                                                //console.log("DEBUG: menu background loaded!" + menuBckgrndLoaded); };
     this.tutorialBckgrndImg.src = backImage;
     var backButton = new tutorialButton(buttonBack);
     backButton.text = "Play Game";
@@ -73,19 +67,19 @@ function theTutorial(backImage, buttonBack, buttonBackClick)
     // ----------------------------------------------------------------------------
     // Draw the Menu Screen
     // ----------------------------------------------------------------------------
-    this.DrawTutorial = function()
-    {
+    this.DrawTutorial = function(tt1, ta1, tt2, ta2, tt3, ta3, tt4, ta4, tt5, ta5, tt6, ta6) {
         // Init Local Canvas variables
         var tutorialCanvas = document.getElementById(CANVAS_TUTORIAL_ID);
-        var tutorialCtx = tutorialCanvas.getContext("2d");
+        var tutorialCTX = tutorialCanvas.getContext("2d");
 		
-		tutorialCtx.drawImage(this.tutorialBckgrndImg, 0, 0);
-		backButton.drawButton(tutorialCtx);
+		tutorialCTX.drawImage(this.tutorialBckgrndImg, 0, 0);
+		tutorialCTX.drawImage(tt1, 350, 100);
+		//tutorialCTX.drawImage(ta1, 350, 400);
 		
+		backButton.drawButton(tutorialCTX);
 	};
 	
-	this.doMouseOver = function(evt)
-	{
+	this.doMouseOver = function(evt) {
 		var tutorialCanvas = document.getElementById(CANVAS_TUTORIAL_ID);
 		var mousePos = Game.getMousePos(tutorialCanvas, evt);
 
@@ -99,8 +93,7 @@ function theTutorial(backImage, buttonBack, buttonBackClick)
 		}
 	};
 	
-	this.doMenuClick = function(evt)
-	{
+	this.doMenuClick = function(evt) {
 		var menuCanvas = document.getElementById(CANVAS_MENU_ID);
 		var tutorialCanvas = document.getElementById(CANVAS_TUTORIAL_ID);
 	

@@ -1,92 +1,96 @@
 //CONSTANT GLOBAL VARIABLES
-var CANVAS_GAME_ID		= "canvasGame";
-var CANVAS_MENU_ID		= "canvasMenu";
-var CANVAS_CREDITS_ID	= "canvasCredits"
-var CANVAS_TUTORIAL_ID	= "canvasTutorial";
-var CANVAS_SCORE_ID		= "canvasScore"
-var WORLD_HEIGHT 	  = 720;
-var WORLD_WIDTH		  = 1280;
-var MAX_LASERS		  = 10;
-var MAX_ASTEROIDS	  = 10;
-var MAX_PARTICLES	  = 10;
-var MAX_CHARGE		  = 40;
-var OK_MIN_SCREEN_RATIO = 1.33;  
-var OK_MAX_SCREEN_RATIO = 1.35;
+var CANVAS_GAME_ID			= "canvasGame";
+var CANVAS_MENU_ID			= "canvasMenu";
+var CANVAS_CREDITS_ID		= "canvasCredits"
+var CANVAS_TUTORIAL_ID		= "canvasTutorial";
+var CANVAS_SCORE_ID			= "canvasScore"
+var WORLD_HEIGHT			= 720;
+var WORLD_WIDTH				= 1280;
+var MAX_LASERS				= 20;
+var MAX_ASTEROIDS			= 10;
+var MAX_PARTICLES			= 10;
+var MAX_CHARGE				= 40;
+var OK_MIN_SCREEN_RATIO		= 1.33;  
+var OK_MAX_SCREEN_RATIO		= 1.35;
 //CONSTANT IMGS
-BKG_IMG_SRC			= 'images/ingamebg/bkgImg.png';
-PLAYER_IMG_SRC  	= 'images/player/playerImg.png';
-EARTH_IMG_SRC1	 	= 'images/earth/earthImg1.png';
-EARTH_IMG_SRC2 	 	= 'images/earth/earthImg2.png';
-EARTH_IMG_SRC3	 	= 'images/earth/earthImg3.png';
-EARTH_IMG_SRC4 	 	= 'images/earth/earthImg4.png';
-LASER_IMG_SRC 	 	= 'images/player/laserImg.png';
-AIMING_IMG_SRC 		= 'images/player/aimingImg.png';
-IONO_IMG_SRC		= 'images/ionosphere/ionoImg.png';
+BKG_IMG_SRC					= 'images/ingamebg/bkgImg.png';
+PLAYER_IMG_SRC				= 'images/player/playerImg.png';
+EARTH_IMG_SRC1				= 'images/earth/earthImg1.png';
+EARTH_IMG_SRC2				= 'images/earth/earthImg2.png';
+EARTH_IMG_SRC3				= 'images/earth/earthImg3.png';
+EARTH_IMG_SRC4				= 'images/earth/earthImg4.png';
+LASER_IMG_SRC				= 'images/player/laserImg.png';
+SUPERLASER_IMG_SRC			= 'images/player/superLaserImg.png';
+AIMING_IMG_SRC				= 'images/player/aimingImg.png';
+IONO_IMG_SRC				= 'images/ionosphere/ionoImg.png';
+PARTICLE_IMG_SRC			= 'images/particles/particleImg.png';
 //CONSTANT ASTEROID IMGS
-ASTEROID1_IMG_SRC 	= 'images/asteroids/asteroid1Img.png';
-ASTEROID2_IMG_SRC	= 'images/asteroids/asteroid2Img.png';
-ASTEROID3_IMG_SRC   = 'images/asteroids/asteroid3Img.png';
-ASTEROID_DEATH_IMG_SRC	= 'images/asteroids/asteroidDeathImg.png';
-ASTEROID_IMPACT_IMG_SRC	= 'images/asteroids/asteroidImpactImg.png';
-ASTEROID_IMPACT2_IMG_SRC= 'images/asteroids/asteroidImpact2Img.png';
+ASTEROID1_IMG_SRC 			= 'images/asteroids/asteroid1Img.png';
+ASTEROID2_IMG_SRC			= 'images/asteroids/asteroid2Img.png';
+ASTEROID3_IMG_SRC			= 'images/asteroids/asteroid3Img.png';
+ASTEROID_DEATH_IMG_SRC		= 'images/asteroids/asteroidDeathImg.png';
+ASTEROID_IMPACT_IMG_SRC		= 'images/asteroids/asteroidImpactImg.png';
+ASTEROID_IMPACT2_IMG_SRC	= 'images/asteroids/asteroidImpact2Img.png';
 //CONSTANT POWER IMGS
-POWER_LEVEL_IMG		 = 'images/ionosphere/ionoFillImg.png';
-POWER_CONTAINER_IMG	 = 'images/ionosphere/ionoContainerImg.png';
-PROJECTED_IMG_SRC    = 'images/ionosphere/ionoProjectedImg.png';
-PLASMA_CONTAINER_IMG = 'images/ionosphere/plasmaContainerImg.png';
-PLASMA_LEVEL_IMG_SRC = 'images/ionosphere/plasmaFillImg.png';
-LEFTICON_IMG_SRC 	 = 'images/ionosphere/leftIonoIconImg.png';
-RIGHTICON_IMG_SRC 	 = 'images/ionosphere/rightIonoIconImg.png';
-HARVEST_IMG_SRC   	 = 'images/player/harvestImg.png';
-//PARTICLE IMG
-PARTICLE_IMG_SRC	 = 'images/particles/particleImg.png';
+POWER_LEVEL_IMG				= 'images/ionosphere/ionoFillImg.png';
+POWER_CONTAINER_IMG			= 'images/ionosphere/ionoContainerImg.png';
+PROJECTED_IMG_SRC			= 'images/ionosphere/ionoProjectedImg.png';
+PLASMA_CONTAINER_IMG		= 'images/ionosphere/plasmaContainerImg.png';
+PLASMA_LEVEL_IMG_SRC		= 'images/ionosphere/plasmaFillImg.png';
+LEFTICON_IMG_SRC			= 'images/ionosphere/leftIonoIconImg.png';
+RIGHTICON_IMG_SRC			= 'images/ionosphere/rightIonoIconImg.png';
+HARVEST_IMG_SRC				= 'images/player/harvestImg.png';
 //CONSTANT LOADING IMGS
 LOADING_BKG_IMG_SRC			= 'images/loading/loadingBkgImg.png';
 LOADING_CONTAINER_IMG_SRC 	= 'images/loading/loadingContainerImg.png';
 LOADING_BAR_IMG_SRC			= 'images/loading/loadingBarImg.png';
 //CONSTANT LEVEL IMGS
-LEVEL1_IMG_SRC	= 'images/ingamebg/level1Img.png';
-LEVEL2_IMG_SRC	= 'images/ingamebg/level2Img.png';
-LEVEL3_IMG_SRC	= 'images/ingamebg/level3Img.png';
-LEVEL4_IMG_SRC	= 'images/ingamebg/level4Img.png';
-LEVEL5_IMG_SRC	= 'images/ingamebg/level5Img.png';
+LEVEL1_IMG_SRC				= 'images/ingamebg/level1Img.png';
+LEVEL2_IMG_SRC				= 'images/ingamebg/level2Img.png';
+LEVEL3_IMG_SRC				= 'images/ingamebg/level3Img.png';
+LEVEL4_IMG_SRC				= 'images/ingamebg/level4Img.png';
+LEVEL5_IMG_SRC				= 'images/ingamebg/level5Img.png';
 //CONSTANT GAMEOVER IMGS
-GAMEOVER_IMG_SRC	= 'images/gameover/gameoverImg.png';
-EARTHBURN_IMG_SRC1	= 'images/gameover/earthBurnImg1.png';
-EARTHBURN_IMG_SRC2	= 'images/gameover/earthBurnImg2.png';
+GAMEOVER_IMG_SRC			= 'images/gameover/gameoverImg.png';
+EARTHBURN_IMG_SRC1			= 'images/gameover/earthBurnImg1.png';
+EARTHBURN_IMG_SRC2			= 'images/gameover/earthBurnImg2.png';
 //CONSTANT MENU BKG IMGS
-MENU_IMG_SRC			 = 'images/menus/mainMenuBgImg.png';
-CREDITS_IMG_SRC		 	 = 'images/menus/creditsBgImg.png';
-TUTORIAL_IMG_SRC		 = 'images/menus/instructBgImg.png';
-SCORE_IMG_SRC			 = 'images/menus/topscoresBgImg.png';
-MENU_EARTH1				 = 'images/menuearth/menuEarth1.png';
-MENU_EARTH2				 = 'images/menuearth/menuEarth2.png';
-MENU_EARTH3				 = 'images/menuearth/menuEarth3.png';
-MENU_EARTH4				 = 'images/menuearth/menuEarth4.png';
+MENU_IMG_SRC				= 'images/menus/mainMenuBgImg.png';
+CREDITS_IMG_SRC				= 'images/menus/creditsBgImg.png';
+TUTORIAL_IMG_SRC			= 'images/menus/instructBgImg.png';
+SCORE_IMG_SRC				= 'images/menus/topscoresBgImg.png';
+MENU_EARTH1					= 'images/menuearth/menuEarth1.png';
+MENU_EARTH2					= 'images/menuearth/menuEarth2.png';
+MENU_EARTH3					= 'images/menuearth/menuEarth3.png';
+MENU_EARTH4					= 'images/menuearth/menuEarth4.png';
 //CONSTANT BUTTON IMGS
-BUTTON_PLAY_IMG_SRC 	 = 'images/buttons/playButtonImg.png';
-BUTTON_CREDITS_IMG_SRC   = 'images/buttons/creditsButtonImg.png';
-BUTTON_SCORE_IMG_SRC     = 'images/buttons/scoreButtonImg.png';
-BUTTON_TUTORIAL_IMG_SRC  = 'images/buttons/tutorialButtonImg.png';
-BUTTON_BACK_IMG_SRC      = 'images/buttons/backButtonImg.png';
-BUTTON_MENU_IMG_SRC		 = 'images/buttons/menuButtonImg.png';
-BUTTON_OPTIONS_IMG_SRC	 = 'images/buttons/optionsButtonImg.png';
+BUTTON_PLAY_IMG_SRC			= 'images/buttons/playButtonImg.png';
+BUTTON_CREDITS_IMG_SRC		= 'images/buttons/creditsButtonImg.png';
+BUTTON_SCORE_IMG_SRC		= 'images/buttons/scoreButtonImg.png';
+BUTTON_TUTORIAL_IMG_SRC		= 'images/buttons/tutorialButtonImg.png';
+BUTTON_BACK_IMG_SRC			= 'images/buttons/backButtonImg.png';
+BUTTON_MENU_IMG_SRC			= 'images/buttons/menuButtonImg.png';
+BUTTON_OPTIONS_IMG_SRC		= 'images/buttons/optionsButtonImg.png';
 //CONSTANT HOVER IMGS
-BUTTON_PLAY_HOVER		 = 'images/buttons/playButtonHoverImg.png';
-BUTTON_CREDITS_HOVER	 = 'images/buttons/creditsButtonHoverImg.png';
-BUTTON_SCORE_HOVER	 	 = 'images/buttons/scoreButtonHoverImg.png';
-BUTTON_TUTORIAL_HOVER    = 'images/buttons/tutorialButtonHoverImg.png';
-BUTTON_BACK_HOVER	 	 = 'images/buttons/backButtonHoverImg.png';
-BUTTON_MENU_HOVER		 = 'images/buttons/menuButtonHoverImg.png';
-BUTTON_OPTIONS_HOVER	 = 'images/buttons/optionsButtonHoverImg.png';
+BUTTON_PLAY_HOVER			= 'images/buttons/playButtonHoverImg.png';
+BUTTON_CREDITS_HOVER		= 'images/buttons/creditsButtonHoverImg.png';
+BUTTON_SCORE_HOVER			= 'images/buttons/scoreButtonHoverImg.png';
+BUTTON_TUTORIAL_HOVER		= 'images/buttons/tutorialButtonHoverImg.png';
+BUTTON_BACK_HOVER			= 'images/buttons/backButtonHoverImg.png';
+BUTTON_MENU_HOVER			= 'images/buttons/menuButtonHoverImg.png';
+BUTTON_OPTIONS_HOVER		= 'images/buttons/optionsButtonHoverImg.png';
 //CONSTANT AUDIO SOURCES
-AUDIO_BKG_SRC		= 'sounds/bkg.mp3';
-AUDIO_PFIRE_SRC		= 'sounds/shoot1.mp3';
-AUDIO_PHIT_SRC		= 'sounds/stationHit1.mp3';
-AUDIO_EHIT_SRC		= 'sounds/earthHit1.mp3';
-AUDIO_CHARGE_SRC	= 'sounds/charge2.mp3';
-AUDIO_AHIT_SRC		= 'sounds/hit1.mp3';
-AUDIO_MENUCLICK_SRC = 'sounds/menuClick3.mp3';
+AUDIO_BKG_SRC				= 'sounds/bkg.mp3';
+AUDIO_PFIRE_SRC				= 'sounds/shoot.mp3';
+AUDIO_PHIT_SRC				= 'sounds/stationHit.mp3';
+AUDIO_EHIT_SRC				= 'sounds/earthHit.mp3';
+AUDIO_CHARGE_SRC			= 'sounds/charge.mp3';
+AUDIO_AHIT_SRC				= 'sounds/hit.mp3';
+AUDIO_MENUCLICK_SRC			= 'sounds/menuClick.mp3';
+AUDIO_HARVESTING_SRC		= 'sounds/harvesting.mp3';
+AUDIO_WARNING_SRC			= 'sounds/warning.mp3';
+AUDIO_AMMOFULL_SRC			= 'sounds/ammoFull.mp3';
+AUDIO_GAINAMMO_SRC			= 'sounds/gainAmmo.mp3';
 
 //### START OF GAME OBJECT
 var Game = {
@@ -115,9 +119,6 @@ var Game = {
 	asteroids:  	[],
 	lasers:			[],
 	particles:		[],
-	numAst:			0,
-	minAst:			0,
-	maxAst:			0,
 	curLaser:		-1,
 	dTheta:			0,
 	gameScore:		0, //Start with score of zero
@@ -127,6 +128,14 @@ var Game = {
 	prevTime:		0,
 	deltaTime:		0,
 	totalTime:		0,
+	
+	//Spawning Variables
+	numAst:			0,
+	minAst:			0,
+	maxAst:			0,
+	numPar:			0,
+	minPar:			0,
+	maxPar:			0,
 	
 	//Harvest/Power Variables
 	charging:		0,
@@ -148,24 +157,24 @@ var Game = {
 	earthX:			0,
 	earthY:			620,
 	
-	
 	//BKG Playing Check
 	bkgPlaying:		0,
 	
 	//Image Checks
-	bkgImgLoaded:		0,
-	playerImgLoaded:	0,
-	asteroid1ImgLoaded:	0,
-	asteroid2ImgLoaded:	0,
-	asteroid3ImgLoaded: 0,
-	earthImg1Loaded:	0,
-	earthImg2Loaded:	0,
-	earthImg3Loaded:	0,
-	earthImg4Loaded:	0,
-	laserImgLoaded:		0,
-	aimingImgLoaded:	0,
-	ionoImgLoaded:		0,
-	powerImgLoaded:     0,
+	bkgImgLoaded:				0,
+	playerImgLoaded:			0,
+	asteroid1ImgLoaded:			0,
+	asteroid2ImgLoaded:			0,
+	asteroid3ImgLoaded: 		0,
+	earthImg1Loaded:			0,
+	earthImg2Loaded:			0,
+	earthImg3Loaded:			0,
+	earthImg4Loaded:			0,
+	laserImgLoaded:				0,
+	superLaserImgloaded:		0,
+	aimingImgLoaded:			0,
+	ionoImgLoaded:				0,
+	powerBarFillImgLoaded:		0,
 	powerContainerImgLoaded:	0,
 	projectedFillImgLoaded: 	0,
 	plasmaContainerImgLoaded:	0,
@@ -183,28 +192,28 @@ var Game = {
 	loadingContainerImgLoaded:	0,
 	loadingBarImgLoaded:		0,
 	//Level Image Checks
-	level1ImgLoaded:	0,
-	level2ImgLoaded:	0,
-	level3ImgLoaded:	0,
-	level4ImgLoaded:	0,
-	level5ImgLoaded:	0,
+	level1ImgLoaded:			0,
+	level2ImgLoaded:			0,
+	level3ImgLoaded:			0,
+	level4ImgLoaded:			0,
+	level5ImgLoaded:			0,
 	//Game Over Image Checks
-	gameoverImgLoaded:	0,
-	earthBurnImg1Loaded:0,
-	earthBurnImg2Loaded:0,
+	gameoverImgLoaded:			0,
+	earthBurnImg1Loaded:		0,
+	earthBurnImg2Loaded:		0,
 	//Menu Image Checks
-	menuImgLoaded:		0,
-	creditsImgLoaded:	0,
-	tutorialImgLoaded:	0,
-	scoreImgLoaded:		0,
+	menuImgLoaded:				0,
+	creditsImgLoaded:			0,
+	tutorialImgLoaded:			0,
+	scoreImgLoaded:				0,
 	//Menu Earth Variables
-	menuEarthSheetNum:	1,
-	menuEarthFrame:		0,
-	menuEarthFrameTick:	0,
-	menuEarthImg1Loaded:0,
-	menuEarthImg2Loaded:0,
-	menuEarthImg3Loaded:0,
-	menuEarthImg4Loaded:0,
+	menuEarthSheetNum:			1,
+	menuEarthFrame:				0,
+	menuEarthFrameTick:			0,
+	menuEarthImg1Loaded:		0,
+	menuEarthImg2Loaded:		0,
+	menuEarthImg3Loaded:		0,
+	menuEarthImg4Loaded:		0,
 	//Button Images
 	backButtonImgLoaded:			0,
 	backButtonHoverImgLoaded:		0,
@@ -217,35 +226,42 @@ var Game = {
 	scoreButtonImgLoaded:			0,
 	scoreButtonHoverImgLoaded:		0,
 	//Audio Checks
-	audioBKGLoaded:		0,
-	audioPFireLoaded:	0,
-	audioPHitLoaded:	0,
-	audioEHitLoaded:	0,
-	audioChargeLoaded:	0,
-	audioAHitLoaded:	0,
+	audioBKGLoaded:				0,
+	audioPFireLoaded:			0,
+	audioPHitLoaded:			0,
+	audioEHitLoaded:			0,
+	audioChargeLoaded:			0,
+	audioAHitLoaded:			0,
+	audioHarvesting:			0, //IMPLEMENT
+	audioWarning:				0, //IMPLEMENT
+	audioAmmoFull:				0, //IMPLEMENT
+	audioGainAmmo:				0, //IMPLEMENT
+	audioMenuClick:				0, //IMPLEMENT
+	
 	//Sprite Sheet Frames
-	earthSheetNum:		1,
-	ionoState:			1,
-	frameTick:			0,
-	asteroidFrameTick:	0,
-	particleFrameTick:	0,
-	aimingFrameTick:	0,
-	laserFrameTick:		0,
-	harvestFrameTick:	0,
-	chargeTick:		    0,
-	balanceTick:		0,
-	earthFrame:			0,
-	playerFrame:		0,
-	playerFireFrame:	70,
-	playerDeathFrame:	60,
-	aimingFrame:		0,
-	harvestFrame:		0,
-	harvestFlip:		0,
+	earthSheetNum:				1,
+	ionoState:					1,
+	frameTick:					0,
+	asteroidFrameTick:			0,
+	particleFrameTick:			0,
+	aimingFrameTick:			0,
+	laserFrameTick:				0,
+	harvestFrameTick:			0,
+	harvestTick:				0,
+	chargeTick:		    		0,
+	balanceTick:				0,
+	earthFrame:					0,
+	playerFrame:				0,
+	playerFireFrame:			70,
+	playerDeathFrame:			60,
+	aimingFrame:				0,
+	harvestFrame:				0,
+	harvestFlip:				0,
 	//Gameover Sprite Sheet Frames
-	earthBurnSheetNum:	1,
-	earthBurnFrame:		0,
-	earthBurnFrameTick:	0,
-	burnFlip:			0,
+	earthBurnSheetNum:			1,
+	earthBurnFrame:				0,
+	earthBurnFrameTick:			0,
+	burnFlip:					0,
 	
 	//Menu Instantiations
 	menu: new theMainMenu(MENU_IMG_SRC, BUTTON_PLAY_IMG_SRC, BUTTON_CREDITS_IMG_SRC, BUTTON_SCORE_IMG_SRC, BUTTON_TUTORIAL_IMG_SRC, BUTTON_PLAY_HOVER,
@@ -333,6 +349,10 @@ var Game = {
 		this.laserImg = new Image();
 		this.laserImg.onload = function () { 	Game.laserImgLoaded = 1; Game.gameLoadedAmt++; };
         this.laserImg.src = LASER_IMG_SRC;
+		//Super Laser
+		this.superLaserImg = new Image();
+		this.superLaserImg.onload = function () { 	Game.superLaserImgLoaded = 1; Game.gameLoadedAmt++; };
+        this.superLaserImg.src = SUPERLASER_IMG_SRC;
 		//Aiming
 		this.aimingImg = new Image();
 		this.aimingImg.onload = function () { 	Game.aimingImgLoaded = 1; Game.gameLoadedAmt++; };
@@ -341,10 +361,10 @@ var Game = {
 		this.ionoImg = new Image();
 		this.ionoImg.onload = function () { 	Game.ionoImgLoaded = 1; Game.gameLoadedAmt++; };
         this.ionoImg.src = IONO_IMG_SRC;
-		//PowerBar
-		this.powerBarImg = new Image();
-		this.powerBarImg.onload = function () { Game.powerImgLoaded = 1; Game.gameLoadedAmt++; };
-        this.powerBarImg.src = POWER_LEVEL_IMG;
+		//Power Bar Fill
+		this.powerBarFillImg = new Image();
+		this.powerBarFillImg.onload = function () { Game.powerBarFillImgLoaded = 1; Game.gameLoadedAmt++; };
+        this.powerBarFillImg.src = POWER_LEVEL_IMG;
 		//Power Container
 		this.powerContainerImg = new Image();
 		this.powerContainerImg.onload = function () { 	Game.powerContainerImgLoaded = 1; Game.gameLoadedAmt++; };
@@ -439,6 +459,10 @@ var Game = {
 		this.audioBKG.onload = function() { Game.audioBKGLoaded = 1; Game.gameLoadedAmt++; };
 		this.audioBKG.src = AUDIO_BKG_SRC;
 		this.audioBKG.volume = 0.2;
+		//MenuClick
+		this.audioMenuClick = new Audio();
+		this.audioMenuClick.onload = function() { Game.audioMenuClickLoaded = 1; Game.gameLoadedAmt++; };
+		this.audioMenuClick.src = AUDIO_MENUCLICK_SRC;
 		//Player Fire
 		this.audioPFire = new Audio();
 		this.audioPFire.onload = function() { Game.audioPFireLoaded = 1; Game.gameLoadedAmt++; };
@@ -459,6 +483,22 @@ var Game = {
 		this.audioAHit = new Audio();
 		this.audioAHit.onload = function() { Game.audioAHitLoaded = 1; Game.gameLoadedAmt++; };
 		this.audioAHit.src = AUDIO_AHIT_SRC;
+		//Harvesting
+		this.audioHarvesting = new Audio();
+		this.audioHarvesting.onload = function() { Game.audioHarvestingLoaded = 1; Game.gameLoadedAmt++; };
+		this.audioHarvesting.src = AUDIO_HARVESTING_SRC;
+		//Warning
+		this.audioWarning = new Audio();
+		this.audioWarning.onload = function() { Game.audioWarningLoaded = 1; Game.gameLoadedAmt++; };
+		this.audioWarning.src = AUDIO_WARNING_SRC;
+		//Ammo Full
+		this.audioAmmoFull = new Audio();
+		this.audioAmmoFull.onload = function() { Game.audioAmmoFullLoaded = 1; Game.gameLoadedAmt++; };
+		this.audioAmmoFull.src = AUDIO_AMMOFULL_SRC;
+		//Gain Ammo
+		this.audioGainAmmo = new Audio();
+		this.audioGainAmmo.onload = function() { Game.audioGainAmmoLoaded = 1; Game.gameLoadedAmt++; };
+		this.audioGainAmmo.src = AUDIO_GAINAMMO_SRC;
 		
 		//Asteroid Init
 		for( var m = 0; m < MAX_ASTEROIDS; m++ ) {
@@ -556,17 +596,17 @@ var Game = {
 	},
 	
 	DrawScreen: function() {
-		this.ctx.fillStyle = "#333333";
+		this.ctx.fillStyle	= "#333333";
         this.ctx.fillRect(0, 0, this.gameWidth, this.gameHeight);
-		this.ctx.font = "20px Akashi";
-		this.ctx.fillStyle = "white";
+		this.ctx.font 		= '20px Akashi';
+		this.ctx.fillStyle	= 'white';
 		
 		//BACKGROUND
 		if( Game.bkgImgLoaded != 0 ) {
 			this.ctx.drawImage(this.bkgImg, 0, 0);
 		}
 		//SCORE
-		this.ctx.fillText("Score: " + Game.gameScore, 10, 25);
+		this.ctx.fillText('Score: '  + Game.gameScore, 10, 25);
 		//LEVEL
 		if( this.levelShow === 1 ) {
 			switch( this.level ) {
@@ -624,69 +664,6 @@ var Game = {
 					this.earthSheetNum = 1;
 				}
 				this.earthFrame = 0;
-			}
-		}
-		//PLAYER
-		if( Game.playerImgLoaded != 0 && Game.gameState != Game.STATE_DEAD ) {
-			//GET THE PLAYER TO THE POSITION WE WANT HIM FIRST
-			this.ctx.save();
-			this.ctx.translate(1355*Math.cos(this.playerTheta), -1355*Math.sin(this.playerTheta));
-			this.ctx.translate(640, 1899);
-			this.ctx.rotate(-this.playerTheta);
-			this.playerX = 640+1355*Math.cos(this.playerTheta);
-			this.playerY = 1899-1355*Math.sin(this.playerTheta);
-			this.ctx.translate(-36, -36);
-			if( Game.gameState === Game.STATE_FIRE ) {
-				this.playerFrame = 0;
-				this.ctx.drawImage(this.playerImg, 0, this.playerFireFrame*75, 75, 75, 0, 0, 75, 75);
-				this.playerFireFrame++;
-				if( this.playerFireFrame >= 100 ) {
-					Game.gameState = Game.STATE_PLAYING;
-					this.playerFireFrame = 70;
-				}
-			} else if( Game.gameState === Game.STATE_DYING ) {
-				this.ctx.drawImage(this.playerImg, 0, this.playerDeathFrame*75, 75, 75, 0, 0, 75, 75);
-				if( this.frameTick === 1 ) {
-					this.playerDeathFrame++;
-				}
-				if( this.playerDeathFrame >= 69 ) {
-					Game.gameState = Game.STATE_DEAD;
-				}
-			} else {
-				this.ctx.drawImage(this.playerImg, 0, this.playerFrame*75, 75, 75, 0, 0, 75, 75);
-			}
-			this.ctx.restore();
-			if( this.frameTick === 1 ) {
-				this.playerFrame += 1;
-			}
-			if( this.playerFrame >= 60 ) {
-				this.playerFrame = 0;
-			}
-		}
-		//HARVESTING
-		if( Game.harvestImgLoaded != 0 && Game.gameState === Game.STATE_HARVEST ){
-			this.ctx.save();
-			this.ctx.translate(this.playerX, this.playerY);
-			this.ctx.rotate(-this.playerTheta);
-			this.ctx.translate(-100, -60);
-			this.ctx.drawImage(this.harvestImg, this.harvestFrame*75, 0, 75, 120, 0, 0, 75, 120);
-			this.ctx.restore();
-			if( this.harvestFrameTick === 1 ) {
-				if( this.harvestFlip === 1 ) {
-					this.harvestFrame--;
-				} else {
-					this.harvestFrame++;
-				}
-			}
-			if( this.harvestFrame >= 30 && this.harvestFlip === 0 ) {
-				this.harvestFrame = 29;
-				this.harvestFlip = 1;
-			}
-			if( this.harvestFlip === 1 ) {
-				if( this.harvestFrame <= 0 ) {
-					this.harvestFrame = 0;
-					this.harvestFlip = 0;
-				}
 			}
 		}
 		//AIMING
@@ -780,7 +757,7 @@ var Game = {
 					if( this.particleFrameTick === 1 ) {
 						Game.particles[i].frame += 1;
 					}
-					if( Game.particles[i].frame >= 30 ) {
+					if( Game.particles[i].frame >= 7 ) {
 						Game.particles[i].frame = 0;
 					}
 				}
@@ -794,18 +771,18 @@ var Game = {
 		if( Game.powerContainerImgLoaded !=0 ) {
 			this.ctx.drawImage(this.powerContainerImg, 240, 699);
 		}
-		if( Game.powerBarImg !=0 ) {
-			this.ctx.drawImage(this.powerBarImg, 0, 0, (this.pLevel*4)+1, 15, 246, 702, (this.pLevel*4)+1, 15);
+		if( Game.powerBarFillImgLoaded !=0 ) {
+			this.ctx.drawImage(this.powerBarFillImg, 0, 0, (this.pLevel*4)+1, 15, 246, 702, (this.pLevel*4)+1, 15);
 		}
-		if ( Game.projectedFillImgLoaded !=0 ) {
+		if( Game.projectedFillImgLoaded !=0 ) {
 			this.ctx.drawImage(this.projectedFillImg, 0, 0, 788, 30, (this.pLevel*4)+246, 702, ((this.maxChargeLevel - this.chargedLevel)*4), 30 );
 		}
 		//PLASMA METER
+		if( Game.plasmaLevel != 0 && Game.plasmaLevelImgLoaded != 0 ) {
+			this.ctx.drawImage(this.plasmaLevelImg, 200-Game.pHarvest*5 ,0, 200, 36, 1065+(200-Game.pHarvest*5), 13, Game.pHarvest*5, 36);
+		}
 		if( Game.plasmaContainerImgLoaded != 0 ) {
 			this.ctx.drawImage(this.plasmaContainerImg, 1062, 10);
-		}
-		if( Game.plasmaLevel != 0 ) {
-			this.ctx.drawImage(this.plasmaLevelImg, 200-Game.pHarvest*5 ,0, 200, 36, 1065+(200-Game.pHarvest*5), 13, Game.pHarvest*5, 36);
 		}
 		//IONO ICONS
 		if( Game.leftIconImgLoaded != 0 ) {
@@ -813,6 +790,69 @@ var Game = {
 		}
 		if( Game.rightIconImgLoaded != 0 ) {
 			this.ctx.drawImage(this.rightDangerIconImg, 0, 0, 60, 60, 1060, 690, 30, 30);
+		}
+		//HARVESTING
+		if( Game.harvestImgLoaded != 0 && Game.gameState === Game.STATE_HARVEST ){
+			this.ctx.save();
+			this.ctx.translate(this.playerX, this.playerY);
+			this.ctx.rotate(-this.playerTheta);
+			this.ctx.translate(-80, -60);
+			this.ctx.drawImage(this.harvestImg, this.harvestFrame*75, 0, 75, 120, 0, 0, 75, 120);
+			this.ctx.restore();
+			if( this.harvestFrameTick === 1 ) {
+				if( this.harvestFlip === 1 ) {
+					this.harvestFrame--;
+				} else {
+					this.harvestFrame++;
+				}
+			}
+			if( this.harvestFrame >= 30 && this.harvestFlip === 0 ) {
+				this.harvestFrame = 29;
+				this.harvestFlip = 1;
+			}
+			if( this.harvestFlip === 1 ) {
+				if( this.harvestFrame <= 0 ) {
+					this.harvestFrame = 0;
+					this.harvestFlip = 0;
+				}
+			}
+		}
+		//PLAYER
+		if( Game.playerImgLoaded != 0 && Game.gameState != Game.STATE_DEAD ) {
+			//GET THE PLAYER TO THE POSITION WE WANT HIM FIRST
+			this.ctx.save();
+			this.ctx.translate(1355*Math.cos(this.playerTheta), -1355*Math.sin(this.playerTheta));
+			this.ctx.translate(640, 1899);
+			this.ctx.rotate(-this.playerTheta);
+			this.playerX = 640+1355*Math.cos(this.playerTheta);
+			this.playerY = 1899-1355*Math.sin(this.playerTheta);
+			this.ctx.translate(-36, -36);
+			if( Game.gameState === Game.STATE_FIRE ) {
+				this.playerFrame = 0;
+				this.ctx.drawImage(this.playerImg, 0, this.playerFireFrame*75, 75, 75, 0, 0, 75, 75);
+				this.playerFireFrame++;
+				if( this.playerFireFrame >= 100 ) {
+					Game.gameState = Game.STATE_PLAYING;
+					this.playerFireFrame = 70;
+				}
+			} else if( Game.gameState === Game.STATE_DYING ) {
+				this.ctx.drawImage(this.playerImg, 0, this.playerDeathFrame*75, 75, 75, 0, 0, 75, 75);
+				if( this.frameTick === 1 ) {
+					this.playerDeathFrame++;
+				}
+				if( this.playerDeathFrame >= 69 ) {
+					Game.gameState = Game.STATE_DEAD;
+				}
+			} else {
+				this.ctx.drawImage(this.playerImg, 0, this.playerFrame*75, 75, 75, 0, 0, 75, 75);
+			}
+			this.ctx.restore();
+			if( this.frameTick === 1 ) {
+				this.playerFrame += 1;
+			}
+			if( this.playerFrame >= 60 ) {
+				this.playerFrame = 0;
+			}
 		}
 		//SPRITE SHEET FRAMES
 		this.frameTick++;
@@ -879,6 +919,9 @@ var Game = {
 				//S -- Charge
 				case 83:
 					if( Game.gameState === Game.STATE_PLAYING ) {
+						this.audioCharge.pause();
+						this.audioCharge.currentTime = 0;
+						this.audioCharge.play();
 						if( Game.charging === 0 ) {
 							Game.charging = 1;
 							Game.maxChargeLevel += 15;
@@ -925,6 +968,8 @@ var Game = {
 		if( Game.pHarvest >= 10 ) {
 			for( var i = 0; i < Game.lasers.length; i++ ) {
 			if( Game.lasers[i].isAlive === 0 && Game.curLaser != i ) {
+				this.audioPFire.pause();
+				this.audioPFire.currentTime = 0;
 				this.audioPFire.play();
 				Game.pHarvest -= 10;
 				if( Game.pLevel < 0 ) {
@@ -1019,20 +1064,26 @@ var Game = {
 		//Particles
 		for( var i = 0; i < Game.particles.length; i++ ) {
 			if( Game.particles[i].isAlive != 0 ) {
-				if( Game.particles[i].isColliding(Game.playerX-36, Game.playerY-36, "player") ) {
+				if( Game.particles[i].isColliding(Game.playerX, Game.playerY, "player") ) {
 					Game.particles[i].destroy();
-					//Add in Particle Collect Noise
-					//Add Power to LaserCharge
-					//Add Check for overcharge
+					//TODO Add in Particle Collect Noise
+					this.pHarvest += 5;
+					if( this.pHarvest > MAX_CHARGE ) {
+						Game.OverchargeShot();
+					}
 				}
 				for( var j = 0; j < Game.lasers.length; j++ ) {
 					if( Game.particles[i].isColliding(Game.lasers[j].x-20, Game.lasers[j].y-40, "laser") ) {
 						Game.particles[i].destroy();
-						//TODO - Decide if we want a sound here
 					}
 				}
 			}
 		}
+	},
+	
+	OverchargeShot: function() {
+		this.pHarvest = 0;
+		this.gameState = this.STATE_FIRE;
 	},
 	
 	SpawnAsteroids: function(tTime) {
@@ -1047,6 +1098,8 @@ var Game = {
 			this.levelShow = 0;
 			this.minAst = 1;
 			this.maxAst = 1;
+			this.minPar = 1;
+			this.maxPar = Math.floor((Math.random()*1)+1);
 		} else if( tTime >= 60 && tTime <= 65 ) {
 			this.level = 2;
 			this.levelShow = 1;
@@ -1054,6 +1107,8 @@ var Game = {
 			this.levelShow = 0;
 			this.minAst = 1;
 			this.maxAst = 3;
+			this.minPar = 1;
+			this.maxPar = Math.floor((Math.random()*2)+1);
 		} else if( tTime >= 90 && tTime <= 95 ) {
 			this.level = 3;
 			this.levelShow = 1;
@@ -1061,6 +1116,8 @@ var Game = {
 			this.levelShow = 0;
 			this.minAst = 2;
 			this.maxAst = 4;
+			this.minPar = 1;
+			this.maxPar = Math.floor((Math.random()*3)+1);
 		} else if( tTime >= 120 && tTime <= 125 ) {
 			this.level = 4;
 			this.levelShow = 1;
@@ -1068,6 +1125,8 @@ var Game = {
 			this.levelShow = 0;
 			this.minAst = 2;
 			this.maxAst = 6;
+			this.minPar = 2;
+			this.maxPar = Math.floor((Math.random()*3)+1);
 		} else if( tTime >= 160 && tTime <= 165 ) {
 			this.level = 5;
 			this.levelShow = 1;
@@ -1075,6 +1134,8 @@ var Game = {
 			this.levelShow = 0;
 			this.minAst = 3;
 			this.maxAst = 6;
+			this.minPar = 3;
+			this.maxPar = Math.floor((Math.random()*4)+1);
 		} else {
 			console.log("YOU WIN.");
 		}
@@ -1086,11 +1147,23 @@ var Game = {
 				var size  = Math.floor(Math.random()*3);
 				if( Game.asteroids[i].isAlive === 0 ) {
 					Game.asteroids[i].isAlive = 1;
-					Game.asteroids[i].speed   = speed;
-					Game.asteroids[i].frame   = frame;
-					Game.asteroids[i].astSize = size;
 					Game.asteroids[i].spawn(speed, frame, size);
 					Game.numAst++;
+				}
+			}
+		}
+	},
+	
+	SpawnParticles: function() {
+		//Spawn Particles
+		if( Game.numPar <= this.minPar && Game.numPar <= MAX_PARTICLES ) {
+			for( var i = Game.numPar; i < this.maxPar; i++ ) {
+				var color = Math.floor(Math.random()*6);
+				var speed = Math.floor((Math.random()*3)+1);
+				if( Game.particles[i].isAlive === 0 ) {
+					Game.particles[i].isAlive = 1;
+					Game.particles[i].spawn(color, speed);
+					Game.numPar++;
 				}
 			}
 		}
@@ -1157,14 +1230,24 @@ var Game = {
 			if( Game.numAst < 0 ) {
 				Game.numAst = 0;
 			}
-			if( Game.numAst > 0 ) {
+			
+			//NUMBER OF PARTICLES CHECK
+			if( Game.numPar < 0 ) {
+				Game.numPar = 0;
+			}
+			
+			//COLLISION DETECTION
+			if( Game.numAst > 0 || Game.numPar > 0 ) {
 				Game.CollisionDetection();
 			}
 			
 			//ASTEROID CREATION
 			Game.SpawnAsteroids(this.totalTime);
 			
-			//LASER COORD UPDATE
+			//PARTICLE CREATION
+			Game.SpawnParticles();
+			
+			//LASER MOVEMENT
 			for( var i = 0; i < Game.lasers.length; i++ ) {
 				if( Game.lasers[i].y < -1 ) {
 					Game.lasers[i].destroy();
@@ -1178,6 +1261,13 @@ var Game = {
 			for( var j = 0; j < Game.asteroids.length; j++ ) {
 				if( Game.asteroids[j].isAlive != 0 && Game.asteroids[j].state != 3 ) {
 					Game.asteroids[j].moveAst(this.dTime);
+				}
+			}
+			
+			//PARTICLE MOVEMENT
+			for( var k = 0; k < Game.particles.length; k++ ) {
+				if( Game.particles[k].isAlive != 0 ) {
+					Game.particles[k].movePar(this.dTime);
 				}
 			}
 			
@@ -1233,7 +1323,7 @@ var Game = {
 					if( Game.pHarvest < MAX_CHARGE && Game.pLevel > 0 ) {
 						Game.pHarvest++;
 						Game.pLevel--;
-					} else if( Game.pHarvest === MAX_CHARGE || Game.pLevel === 0 ) {
+					} else if( Game.pHarvest === MAX_CHARGE ) {
 						Game.gameState = Game.STATE_PLAYING;
 					}
 				} else if(Game.harvestTick >= 10){

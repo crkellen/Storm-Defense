@@ -5,3 +5,7 @@ body {
 comment {
 	background: #6b92b9;
 }
+@font-face {
+	font-family: 'Akashi';
+	src: url('http://lutzkellen.com/Akashi.ttf');
+}

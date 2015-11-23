@@ -76,7 +76,7 @@ function theTutorial(backImage, buttonBack, buttonBackHover, buttonNext, buttonN
     // ----------------------------------------------------------------------------
     // Draw the Menu Screen
     // ----------------------------------------------------------------------------
-    this.DrawTutorial = function(tt1, ta1, tt2, ta2, tt3, ta3, tt4, ta4, tt5, ta5, tt6, ta6) {
+    this.DrawTutorial = function(tt1, ta1, tt2, ta2, tt3, ta3, tt4, ta4, tt5, ta5, tt6, ta6, tt7, ta7, tt8) {
         // Init Local Canvas variables
         var tutorialCanvas = document.getElementById(CANVAS_TUTORIAL_ID);
         var tutorialCTX = tutorialCanvas.getContext("2d");
@@ -87,25 +87,25 @@ function theTutorial(backImage, buttonBack, buttonBackHover, buttonNext, buttonN
 			case 0:
 				//Intro
 				this.numFrames = 13;
-				tutorialCTX.drawImage(tt1, 350, 200);
+				tutorialCTX.drawImage(tt1, 350, 90);
 				tutorialCTX.drawImage(ta1, this.tutanimFrame*640, 0, 640, 360, 350, 360, 640, 360);
 				break;
 			case 1:
 				//Movement
 				this.numFrames = 16;
-				tutorialCTX.drawImage(tt2, 300, 200);
+				tutorialCTX.drawImage(tt2, 350, 90);
 				tutorialCTX.drawImage(ta2, this.tutanimFrame*640, 0, 640, 360, 350, 360, 640, 360);
 				break;
 			case 2:
 				//Charging
 				this.numFrames = 23;
-				tutorialCTX.drawImage(tt3, 250, 90);
+				tutorialCTX.drawImage(tt3, 350, 50);
 				tutorialCTX.drawImage(ta3, this.tutanimFrame*640, 0, 640, 360, 350, 360, 640, 360);
 				break;
 			case 3:
 				//Harvesting
 				this.numFrames = 12;
-				tutorialCTX.drawImage(tt4, 300, 90);
+				tutorialCTX.drawImage(tt4, 350, 50);
 				tutorialCTX.drawImage(ta4, this.tutanimFrame*640, 0, 640, 360, 350, 360, 640, 360);
 				break;
 			case 4:
@@ -121,10 +121,15 @@ function theTutorial(backImage, buttonBack, buttonBackHover, buttonNext, buttonN
 				tutorialCTX.drawImage(ta6, this.tutanimFrame*640, 0, 640, 360, 350, 360, 640, 360);
 				break;
 			case 6:
-				//Particles ################################################################################ FINISH THIS WITH THE TEXT
+				//Particles
 				this.numFrames = 31;
-				tutorialCTX.drawImage(tt6, 350, 50);
-				tutorialCTX.drawImage(ta6, this.tutanimFrame*640, 0, 640, 360, 350, 360, 640, 360);
+				tutorialCTX.drawImage(tt7, 350, 50);
+				tutorialCTX.drawImage(ta7, this.tutanimFrame*640, 0, 640, 360, 350, 360, 640, 360);
+				break;
+			case 7:
+				this.numFrames = 31;
+				tutorialCTX.drawImage(tt8, 350, 50);
+				tutorialCTX.drawImage(ta7, this.tutanimFrame*640, 0, 640, 360, 350, 360, 640, 360);
 				break;
 			default: console.log("ERROR: Current Tutorial Selection");
 		}
@@ -172,18 +177,15 @@ function theTutorial(backImage, buttonBack, buttonBackHover, buttonNext, buttonN
 			menuCanvas.style.display    = "block";
 			Game.gameState = Game.STATE_MENU;
 		} else if( nextButton.coordsAreInside(mousePos.x, mousePos.y) ) {
-			alert(this.curTut);
-			this.curTut++;
-			alert(this.curTut);
-			if( this.curTut >= 7 ) {
-				this.curTut = 0;
+			Game.tutorial.curTut++;
+			if( Game.tutorial.curTut >= 8 ) {
+				Game.tutorial.curTut = 0;
 			}
 		} else if( prevButton.coordsAreInside(mousePos.x, mousePos.y) ) {
-			this.curTut--;
-			if( this.curTut <= -1 ) {
-				this.curTut = 6;
+			Game.tutorial.curTut--;
+			if( Game.tutorial.curTut <= -1 ) {
+				Game.tutorial.curTut = 7;
 			}
 		}
 	};
-    
 };

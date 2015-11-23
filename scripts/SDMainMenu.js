@@ -154,6 +154,7 @@ function theMainMenu(backImage, buttonMenuImg, buttonCreditsImg, buttonScoreImg,
 			gameCanvas.style.display    = "block";
 			menuCanvas.style.display    = "none";
 			creditsCanvas.style.display = "none";
+			//alert("k");
 			Game.gameState = Game.STATE_PLAYING;
 		} else if( creditsButton.coordsAreInside(mousePos.x, mousePos.y) ) {
 			gameCanvas.style.display    = "none";

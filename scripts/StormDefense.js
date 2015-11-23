@@ -84,6 +84,8 @@ BUTTON_TUTORIAL_IMG_SRC		= 'images/buttons/tutorialButtonImg.png';
 BUTTON_BACK_IMG_SRC			= 'images/buttons/backButtonImg.png';
 BUTTON_MENU_IMG_SRC			= 'images/buttons/menuButtonImg.png';
 BUTTON_OPTIONS_IMG_SRC		= 'images/buttons/optionsButtonImg.png';
+BUTTON_NEXT_IMG_SRC			= 'images/buttons/nextButtonImg.png';
+BUTTON_PREV_IMG_SRC			= 'images/buttons/prevButtonImg.png';
 //CONSTANT HOVER IMGS
 BUTTON_PLAY_HOVER			= 'images/buttons/playButtonHoverImg.png';
 BUTTON_CREDITS_HOVER		= 'images/buttons/creditsButtonHoverImg.png';
@@ -92,6 +94,8 @@ BUTTON_TUTORIAL_HOVER		= 'images/buttons/tutorialButtonHoverImg.png';
 BUTTON_BACK_HOVER			= 'images/buttons/backButtonHoverImg.png';
 BUTTON_MENU_HOVER			= 'images/buttons/menuButtonHoverImg.png';
 BUTTON_OPTIONS_HOVER		= 'images/buttons/optionsButtonHoverImg.png';
+BUTTON_NEXT_HOVER			= 'images/buttons/nextButtonHoverImg.png';
+BUTTON_PREV_HOVER			= 'images/buttons/prevButtonHoverImg.png';
 //CONSTANT AUDIO SOURCES
 AUDIO_BKG_SRC				= 'sounds/bkg.mp3';
 AUDIO_PFIRE_SRC				= 'sounds/shoot.mp3';
@@ -214,11 +218,11 @@ var Game = {
 	gameoverImgLoaded:			0,
 	earthBurnImg1Loaded:		0,
 	earthBurnImg2Loaded:		0,
-	//Menu Image Checks
-	menuImgLoaded:				0,
-	creditsImgLoaded:			0,
-	tutorialImgLoaded:			0,
-	scoreImgLoaded:				0,
+	// //Menu Image Checks
+	// menuImgLoaded:				0,
+	// creditsImgLoaded:			0,
+	// tutorialImgLoaded:			0,
+	// scoreImgLoaded:				0,
 	//Tutorial Image Checks
 	tutorialtext1ImgLoaded:		0,
 	tutorialanim1ImgLoaded:		0,
@@ -240,17 +244,17 @@ var Game = {
 	menuEarthImg2Loaded:		0,
 	menuEarthImg3Loaded:		0,
 	menuEarthImg4Loaded:		0,
-	//Button Images
-	backButtonImgLoaded:			0,
-	backButtonHoverImgLoaded:		0,
-	playButtonImgLoaded:			0,
-	playButtonHoverImgLoaded:		0,
-	creditsButtonImgLoaded:			0,
-	creditsButtonHoverImgLoaded:	0,
-	tutorialButtonImgLoaded:		0,
-	tutorialButtonHoverImgLoaded:	0,
-	scoreButtonImgLoaded:			0,
-	scoreButtonHoverImgLoaded:		0,
+	// //Button Images
+	// backButtonImgLoaded:			0,
+	// backButtonHoverImgLoaded:		0,
+	// playButtonImgLoaded:			0,
+	// playButtonHoverImgLoaded:		0,
+	// creditsButtonImgLoaded:			0,
+	// creditsButtonHoverImgLoaded:	0,
+	// tutorialButtonImgLoaded:		0,
+	// tutorialButtonHoverImgLoaded:	0,
+	// scoreButtonImgLoaded:			0,
+	// scoreButtonHoverImgLoaded:		0,
 	//Audio Checks
 	audioBKGLoaded:				0,
 	audioPFireLoaded:			0,
@@ -258,10 +262,10 @@ var Game = {
 	audioEHitLoaded:			0,
 	audioChargeLoaded:			0,
 	audioAHitLoaded:			0,
-	audioHarvesting:			0, //IMPLEMENT
-	audioWarning:				0, //IMPLEMENT
-	audioAmmoFull:				0, //IMPLEMENT
-	audioGainAmmo:				0, //IMPLEMENT
+	audioHarvesting:			0,
+	audioWarning:				0,
+	audioAmmoFull:				0,
+	audioGainAmmo:				0, 
 	audioMenuClick:				0, //IMPLEMENT
 	
 	//Sprite Sheet Frames
@@ -293,7 +297,7 @@ var Game = {
 	menu: new theMainMenu(MENU_IMG_SRC, BUTTON_PLAY_IMG_SRC, BUTTON_CREDITS_IMG_SRC, BUTTON_SCORE_IMG_SRC, BUTTON_TUTORIAL_IMG_SRC, BUTTON_PLAY_HOVER,
 					BUTTON_CREDITS_HOVER, BUTTON_SCORE_HOVER, BUTTON_TUTORIAL_HOVER, BUTTON_OPTIONS_IMG_SRC, BUTTON_OPTIONS_HOVER),
 	credits: new theCredits(CREDITS_IMG_SRC, BUTTON_BACK_IMG_SRC, BUTTON_BACK_HOVER),
-	tutorial: new theTutorial(TUTORIAL_IMG_SRC, BUTTON_BACK_IMG_SRC, BUTTON_BACK_HOVER),
+	tutorial: new theTutorial(TUTORIAL_IMG_SRC, BUTTON_BACK_IMG_SRC, BUTTON_BACK_HOVER, BUTTON_NEXT_IMG_SRC, BUTTON_NEXT_HOVER, BUTTON_PREV_IMG_SRC, BUTTON_PREV_HOVER),
 	score: new theScore(SCORE_IMG_SRC, BUTTON_BACK_IMG_SRC, BUTTON_BACK_HOVER),
 	
 	Init: function() {
@@ -575,14 +579,17 @@ var Game = {
 		this.audioWarning = new Audio();
 		this.audioWarning.onload = function() { Game.audioWarningLoaded = 1; Game.gameLoadedAmt++; };
 		this.audioWarning.src = AUDIO_WARNING_SRC;
+		this.audioWarning.volume = 0.2;
 		//Ammo Full
 		this.audioAmmoFull = new Audio();
 		this.audioAmmoFull.onload = function() { Game.audioAmmoFullLoaded = 1; Game.gameLoadedAmt++; };
 		this.audioAmmoFull.src = AUDIO_AMMOFULL_SRC;
+		this.audioAmmoFull.volume = 0.2;
 		//Gain Ammo
 		this.audioGainAmmo = new Audio();
 		this.audioGainAmmo.onload = function() { Game.audioGainAmmoLoaded = 1; Game.gameLoadedAmt++; };
 		this.audioGainAmmo.src = AUDIO_GAINAMMO_SRC;
+		this.audioGainAmmo.volume = 0.2;
 		
 		//Asteroid Init
 		for( var m = 0; m < MAX_ASTEROIDS; m++ ) {
@@ -626,6 +633,11 @@ var Game = {
 		//Turn off Music
 		this.audioBKG.pause();
 		this.audioBKG.currentTime = 0;
+		//Turn off all Sound
+		this.audioHarvesting.pause();
+		this.audioHarvesting.currentTime = 0;
+		this.audioWarning.pause();
+		this.audioWarning.currentTime = 0;
 		//Reset Arrays
 			//Asteroids
 			for( var m = 0; m < MAX_ASTEROIDS; m++ ) {
@@ -976,7 +988,7 @@ var Game = {
 			}
 		} else {
 			switch( event.keyCode ) {
-				//Left Shift - Charge
+				//Left Shift - Harvest
 				case 16:
 					if( Game.gameState != Game.STATE_DYING ) {
 						if( Game.gameState === Game.STATE_HARVEST ) {
@@ -988,6 +1000,13 @@ var Game = {
 							Game.gameState = Game.STATE_HARVEST;
 							this.audioHarvesting.play();
 							this.audioHarvesting.loop = true;
+						} else {
+							//Charges Full
+							if( Game.gameState === Game.STATE_PLAYING ) {
+								this.audioAmmoFull.pause();
+								this.audioAmmoFull.currentTime = 0;
+								this.audioAmmoFull.play();
+							}
 						}
 					}
 					break;
@@ -1156,7 +1175,8 @@ var Game = {
 			if( Game.particles[i].isAlive != 0 ) {
 				if( Game.particles[i].isColliding(Game.playerX, Game.playerY, "player") ) {
 					Game.particles[i].destroy();
-					//TODO Add in Particle Collect Noise
+					//Add in Particle Collect Noise
+					
 					this.pHarvest += 5;
 					if( this.pHarvest > MAX_CHARGE ) {
 						Game.OverchargeShot();
@@ -1173,6 +1193,9 @@ var Game = {
 	
 	OverchargeShot: function() {
 		this.pHarvest = 0;
+		this.audioPFire.pause();
+		this.audioPFire.currentTime = 0;
+		this.audioPFire.play();
 		this.gameState = this.STATE_FIRE;
 	},
 	
@@ -1282,6 +1305,21 @@ var Game = {
 				this.audioBKG.play();
 				this.audioBKG.loop = true;
 				this.bkgPlaying = 1;
+			}
+			
+			//TURN OFF HARVEST SOUND IF FULL
+			if( this.pHarvest === 40 ) {
+				this.audioHarvesting.pause();
+				this.audioHarvesting.currentTime = 0;
+			}
+			
+			//WARNING SOUND
+			if( this.pLevel >= 175 || this.pLevel <= 25 ) {
+				this.audioWarning.play();
+				this.audioWarning.loop = true;
+			} else {
+				this.audioWarning.pause();
+				this.audioWarning.currentTime = 0;
 			}
 
 			//TIME CALCULATION
@@ -1412,6 +1450,9 @@ var Game = {
 				if( Game.harvestTick === 1 ) {
 					if( Game.pHarvest < MAX_CHARGE && Game.pLevel > 0 ) {
 						Game.pHarvest++;
+						if(  this.pHarvest % 10 === 0 ) {
+							this.audioGainAmmo.play();
+						}
 						Game.pLevel--;
 					} else if( Game.pHarvest === MAX_CHARGE ) {
 						Game.gameState = Game.STATE_PLAYING;

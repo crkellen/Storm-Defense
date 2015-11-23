@@ -882,9 +882,9 @@ var Game = {
 		}
 		//AURORA
 		if( this.auroraImgLoaded != 0 && this.gameState === this.STATE_HARVEST ) {
-			this.ctx.drawImage(this.auroraImg, 0, this.auroraFrame*151, 1280, 150, this.earthX, this.earthY-30, 1280, 151);
+			this.ctx.drawImage(this.auroraImg, 0, this.auroraFrame*150, 1280, 150, this.earthX, this.earthY-30, 1280, 151);
 			if( this.auroraFrameTick === 1 ) {
-				//this.auroraFrame++;
+				this.auroraFrame++;
 			}
 			if( this.auroraFrame >= 16 ) {
 				this.auroraFrame = 0;
@@ -1005,7 +1005,7 @@ var Game = {
 		if( this.harvestFrameTick  >= 5 ) {
 			this.harvestFrameTick = 0;
 		}
-		if( this.auroraFrameTick   >= 50) {
+		if( this.auroraFrameTick   >= 10) {
 			this.auroraFrameTick = 0;
 		}
 	},

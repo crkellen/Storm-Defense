@@ -19,14 +19,14 @@ function Asteroid(id, state, speed, frame) {
 Asteroid.prototype.destroy = function() {
 	if( this.astSize != 2 ) {
 		this.state = 1;
-		Game.pScore += 100;
+		Game.gameScore += 100;
 		Game.numAst--;
 		return;
 	}
 	if( this.astSize === 2 ) {
 		this.state = 2;
 		this.astSize = 0;
-		Game.pScore += 50;
+		Game.gameScore += 50;
 		this.x += 15;
 		this.y += 15;
 		return;

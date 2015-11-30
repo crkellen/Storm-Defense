@@ -8,6 +8,7 @@ function Laser(id, theta, frame) {
 	this.isAlive = 0; //Start Dead
 };
 
+//FUNCTIONS
 Laser.prototype.drawSelf = function(ctx, lImg) {
 	ctx.translate(this.x, this.y);
 	ctx.rotate(this.theta);

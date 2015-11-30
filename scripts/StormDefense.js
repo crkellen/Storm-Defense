@@ -7,6 +7,7 @@ var CANVAS_SCORE_ID			= "canvasScore"
 var WORLD_HEIGHT			= 720;
 var WORLD_WIDTH				= 1280;
 var MAX_LASERS				= 20;
+var MAX_SUPERLASERS			= 5;
 var MAX_ASTEROIDS			= 10;
 var MAX_PARTICLES			= 10;
 var MAX_CHARGE				= 40;
@@ -54,6 +55,7 @@ LEVEL5_IMG_SRC				= 'images/ingamebg/level5Img.png';
 //CONSTANT GAMEOVER IMGS
 GAMEOVER_IMG_SRC			= 'images/gameover/gameoverImg.png';
 VICTORY_IMG_SRC				= 'images/gameover/victoryImg.png';
+PRESSANY_IMG_SRC			= 'images/gameover/pressAnyImg.png';
 EARTHBURN_IMG_SRC1			= 'images/gameover/earthBurnImg1.png';
 EARTHBURN_IMG_SRC2			= 'images/gameover/earthBurnImg2.png';
 //CONSTANT MENU BKG IMGS
@@ -129,6 +131,7 @@ var Game = {
 	STATE_GAMEOVER:	999,
 	gameState:		0,
 	isInitialized:	0,
+	isGameover:		0,
 	
 	//Canvas and Context
 	gameCanvas:		null,
@@ -142,6 +145,7 @@ var Game = {
 	asteroids:  	[],
 	lasers:			[],
 	particles:		[],
+	superlasers:	[],
 	curLaser:		-1,
 	dTheta:			0,
 	gameScore:		0, //Start with score of zero
@@ -224,6 +228,7 @@ var Game = {
 	//Game Over Image Checks
 	gameoverImgLoaded:			0,
 	victoryImgLoaded:			0,
+	pressAnyImgLoaded:			0,
 	earthBurnImg1Loaded:		0,
 	earthBurnImg2Loaded:		0,
 	//Tutorial Image Checks
@@ -273,6 +278,8 @@ var Game = {
 	laserFrameTick:				0,
 	harvestFrameTick:			0,
 	auroraFrameTick:			0,
+	victoryFrameTick:			0,
+	gameoverFrameTick:			0,
 	harvestTick:				0,
 	chargeTick:		    		0,
 	balanceTick:				0,
@@ -283,12 +290,15 @@ var Game = {
 	aimingFrame:				0,
 	harvestFrame:				0,
 	auroraFrame:				0,
+	victoryFrame:				0,
+	gameoverFrame:				0,
 	harvestFlip:				0,
 	//Gameover Sprite Sheet Frames
 	earthBurnSheetNum:			1,
 	earthBurnFrame:				0,
 	earthBurnFrameTick:			0,
 	burnFlip:					0,
+	canReturn:					0,
 	
 	//Menu Instantiations
 	menu: new theMainMenu(MENU_IMG_SRC, BUTTON_PLAY_IMG_SRC, BUTTON_CREDITS_IMG_SRC, BUTTON_SCORE_IMG_SRC, BUTTON_TUTORIAL_IMG_SRC, BUTTON_PLAY_HOVER,
@@ -440,6 +450,10 @@ var Game = {
 		this.victoryImg = new Image();
 		this.victoryImg.onload = function () { Game.victoryImgLoaded = 1; Game.gameLoadedAmt++; };
 		this.victoryImg.src = VICTORY_IMG_SRC;
+		//Press Any Key
+		this.pressAnyImg = new Image();
+		this.pressAnyImg.onload = function () { Game.pressAnyImgLoaded = 1; Game.gameLoadedAmt++; };
+		this.pressAnyImg.src = PRESSANY_IMG_SRC;
 		//EarthBurn1
 		this.earthBurnImg1 = new Image();
 		this.earthBurnImg1.onload = function () { 	Game.earthBurnImg1Loaded = 1; Game.gameLoadedAmt++; };
@@ -620,6 +634,10 @@ var Game = {
 		for( var o = 0; o < MAX_PARTICLES; o++ ) {
 			this.particles[o] = new Particle(o, 0, 0, 0);
 		}
+		//Superlaser Init
+		for( var n = 0; n < MAX_SUPERLASERS; n++ ) {
+			this.superlasers[n] = new Superlaser(n, 0, 0);
+		}
 		
 		//MENU LISTENERS
         this.menuCanvas.addEventListener('click', this.menu.doMenuClick, false);
@@ -673,6 +691,12 @@ var Game = {
 				this.particles[o].x = 0;
 				this.particles[o].y = 0;
 				this.particles[o].isAlive = 0;
+			}
+			//Superlaser Init
+			for( var n = 0; n < MAX_SUPERLASERS; n++ ) {
+				this.superlasers[n].x = 0;
+				this.superlasers[n].y = 0;
+				this.superlasers[n].isAlive = 0;
 			}
 		//General Variables
 		this.numAst = 0;
@@ -770,13 +794,13 @@ var Game = {
 			}
 			if( this.frameTick === 1 ) {
 				this.earthFrame += 1;
-			}
-			if( this.earthFrame >= 120 ) {
-				this.earthSheetNum++;
-				if( this.earthSheetNum == 5 ) {
-					this.earthSheetNum = 1;
+				if( this.earthFrame >= 120 ) {
+					this.earthSheetNum++;
+					if( this.earthSheetNum == 5 ) {
+						this.earthSheetNum = 1;
+					}
+					this.earthFrame = 0;
 				}
-				this.earthFrame = 0;
 			}
 		}
 		//AIMING
@@ -789,24 +813,41 @@ var Game = {
 			this.ctx.restore();
 			if( this.aimingFrameTick === 1 ) {
 				this.aimingFrame += 1;
+				if( this.aimingFrame >= 5 ) {
+					this.aimingFrame = 0;
+				}
 			}
-			if( this.aimingFrame >= 5 ) {
-				this.aimingFrame = 0;
-			}
+			
 		}
 		//LASER
 		if( Game.laserImgLoaded != 0 ) {
-			for( var i = 0; i < Game.asteroids.length; i++ ) {
+			for( var i = 0; i < Game.lasers.length; i++ ) {
 				if( Game.lasers[i].isAlive != 0 ) {
 					this.ctx.save();
 					Game.lasers[i].drawSelf(this.ctx, this.laserImg);
 					this.ctx.restore();
+					if( this.laserFrameTick === 1 ) {
+						Game.lasers[i].frame += 1;
+						if( Game.lasers[i].frame >= 10 ) {
+							Game.lasers[i].frame = 0;
+						}
+					}
 				}
-				if( this.laserFrameTick === 1 && Game.lasers[i].isAlive === 1 ) {
-					Game.lasers[i].frame += 1;
-				}
-				if( Game.lasers[i].frame >= 10 ) {
-					Game.lasers[i].frame = 0;
+			}
+		}
+		//SUPERLASER
+		if( Game.superLaserImgLoaded != 0 ) {
+			for( var i = 0; i < Game.superlasers.length; i++ ) {
+				if( Game.superlasers[i].isAlive != 0 ) {
+					this.ctx.save();
+					Game.superlasers[i].drawSelf(this.ctx, this.superLaserImg);
+					this.ctx.restore();
+					if( this.laserFrameTick === 1 ) {
+						Game.lasers[i].frame += 1;
+						if( Game.lasers[i].frame >= 10 ) {
+							Game.lasers[i].frame = 0;
+						}
+					}
 				}
 			}
 		}
@@ -817,9 +858,9 @@ var Game = {
 					Game.asteroids[i].drawSelf(this.ctx, this.asteroid1Img, this.asteroid2Img, this.asteroid3Img);
 					if( this.asteroidFrameTick === 1 ) {
 						Game.asteroids[i].frame += 1;
-					}
-					if( Game.asteroids[i].frame >= 60 ) {
-						Game.asteroids[i].frame = 0;
+						if( Game.asteroids[i].frame >= 60 ) {
+							Game.asteroids[i].frame = 0;
+						}
 					}
 				}
 				if( Game.asteroids[i].state === 1 || Game.asteroids[i].state === 2 ) {
@@ -869,9 +910,9 @@ var Game = {
 					Game.particles[i].drawSelf(this.ctx, this.particleImg);
 					if( this.particleFrameTick === 1 ) {
 						Game.particles[i].frame += 1;
-					}
-					if( Game.particles[i].frame >= 7 ) {
-						Game.particles[i].frame = 0;
+						if( Game.particles[i].frame >= 7 ) {
+							Game.particles[i].frame = 0;
+						}
 					}
 				}
 			}
@@ -885,9 +926,9 @@ var Game = {
 			this.ctx.drawImage(this.auroraImg, 0, this.auroraFrame*150, 1280, 150, this.earthX, this.earthY-30, 1280, 151);
 			if( this.auroraFrameTick === 1 ) {
 				this.auroraFrame++;
-			}
-			if( this.auroraFrame >= 16 ) {
-				this.auroraFrame = 0;
+				if( this.auroraFrame >= 16 ) {
+					this.auroraFrame = 0;
+				}
 			}
 		}
 		//IONOSPHERE METER
@@ -902,7 +943,7 @@ var Game = {
 		}
 		//PLASMA METER
 		if( Game.pHarvest === 0 ) {
-			
+			//Do Nothing
 		} else if( Game.plasmaLevel != 0 && Game.plasmaLevelImgLoaded != 0 ) {
 			this.ctx.drawImage(this.plasmaLevelImg, 200-5*Game.pHarvest, 0, 5*Game.pHarvest, 36, 1265-(Game.pHarvest*5), 13, Game.pHarvest*5, 36);
 		}
@@ -966,6 +1007,7 @@ var Game = {
 					this.playerDeathFrame++;
 				}
 				if( this.playerDeathFrame >= 69 ) {
+					Game.isGameover = 2;
 					Game.gameState = Game.STATE_DEAD;
 				}
 			} else {
@@ -1142,6 +1184,74 @@ var Game = {
 		if( this.victoryImgLoaded != 0 ) {
 			this.ctx.drawImage(this.victoryImg, 0, 0);
 		}
+		//EARTH
+		if( Game.earthImg1Loaded != 0 && Game.earthImg2Loaded != 0 && Game.earthImg3Loaded != 0 && Game.earthImg4Loaded != 0 ) {
+			switch( this.earthSheetNum ) {
+				case 1:
+					this.ctx.drawImage(this.earthImg1, 0, this.earthFrame*100, 1280, 100, this.earthX, this.earthY, 1280, 100);
+					break;
+				case 2:
+					this.ctx.drawImage(this.earthImg2, 0, this.earthFrame*100, 1280, 100, this.earthX, this.earthY, 1280, 100);
+					break;
+				case 3:
+					this.ctx.drawImage(this.earthImg3, 0, this.earthFrame*100, 1280, 100, this.earthX, this.earthY, 1280, 100);
+					break;
+				case 4:
+					this.ctx.drawImage(this.earthImg4, 0, this.earthFrame*100, 1280, 100, this.earthX, this.earthY, 1280, 100);
+					break;
+				default: console.log("ERROR: Earth Sheet Number");
+			}
+			if( this.frameTick === 1 ) {
+				this.earthFrame += 1;
+				if( this.earthFrame >= 120 ) {
+					this.earthSheetNum++;
+					if( this.earthSheetNum == 5 ) {
+						this.earthSheetNum = 1;
+					}
+					this.earthFrame = 0;
+				}
+			}
+		}
+		//PLAYER
+		if( Game.playerImgLoaded != 0 && Game.gameState != Game.STATE_DEAD ) {
+			//GET THE PLAYER TO THE POSITION WE WANT HIM FIRST
+			this.ctx.save();
+			this.ctx.translate(1355*Math.cos(this.playerTheta), -1355*Math.sin(this.playerTheta));
+			this.ctx.translate(640, 1899);
+			this.ctx.rotate(-this.playerTheta);
+			this.playerX = 640+1355*Math.cos(this.playerTheta);
+			this.playerY = 1899-1355*Math.sin(this.playerTheta);
+			this.ctx.translate(-36, -36);
+			this.ctx.drawImage(this.playerImg, 0, this.playerFrame*75, 75, 75, 0, 0, 75, 75);
+			this.ctx.restore();
+			if( this.frameTick === 1 ) {
+				this.playerFrame += 1;
+			}
+			if( this.playerFrame >= 60 ) {
+				this.playerFrame = 0;
+			}
+		}
+		//PRESS ANY KEY
+		if( Game.canReturn === 1 && Game.pressAnyImgLoaded != 0 ) {
+			this.ctx.drawImage(this.pressAnyImg, 0, 0, 824, 43, 228, 368, 824, 43);
+		}
+		this.frameTick++;
+		if( this.frameTick >= 10 ) {
+			this.frameTick = 0;
+		}
+		
+		if( this.victoryFrameTick === 1 ) {
+			this.victoryFrame++;
+			if( this.victoryFrame >= 30 ) {
+				//Allow them to return to main screen
+				Game.canReturn = 1;
+				Game.gameState = Game.STATE_GAMEOVER;
+			}
+		}
+		this.victoryFrameTick++;
+		if( this.victoryFrameTick >= 5 ) {
+			this.victoryFrameTick = 0;
+		}
 	},
 	
 	GameOver: function() {
@@ -1165,11 +1275,13 @@ var Game = {
 					break;
 				case 2:
 					this.ctx.drawImage(this.earthBurnImg2, 0, this.earthBurnFrame*250, 1280, 250, 0, 470, 1280, 250);
-					//Change Gamestate so player can exit
-					this.gameState = this.STATE_GAMEOVER;
 					break;
 				default: console.log("ERROR: Earth Burn Sheet Num");
 			}
+		}
+		//PRESS ANY KEY
+		if( Game.canReturn === 1 && Game.pressAnyImgLoaded != 0 ) {
+			this.ctx.drawImage(this.pressAnyImg, 0, 0, 824, 43, 228, 368, 824, 43);
 		}
 		if( this.earthBurnFrameTick === 1 ) {
 			if( this.burnFlip === 1 ) {
@@ -1196,6 +1308,19 @@ var Game = {
 		this.earthBurnFrameTick++;
 		if( this.earthBurnFrameTick >= 5 ) {
 			this.earthBurnFrameTick = 0;
+		}
+		
+		if( this.gameoverFrameTick === 1 ) {
+			this.gameoverFrame++;
+			if( this.gameoverFrame >= 30 ) {
+				//Allow them to return to main screen
+				Game.canReturn = 1;
+				Game.gameState = Game.STATE_GAMEOVER;
+			}
+		}
+		this.gameoverFrameTick++;
+		if( this.gameoverFrameTick >= 5 ) {
+			this.gameoverFrameTick = 0;
 		}
 	},
 	
@@ -1299,6 +1424,7 @@ var Game = {
 			this.minPar = 3;
 			this.maxPar = Math.floor((Math.random()*4)+1);
 		} else {
+			Game.isGameover = 1;
 			this.gameState = this.STATE_VICTORY;
 		}
 		//Spawn Asteroids
@@ -1532,14 +1658,10 @@ var Game = {
 						this.tutorialtextImg7, this.tutorialanimImg7, this.tutorialtextImg8);
 		} else if(Game.gameState === Game.STATE_SCORE) { //SCORE UPDATE
 			Game.score.DrawScore();
-		} else if( Game.gameState == Game.STATE_VICTORY ) {
+		} else if( (Game.gameState === Game.STATE_GAMEOVER || Game.gameState === Game.STATE_VICTORY) && Game.isGameover === 1 ) { //VICTORY UPDATE
 			Game.Victory();
-		} else if( Game.gameState == Game.STATE_GAMEOVER || Game.STATE_DEAD ) { //GAMEOVER UPDATE
-			//alert(Game.gameState);
+		} else if( (Game.gameState === Game.STATE_GAMEOVER || Game.gameState === Game.STATE_DEAD) && Game.isGameover === 2 ) { //GAMEOVER UPDATE
 			Game.GameOver();
-		// } else if( Game.gameState === Game.STATE_VICTORY ) {
-			// //alert("dsadasd");
-			// Game.Victory();
 		} else {
 			console.log("ERROR: Game State");
 		}

@@ -1377,6 +1377,8 @@ var Game = {
 	
 	OverchargeShot: function() {
 		this.pHarvest = 0;
+		this.audioHarvesting.pause();
+		this.audioHarvesting.currentTime = 0;
 		this.audioPFire.pause();
 		this.audioPFire.currentTime = 0;
 		this.audioPFire.play();

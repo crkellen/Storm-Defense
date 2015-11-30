@@ -1,57 +1,62 @@
 <!DOCTYPE html>
-{% autoescape true %}
+<!--{% autoescape true %}-->
 <html>
-
+ 
   <head>
 	<meta content="text/html; charset=utf-8" http-equiv="content-type">
     <meta name="author" content="Lutz Kellen, Daniel Michael, Keenan Jones">
     <meta name="description" content="HTML5/Javascript Storm Defense for UW Stout's GDD 325 Client: Science Olympiad">
 	<title>Storm Defense</title>
-	<link rel="stylesheet" href="stylesheets/maincss.css">
-    <script src="scripts/StormDefenseMainMenu.js" type="text/javascript"></script>
-    <script src="scripts/StormDefenseCredits.js" type="text/javascript"></script>
-    <script src="scripts/StormDefenseTutorial.js" type="text/javascript"></script>
-    <script src="scripts/StormDefenseScore.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="stylesheets/MainCSS.css">
+    <script src="scripts/SDMainMenu.js" type="text/javascript"></script>
+    <script src="scripts/SDCredits.js" type="text/javascript"></script>
+    <script src="scripts/SDTutorial.js" type="text/javascript"></script>
+    <script src="scripts/SDScore.js" type="text/javascript"></script>
 	<script src="scripts/SDAsteroids.js" type="text/javascript"></script>
 	<script src="scripts/SDLasers.js" type="text/javascript"></script>
+	<script src="scripts/SDSuperlasers.js" type="text/javascript"></script>
+	<script src="scripts/SDParticles.js" type="text/javascript"></script>
 	<script src="scripts/StormDefense.js" type="text/javascript"></script>
   </head>
 
   <body>
     <!-- This loops through the profiles stored and prints out the username score
-          and no. of times that particular user visited the webpage -->
+          and no. of times that particular user visited the webpage 
     {% for profile in profiles %}
       User: {{ profile.name }} Score: {{ profile.score }} No. Times logged in: {{ profile.logged_in }} <br>
-    {% endfor %}
+    {% endfor %} -->
     <!-- if profile is stored greet user else greet unrecognized user -->
-    {% if stored == True %}
- 
+    <!--{% if stored == True %}-->
+		<div style="font-family: Akashi;">
 		<div>
-            <canvas id="canvasMenu" style="border:1px solid #000000; display:none;" height="720" width="1280">
+            <canvas id="canvasMenu" style="border:5px solid #333333; display:none;" height="720" width="1280">
                 Your browser does not support HTML 5 Canvas Tag
             </canvas>
-            <canvas id="canvasCredits" style="border:1px solid #000000; display:none;" height="720" width="1280">
+            <canvas id="canvasCredits" style="border:5px solid #333333; display:none;" height="720" width="1280">
                 Your browser does not support HTML 5 Canvas Tag
             </canvas>
-            <canvas id="canvasGame" style="border:1px solid #000000; display:none;" height="720" width="1280">
+            <canvas id="canvasGame" style="border:5px solid #333333; display:none;" height="720" width="1280">
                 Your browser does not support HTML 5 Canvas Tag
             </canvas>
-            <canvas id="canvasTutorial" style="border:1px solid #000000; display:none;" height="720" width="1280">
+            <canvas id="canvasTutorial" style="border:5px solid #333333; display:none;" height="720" width="1280">
                 Your browser does not support HTML 5 Canvas Tag
             </canvas>
-            <canvas id="canvasScore" style="border:1px solid #000000; display:none;" height="720" width="1280">
+            <canvas id="canvasScore" style="border:5px solid #333333; display:none;" height="720" width="1280">
                 Your browser does not support HTML 5 Canvas Tag
             </canvas>
    		</div> 
- 
+		</div>
+	<!--
     {% else %}
       Hello unregistered user
     {% endif %}
 
 
     <a href="{{ url|safe }}">{{ url_linktext }}</a>
-    
+    -->
 
   </body>
 </html>
+<!--
 {% endautoescape %}
+-->

@@ -843,9 +843,9 @@ var Game = {
 					Game.superlasers[i].drawSelf(this.ctx, this.superLaserImg);
 					this.ctx.restore();
 					if( this.laserFrameTick === 1 ) {
-						Game.lasers[i].frame += 1;
-						if( Game.lasers[i].frame >= 10 ) {
-							Game.lasers[i].frame = 0;
+						Game.superlasers[i].frame += 1;
+						if( Game.superlasers[i].frame >= 14 ) {
+							Game.superlasers[i].frame = 0;
 						}
 					}
 				}
@@ -1340,6 +1340,13 @@ var Game = {
 						Game.lasers[j].destroy();
 					}
 				}
+				for( var k = 0; k < Game.superlasers.length; k++ ) {
+					if( Game.asteroids[i].isColliding(Game.superlasers[k].x-20, Game.superlasers[k].y-40, "superlaser") ) {
+						Game.asteroids[i].destroy();
+						this.audioAHit.play();
+						Game.superlasers[k].destroy();
+					}
+				}
 			}
 		}
 		//Particles
@@ -1347,7 +1354,7 @@ var Game = {
 			if( Game.particles[i].isAlive != 0 ) {
 				if( Game.particles[i].isColliding(Game.playerX, Game.playerY, "player") ) {
 					Game.particles[i].destroy();
-					//Add in Particle Collect Noise
+					//TODO Add in Particle Collect Noise
 					
 					this.pHarvest += 5;
 					if( this.pHarvest > MAX_CHARGE ) {
@@ -1356,6 +1363,11 @@ var Game = {
 				}
 				for( var j = 0; j < Game.lasers.length; j++ ) {
 					if( Game.particles[i].isColliding(Game.lasers[j].x-20, Game.lasers[j].y-40, "laser") ) {
+						Game.particles[i].destroy();
+					}
+				}
+				for( var k = 0; k < Game.superlasers.length; k++ ) {
+					if( Game.particles[i].isColliding(Game.superlasers[k].x-20, Game.superlasers[k].y-40, "superlaser") ) {
 						Game.particles[i].destroy();
 					}
 				}
@@ -1369,6 +1381,37 @@ var Game = {
 		this.audioPFire.currentTime = 0;
 		this.audioPFire.play();
 		this.gameState = this.STATE_FIRE;
+		for( var i = 0; i < this.superlasers.length; i++ ) {
+			this.superlasers[i].isAlive = 1;
+			switch( i ) {
+				case 0:
+					this.superlasers[i].theta = -Game.playerTheta;
+					this.superlasers[i].x = Game.playerX+20;
+					this.superlasers[i].y = Game.playerY;
+					break;
+				case 1:
+					this.superlasers[i].theta = -Game.playerTheta+0.1;
+					this.superlasers[i].x = Game.playerX+20;
+					this.superlasers[i].y = Game.playerY;
+					break;
+				case 2:
+					this.superlasers[i].theta = -Game.playerTheta+0.3;
+					this.superlasers[i].x = Game.playerX+20;
+					this.superlasers[i].y = Game.playerY;
+					break;
+				case 3:
+					this.superlasers[i].theta = -Game.playerTheta-0.1;
+					this.superlasers[i].x = Game.playerX+20;
+					this.superlasers[i].y = Game.playerY;
+					break;
+				case 4:
+					this.superlasers[i].theta = -Game.playerTheta-0.3;
+					this.superlasers[i].x = Game.playerX+20;
+					this.superlasers[i].y = Game.playerY;
+					break;
+				default: console.log("ERROR: Overcharge Shot Spawning"); break;
+			}
+		}
 	},
 	
 	SpawnAsteroids: function(tTime) {
@@ -1561,6 +1604,16 @@ var Game = {
 				} else {
 					Game.lasers[i].x += Math.cos(Game.lasers[i].theta)*3.5;
 					Game.lasers[i].y += Math.sin(Game.lasers[i].theta)*3.5;
+				}
+			}
+			
+			//SUPERLASER MOVEMENT
+			for( var i = 0; i < Game.superlasers.length; i++ ) {
+				if( Game.superlasers[i].y < -1 ) {
+					Game.superlasers[i].destroy();
+				} else {
+					Game.superlasers[i].x += Math.cos(Game.superlasers[i].theta)*3.5;
+					Game.superlasers[i].y += Math.sin(Game.superlasers[i].theta)*3.5;
 				}
 			}
 			

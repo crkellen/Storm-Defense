@@ -66,6 +66,8 @@ Particle.prototype.isColliding = function(x, y, object) {
 		return !( x+75 < this.x+5 || this.x+40 < x || y+50 < this.y+5 || this.y+40 < y);
 	} else if ( object === "laser" ) {
 		return !( x+10 < this.x+5 || this.x+40 < x || y+10 < this.y+5 || this.y+40 < y);
+	} else if ( object === "superlaser" ) {
+		return !( x+10 < this.x+5 || this.x+40 < x || y+10 < this.y+5 || this.y+40 < y);
 	} else {
 		console.log("ERROR: Object Type - Collision Detection Particles");
 	}

@@ -18,40 +18,8 @@ Superlaser.prototype.destroy = function() {
 };
 
 Superlaser.prototype.drawSelf = function(ctx, slImg) {
-
+	ctx.translate(this.x, this.y);
+	ctx.rotate(this.theta);
+	ctx.translate(-36, -22);
+	ctx.drawImage(slImg, 0, this.frame*15, 70, 15, 0, 0, 70, 15);
 };
-/*
-Superlaser.prototype.spawn = function(speed, frame, size) {
-	this.speed 		= speed;
-	this.frame 		= frame;
-	this.astSize	= size;
-	
-	//Generate an X position
-		//Go from 0 to 1180 to keep it on map
-	this.x = Math.floor(Math.random()*1181);
-	//Generate an Y position
-		//Spawn above the map by 105
-	this.y = -105;
-	
-	var tx = ( (640)-50 + (Math.random()*100) );
-	var ty = 720;
-	
-	this.dx = tx - this.x;
-	this.dy = ty - this.y;
-	
-	var magni = Math.sqrt( this.dx*this.dx + this.dy*this.dy );
-	
-	this.dx = this.dx / (magni);
-	this.dy = this.dy / (magni);
-};
-
-Superlaser.prototype.moveAst = function(dT) {
-	this.x += this.dx * this.speed;
-	this.y += this.dy * this.speed;
-	
-	//Earth Collision Detection
-	if( this.y >= 620 ) {
-		this.state = 3;
-	}
-};
-*/

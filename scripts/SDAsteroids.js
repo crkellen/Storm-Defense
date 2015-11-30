@@ -84,6 +84,8 @@ Asteroid.prototype.isColliding = function(x, y, object) {
 				return !( x+75 < this.x+5 || this.x+40 < x || y+50 < this.y+5 || this.y+40 < y);
 			} else if ( object === "laser" ) {
 				return !( x+10 < this.x+5 || this.x+40 < x || y+5 < this.y+5 || this.y+40 < y);
+			} else if ( object === "superlaser" ) {
+				return !( x+10 < this.x+5 || this.x+40 < x || y+5 < this.y+5 || this.y+40 < y);
 			} else {
 				console.log("ERROR: Object Type - Collision Detection (Small)");
 			}
@@ -93,6 +95,8 @@ Asteroid.prototype.isColliding = function(x, y, object) {
 				return !( x+75 < this.x+10 || this.x+60 < x || y+50 < this.y+10 || this.y+55 < y);
 			} else if ( object === "laser" ) {
 				return !( x+10 < this.x+10 || this.x+60 < x || y+5 < this.y+10 || this.y+55 < y);
+			} else if ( object === "superlaser" ) {
+				return !( x+10 < this.x+10 || this.x+60 < x || y+5 < this.y+10 || this.y+55 < y);
 			} else {
 				console.log("ERROR: Object Type - Collision Detection (Small)");
 			}
@@ -101,6 +105,8 @@ Asteroid.prototype.isColliding = function(x, y, object) {
 			if( object === "player" ) {
 				return !( x+75 < this.x+20 || this.x+70 < x || y+50 < this.y+15 || this.y+75 < y);
 			} else if ( object === "laser" ) {
+				return !( x+10 < this.x+20 || this.x+70 < x || y+5 < this.y+15 || this.y+75 < y);
+			} else if ( object === "superlaser" ) {
 				return !( x+10 < this.x+20 || this.x+70 < x || y+5 < this.y+15 || this.y+75 < y);
 			} else {
 				console.log("ERROR: Object Type - Collision Detection (Small)");

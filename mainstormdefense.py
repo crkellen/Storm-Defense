@@ -30,7 +30,6 @@ def login_key(login_name=DEFAULT_LOGIN_NAME):
 class Profile(ndb.Model):
     """A main model for representing an individual login entry."""
     name = ndb.StringProperty(indexed=False)
-	username = ndb.StringProperty(indexed=False)
     date = ndb.DateTimeProperty(auto_now_add=True)
     score = ndb.GenericProperty(default=0)
     stat_one = ndb.GenericProperty(indexed=False)
@@ -82,7 +81,6 @@ class MainPage(webapp2.RequestHandler):
             if stored == False or profiles_query.get() == None:
                 new_profile = Profile(parent=login_key(DEFAULT_LOGIN_NAME))
                 new_profile.name = users.get_current_user().nickname()
-				new_profile.username = 'username' + users.get_current_user().user_id();
                 new_profile.put()
                 query_params = {'login_name': DEFAULT_LOGIN_NAME}
                 self.redirect('/?' + urllib.urlencode(query_params))

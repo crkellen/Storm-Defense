@@ -16,10 +16,10 @@ var OK_MAX_SCREEN_RATIO		= 1.35;
 //CONSTANT IMGS
 BKG_IMG_SRC					= 'images/ingamebg/bkgImg.png';
 PLAYER_IMG_SRC				= 'images/player/playerImg.png';
-EARTH_IMG_SRC1				= 'images/earth/earthImg1.png';
-EARTH_IMG_SRC2				= 'images/earth/earthImg2.png';
-EARTH_IMG_SRC3				= 'images/earth/earthImg3.png';
-EARTH_IMG_SRC4				= 'images/earth/earthImg4.png';
+EARTH_IMG_SRC1				= 'images/earth/earthImg1.jpg';
+EARTH_IMG_SRC2				= 'images/earth/earthImg2.jpg';
+EARTH_IMG_SRC3				= 'images/earth/earthImg3.jpg';
+EARTH_IMG_SRC4				= 'images/earth/earthImg4.jpg';
 LASER_IMG_SRC				= 'images/player/laserImg.png';
 SUPERLASER_IMG_SRC			= 'images/player/superLaserImg.png';
 AIMING_IMG_SRC				= 'images/player/aimingImg.png';
@@ -62,11 +62,11 @@ EARTHBURN_IMG_SRC2			= 'images/gameover/earthBurnImg2.png';
 MENU_IMG_SRC				= 'images/menus/mainMenuBgImg.png';
 CREDITS_IMG_SRC				= 'images/menus/creditsBgImg.png';
 TUTORIAL_IMG_SRC			= 'images/menus/tutorialBgImg.png';
-SCORE_IMG_SRC				= 'images/menus/topscoresBgImg.png';
-MENU_EARTH1					= 'images/menuearth/menuEarth1.png';
-MENU_EARTH2					= 'images/menuearth/menuEarth2.png';
-MENU_EARTH3					= 'images/menuearth/menuEarth3.png';
-MENU_EARTH4					= 'images/menuearth/menuEarth4.png';
+SCORE_IMG_SRC				= 'images/menus/topscoresBgImg.jpg';
+MENU_EARTH1					= 'images/menuearth/menuEarth1.jpg';
+MENU_EARTH2					= 'images/menuearth/menuEarth2.jpg';
+MENU_EARTH3					= 'images/menuearth/menuEarth3.jpg';
+MENU_EARTH4					= 'images/menuearth/menuEarth4.jpg';
 //CONSTANT TUTORIAL IMGS
 TUTORIAL_TEXT1_IMG_SRC		= 'images/tutorial/tutorialtext1Img.png';
 TUTORIAL_ANIM1_IMG_SRC		= 'images/tutorial/tutorialanimIntroImg.png';
@@ -133,6 +133,7 @@ var Game = {
 	gameState:		0,
 	isInitialized:	0,
 	isGameover:		0,
+	profiles:		null,
 	
 	//Asset Manager Variables
 	assetMan:		null,
@@ -192,120 +193,120 @@ var Game = {
 	earthY:			620,
 	
 	//BKG Playing Check
-	bkgPlaying:		0,
+	bkgPlaying:				0,
 	
 	//Image Checks
-	bkgImgLoaded:				0,
-	playerImgLoaded:			0,
-	asteroid1ImgLoaded:			0,
-	asteroid2ImgLoaded:			0,
-	asteroid3ImgLoaded: 		0,
-	earthImg1Loaded:			0,
-	earthImg2Loaded:			0,
-	earthImg3Loaded:			0,
-	earthImg4Loaded:			0,
-	laserImgLoaded:				0,
-	superLaserImgloaded:		0,
-	aimingImgLoaded:			0,
-	ionoImgLoaded:				0,
-	auroraImgLoaded:			0,
-	powerBarFillImgLoaded:		0,
-	powerContainerImgLoaded:	0,
-	projectedFillImgLoaded: 	0,
-	plasmaContainerImgLoaded:	0,
-	plasmaLevelImgLoaded: 		0,
-	harvestImgLoaded: 			0,
-	leftIconImgLoaded:  		0,
-	rightIconImgLoaded:			0,
-	asteroidDeathImgLoaded:		0,
-	asteroidImpactImgLoaded:	0,
-	asteroidImpact2Imgloaded:	0,
+	bkgImg:					null,
+	playerImg:				null,
+	asteroid1Img:			null,
+	asteroid2Img:			null,
+	asteroid3Img: 			null,
+	earthImg1:				null,
+	earthImg2:				null,
+	earthImg3:				null,
+	earthImg4:				null,
+	laserImg:				null,
+	superLaserImgloaded:	null,
+	aimingImg:				null,
+	ionoImg:				null,
+	auroraImg:				null,
+	powerBarFillImg:		null,
+	powerContainerImg:		null,
+	projectedFillImg: 		null,
+	plasmaContainerImg:		null,
+	plasmaLevelImg: 		null,
+	harvestImg: 			null,
+	leftIconImg:  			null,
+	rightIconImg:			null,
+	asteroidDeathImg:		null,
+	asteroidImpactImg:		null,
+	asteroidImpact2Img:		null,
 	//Particle Image Checks
-	particleImgLoaded:			0,
+	particleImg:			null,
 	//Loading Image Checks
-	loadingBkgImgLoaded:		0,
-	loadingContainerImgLoaded:	0,
-	loadingBarImgLoaded:		0,
+	loadingBKGImg:			null,
+	loadingContainerImg:	null,
+	loadingBarImg:			null,
 	//Level Image Checks
-	level1ImgLoaded:			0,
-	level2ImgLoaded:			0,
-	level3ImgLoaded:			0,
-	level4ImgLoaded:			0,
-	level5ImgLoaded:			0,
+	level1Img:				null,
+	level2Img:				null,
+	level3Img:				null,
+	level4Img:				null,
+	level5Img:				null,
 	//Game Over Image Checks
-	gameoverImgLoaded:			0,
-	victoryImgLoaded:			0,
-	pressAnyImgLoaded:			0,
-	earthBurnImg1Loaded:		0,
-	earthBurnImg2Loaded:		0,
+	gameoverImg:			null,
+	victoryImg:				null,
+	pressAnyImg:			null,
+	earthBurnImg1:			null,
+	earthBurnImg2:			null,
 	//Tutorial Image Checks
-	tutorialtext1ImgLoaded:		0,
-	tutorialanim1ImgLoaded:		0,
-	tutorialtext2ImgLoaded:		0,
-	tutorialanim2ImgLoaded:		0,
-	tutorialtext3ImgLoaded:		0,
-	tutorialanim3ImgLoaded:		0,
-	tutorialtext4ImgLoaded:		0,
-	tutorialanim4ImgLoaded:		0,
-	tutorialtext5ImgLoaded:		0,
-	tutorialanim5ImgLoaded:		0,
-	tutorialtext6ImgLoaded:		0,
-	tutorialanim6ImgLoaded:		0,
-	tutorialtext7ImgLoaded:		0,
-	tutorialanim7ImgLoaded:		0,
-	tutorialtext8ImgLoaded:		0,
+	tutorialtext1Img:		null,
+	tutorialanim1Img:		null,
+	tutorialtext2Img:		null,
+	tutorialanim2Img:		null,
+	tutorialtext3Img:		null,
+	tutorialanim3Img:		null,
+	tutorialtext4Img:		null,
+	tutorialanim4Img:		null,
+	tutorialtext5Img:		null,
+	tutorialanim5Img:		null,
+	tutorialtext6Img:		null,
+	tutorialanim6Img:		null,
+	tutorialtext7Img:		null,
+	tutorialanim7Img:		null,
+	tutorialtext8Img:		null,
 	//Menu Earth Variables
-	menuEarthSheetNum:			1,
-	menuEarthFrame:				0,
-	menuEarthFrameTick:			0,
-	menuEarthImg1Loaded:		0,
-	menuEarthImg2Loaded:		0,
-	menuEarthImg3Loaded:		0,
-	menuEarthImg4Loaded:		0,
+	menuEarthSheetNum:		1,
+	menuEarthFrame:			0,
+	menuEarthFrameTick:		0,
+	menuEarthImg1:			null,
+	menuEarthImg2:			null,
+	menuEarthImg3:			null,
+	menuEarthImg4:			null,
 	//Audio Checks
-	audioBKGLoaded:				0,
-	audioPFireLoaded:			0,
-	audioPHitLoaded:			0,
-	audioEHitLoaded:			0,
-	audioChargeLoaded:			0,
-	audioAHitLoaded:			0,
-	audioHarvesting:			0,
-	audioWarning:				0,
-	audioAmmoFull:				0,
-	audioGainAmmo:				0, 
-	audioMenuClick:				0, //IMPLEMENT
+	audioBKGLoaded:			0,
+	audioPFireLoaded:		0,
+	audioPHitLoaded:		0,
+	audioEHitLoaded:		0,
+	audioChargeLoaded:		0,
+	audioAHitLoaded:		0,
+	audioHarvesting:		0,
+	audioWarning:			0,
+	audioAmmoFull:			0,
+	audioGainAmmo:			0, 
+	audioMenuClick:			0, //IMPLEMENT
 	
 	//Sprite Sheet Frames
-	earthSheetNum:				1,
-	ionoState:					1,
-	frameTick:					0,
-	asteroidFrameTick:			0,
-	particleFrameTick:			0,
-	aimingFrameTick:			0,
-	laserFrameTick:				0,
-	harvestFrameTick:			0,
-	auroraFrameTick:			0,
-	victoryFrameTick:			0,
-	gameoverFrameTick:			0,
-	harvestTick:				0,
-	chargeTick:		    		0,
-	balanceTick:				0,
-	earthFrame:					0,
-	playerFrame:				0,
-	playerFireFrame:			70,
-	playerDeathFrame:			60,
-	aimingFrame:				0,
-	harvestFrame:				0,
-	auroraFrame:				0,
-	victoryFrame:				0,
-	gameoverFrame:				0,
-	harvestFlip:				0,
+	earthSheetNum:			1,
+	ionoState:				1,
+	frameTick:				0,
+	asteroidFrameTick:		0,
+	particleFrameTick:		0,
+	aimingFrameTick:		0,
+	laserFrameTick:			0,
+	harvestFrameTick:		0,
+	auroraFrameTick:		0,
+	victoryFrameTick:		0,
+	gameoverFrameTick:		0,
+	harvestTick:			0,
+	chargeTick:		    	0,
+	balanceTick:			0,
+	earthFrame:				0,
+	playerFrame:			0,
+	playerFireFrame:		70,
+	playerDeathFrame:		60,
+	aimingFrame:			0,
+	harvestFrame:			0,
+	auroraFrame:			0,
+	victoryFrame:			0,
+	gameoverFrame:			0,
+	harvestFlip:			0,
 	//Gameover Sprite Sheet Frames
-	earthBurnSheetNum:			1,
-	earthBurnFrame:				0,
-	earthBurnFrameTick:			0,
-	burnFlip:					0,
-	canReturn:					0,
+	earthBurnSheetNum:		1,
+	earthBurnFrame:			0,
+	earthBurnFrameTick:		0,
+	burnFlip:				0,
+	canReturn:				0,
 	
 	//Menu Instantiations
 	menu: new theMainMenu(MENU_IMG_SRC, BUTTON_PLAY_IMG_SRC, BUTTON_CREDITS_IMG_SRC, BUTTON_SCORE_IMG_SRC, BUTTON_TUTORIAL_IMG_SRC, BUTTON_PLAY_HOVER,
@@ -314,12 +315,14 @@ var Game = {
 	tutorial: new theTutorial(TUTORIAL_IMG_SRC, BUTTON_BACK_IMG_SRC, BUTTON_BACK_HOVER, BUTTON_NEXT_IMG_SRC, BUTTON_NEXT_HOVER, BUTTON_PREV_IMG_SRC, BUTTON_PREV_HOVER),
 	score: new theScore(SCORE_IMG_SRC, BUTTON_BACK_IMG_SRC, BUTTON_BACK_HOVER),
 	
-	Init: function() {
+	Init: function() {		
 		this.gameCanvas = document.getElementById(CANVAS_GAME_ID);
 		this.ctx = this.gameCanvas.getContext("2d");
 		this.menuCanvas = document.getElementById(CANVAS_MENU_ID);
 		this.menuCTX = this.menuCanvas.getContext("2d");
 		this.menuCanvas.style.display = 'block';
+		var loadingDiv = document.getElementById("LoadingDiv");
+		loadingDiv.style.display = 'none';
 		
 		Game.gameState = Game.STATE_LOADING;
 		this.totalAssets = 0;
@@ -589,10 +592,10 @@ var Game = {
 		var scoreCanvas = document.getElementById(CANVAS_SCORE_ID);
         scoreCanvas.addEventListener('click', this.score.doMenuClick, false);
 		scoreCanvas.addEventListener('mousemove', this.score.doMouseOver, false);
-
+Game.DrawLoadStatus();
 		//Begin Download
-		this.assetMan.downloadAll(Game.SwitchStateToReady );
-		Game.DrawLoadStatus();
+		this.assetMan.downloadAll(Game.SwitchStateToReady);
+		//Game.DrawLoadStatus();
 	},
 	
 	ReInit: function() {
@@ -664,6 +667,10 @@ var Game = {
 	},
 	
 	CreateImages: function() {
+	//LOADING IMAGES
+		//this.loadingBKGImg 			= this.assetMan.getAsset(LOADING_BKG_IMG_SRC);
+		this.loadingBarImg 			= this.assetMan.getAsset(LOADING_BAR_IMG_SRC);
+		this.loadingContainerImg 	= this.assetMan.getAsset(LOADING_CONTAINER_IMG_SRC);
 	//MENU IMAGES	
 		//MAIN MENU
 			//BKG
@@ -783,20 +790,27 @@ var Game = {
 	},
 	
 	SwitchStateToReady: function() {
-        console.log("DEBUG: SwitchStateToReady called");
+        Game.CreateImages();
+		console.log("DEBUG: SwitchStateToReady called");
 		Game.isInitialized = 1;
         Game.gameState = Game.STATE_MENU;
         Game.assetsReady = Game.totalAssets; // does not mean all successfully
-		Game.CreateImages();
         Game.DrawLoadStatus();
     },
 	
 	DrawLoadStatus: function() {
         // Clear the canvas
-        this.menuCTX.clearRect(0, 0, this.menuCanvas.width, this.menuCanvas.height);
-        this.img = this.assetMan.getAsset(LOADING_BKG_IMG_SRC);
-        this.menuCTX.drawImage(this.img, 0, 0);
-		this.img = null;
+		this.menuCanvas.style.display = 'block';
+		this.menuCTX.fillStyle = "#FF0000";
+		this.menuCTX.fillRect(0, 0, 500, 500);
+		//alert("DDDDD");
+        //this.menuCTX.clearRect(0, 0, this.menuCanvas.width, this.menuCanvas.height);
+        //this.img = this.assetMan.getAsset(LOADING_BKG_IMG_SRC);
+		this.loadingBKGImg = new Image();
+		this.loadingBKGImg.src = LOADING_BKG_IMG_SRC;
+		
+        this.menuCTX.drawImage(this.loadingBKGImg, 0, 0);
+		//this.img = null;
         // calculate percentage complete
         //var percentDone = Math.floor( (this.assetsReady / this.totalAssets) * 100); 
     },
@@ -808,72 +822,58 @@ var Game = {
 		this.ctx.fillStyle	= 'white';
 		
 		//BACKGROUND
-		if( Game.bkgImgLoaded != 0 ) {
-			this.ctx.drawImage(this.bkgImg, 0, 0);
-		}
+		this.ctx.drawImage(this.bkgImg, 0, 0);
 		//SCORE
 		this.ctx.fillText('Score: '  + Game.gameScore, 10, 25);
 		//LEVEL
 		if( this.levelShow === 1 ) {
 			switch( this.level ) {
 				case 1:
-					if( this.level1ImgLoaded != 0 ) {
-						this.ctx.drawImage(this.level1Img, 450, 160);
-					}
+					this.ctx.drawImage(this.level1Img, 450, 160);
 					break;
 				case 2:
-					if( this.level2ImgLoaded != 0 ) {
-						this.ctx.drawImage(this.level2Img, 550, 160);
-					}
+					this.ctx.drawImage(this.level2Img, 550, 160);
 					break;
 				case 3:
-					if( this.level3ImgLoaded != 0 ) {
-						this.ctx.drawImage(this.level3Img, 550, 160);
-					}
+					this.ctx.drawImage(this.level3Img, 550, 160);
 					break;
 				case 4:
-					if( this.level4ImgLoaded != 0 ) {
-						this.ctx.drawImage(this.level4Img, 550, 160);
-					}
+					this.ctx.drawImage(this.level4Img, 550, 160);
 					break;
 				case 5:
-					if( this.level5ImgLoaded != 0 ) {
-						this.ctx.drawImage(this.level5Img, 550, 160);
-					}
+					this.ctx.drawImage(this.level5Img, 550, 160);
 					break;
 				default: console.log("ERROR: Level Draw"); break;
 			}
 		}
 		//EARTH
-		if( Game.earthImg1Loaded != 0 && Game.earthImg2Loaded != 0 && Game.earthImg3Loaded != 0 && Game.earthImg4Loaded != 0 ) {
-			switch( this.earthSheetNum ) {
-				case 1:
-					this.ctx.drawImage(this.earthImg1, 0, this.earthFrame*100, 1280, 100, this.earthX, this.earthY, 1280, 100);
-					break;
-				case 2:
-					this.ctx.drawImage(this.earthImg2, 0, this.earthFrame*100, 1280, 100, this.earthX, this.earthY, 1280, 100);
-					break;
-				case 3:
-					this.ctx.drawImage(this.earthImg3, 0, this.earthFrame*100, 1280, 100, this.earthX, this.earthY, 1280, 100);
-					break;
-				case 4:
-					this.ctx.drawImage(this.earthImg4, 0, this.earthFrame*100, 1280, 100, this.earthX, this.earthY, 1280, 100);
-					break;
-				default: console.log("ERROR: Earth Sheet Number");
-			}
-			if( this.frameTick === 1 ) {
-				this.earthFrame += 1;
-				if( this.earthFrame >= 120 ) {
-					this.earthSheetNum++;
-					if( this.earthSheetNum == 5 ) {
-						this.earthSheetNum = 1;
-					}
-					this.earthFrame = 0;
+		switch( this.earthSheetNum ) {
+			case 1:
+				this.ctx.drawImage(this.earthImg1, 0, this.earthFrame*100, 1280, 100, this.earthX, this.earthY, 1280, 100);
+				break;
+			case 2:
+				this.ctx.drawImage(this.earthImg2, 0, this.earthFrame*100, 1280, 100, this.earthX, this.earthY, 1280, 100);
+				break;
+			case 3:
+				this.ctx.drawImage(this.earthImg3, 0, this.earthFrame*100, 1280, 100, this.earthX, this.earthY, 1280, 100);
+				break;
+			case 4:
+				this.ctx.drawImage(this.earthImg4, 0, this.earthFrame*100, 1280, 100, this.earthX, this.earthY, 1280, 100);
+				break;
+			default: console.log("ERROR: Earth Sheet Number");
+		}
+		if( this.frameTick === 1 ) {
+			this.earthFrame += 1;
+			if( this.earthFrame >= 120 ) {
+				this.earthSheetNum++;
+				if( this.earthSheetNum == 5 ) {
+					this.earthSheetNum = 1;
 				}
+				this.earthFrame = 0;
 			}
 		}
 		//AIMING
-		if( Game.aimingImgLoaded != 0 && (Game.gameState === Game.STATE_PLAYING || Game.gameState === Game.STATE_FIRE) ) {
+		if( (Game.gameState === Game.STATE_PLAYING || Game.gameState === Game.STATE_FIRE) ) {
 			this.ctx.save();
 			this.ctx.translate(this.aimingX, this.aimingY);
 			this.ctx.rotate(-this.playerTheta);
@@ -886,112 +886,101 @@ var Game = {
 					this.aimingFrame = 0;
 				}
 			}
-			
 		}
 		//LASER
-		if( Game.laserImgLoaded != 0 ) {
-			for( var i = 0; i < Game.lasers.length; i++ ) {
-				if( Game.lasers[i].isAlive != 0 ) {
-					this.ctx.save();
-					Game.lasers[i].drawSelf(this.ctx, this.laserImg);
-					this.ctx.restore();
-					if( this.laserFrameTick === 1 ) {
-						Game.lasers[i].frame += 1;
-						if( Game.lasers[i].frame >= 10 ) {
-							Game.lasers[i].frame = 0;
-						}
+		for( var i = 0; i < Game.lasers.length; i++ ) {
+			if( Game.lasers[i].isAlive != 0 ) {
+				this.ctx.save();
+				Game.lasers[i].drawSelf(this.ctx, this.laserImg);
+				this.ctx.restore();
+				if( this.laserFrameTick === 1 ) {
+					Game.lasers[i].frame += 1;
+					if( Game.lasers[i].frame >= 10 ) {
+						Game.lasers[i].frame = 0;
 					}
 				}
 			}
 		}
 		//SUPERLASER
-		if( Game.superLaserImgLoaded != 0 ) {
-			for( var i = 0; i < Game.superlasers.length; i++ ) {
-				if( Game.superlasers[i].isAlive != 0 ) {
-					this.ctx.save();
-					Game.superlasers[i].drawSelf(this.ctx, this.superLaserImg);
-					this.ctx.restore();
-					if( this.laserFrameTick === 1 ) {
-						Game.superlasers[i].frame += 1;
-						if( Game.superlasers[i].frame >= 14 ) {
-							Game.superlasers[i].frame = 0;
-						}
+		for( var i = 0; i < Game.superlasers.length; i++ ) {
+			if( Game.superlasers[i].isAlive != 0 ) {
+				this.ctx.save();
+				Game.superlasers[i].drawSelf(this.ctx, this.superLaserImg);
+				this.ctx.restore();
+				if( this.laserFrameTick === 1 ) {
+					Game.superlasers[i].frame += 1;
+					if( Game.superlasers[i].frame >= 14 ) {
+						Game.superlasers[i].frame = 0;
 					}
 				}
 			}
 		}
 		//ASTEROIDS
-		if( Game.asteroid1ImgLoaded != 0 && Game.asteroid2ImgLoaded != 0 && Game.asteroid3ImgLoaded != 0 ) {
-			for( var i = 0; i < Game.asteroids.length; i++ ) {
-				if( Game.asteroids[i].isAlive != 0 && Game.asteroids[i].state === 0 || Game.asteroids[i].state === 2 ) {
-					Game.asteroids[i].drawSelf(this.ctx, this.asteroid1Img, this.asteroid2Img, this.asteroid3Img);
-					if( this.asteroidFrameTick === 1 ) {
-						Game.asteroids[i].frame += 1;
-						if( Game.asteroids[i].frame >= 60 ) {
-							Game.asteroids[i].frame = 0;
-						}
+		for( var i = 0; i < Game.asteroids.length; i++ ) {
+			if( Game.asteroids[i].isAlive != 0 && Game.asteroids[i].state === 0 || Game.asteroids[i].state === 2 ) {
+				Game.asteroids[i].drawSelf(this.ctx, this.asteroid1Img, this.asteroid2Img, this.asteroid3Img);
+				if( this.asteroidFrameTick === 1 ) {
+					Game.asteroids[i].frame += 1;
+					if( Game.asteroids[i].frame >= 60 ) {
+						Game.asteroids[i].frame = 0;
 					}
 				}
-				if( Game.asteroids[i].state === 1 || Game.asteroids[i].state === 2 ) {
-					switch( Game.asteroids[i].astSize ) {
-						case 0:
-							this.ctx.drawImage(this.asteroidDeathImg, Game.asteroids[i].dFrame*100, 0, 100, 100, Game.asteroids[i].x-30, Game.asteroids[i].y-30, 100, 100);
-							break;
-						case 1:
-							this.ctx.drawImage(this.asteroidDeathImg, Game.asteroids[i].dFrame*100, 0, 100, 100, Game.asteroids[i].x-15, Game.asteroids[i].y-15, 100, 100);
-							break;
-						case 2:
-							this.ctx.drawImage(this.asteroidDeathImg, Game.asteroids[i].dFrame*100, 0, 100, 100, Game.asteroids[i].x, Game.asteroids[i].y, 100, 100);
-							break;
-						default: console.log("ERROR: Asteroid Drawing Death Size");
-					}
-					Game.asteroids[i].dFrame++;
-					if( Game.asteroids[i].dFrame >= 60 ) {
-						Game.asteroids[i].dFrame = 0;
-						if( Game.asteroids[i].state === 2 ) {
-							Game.asteroids[i].state = 0;
-						} else if( Game.asteroids[i].state != 2 ) {
-							Game.asteroids[i].isAlive = 0;
-							Game.asteroids[i].state = 0;
-						}
-					}
+			}
+			if( Game.asteroids[i].state === 1 || Game.asteroids[i].state === 2 ) {
+				switch( Game.asteroids[i].astSize ) {
+					case 0:
+						this.ctx.drawImage(this.asteroidDeathImg, Game.asteroids[i].dFrame*100, 0, 100, 100, Game.asteroids[i].x-30, Game.asteroids[i].y-30, 100, 100);
+						break;
+					case 1:
+						this.ctx.drawImage(this.asteroidDeathImg, Game.asteroids[i].dFrame*100, 0, 100, 100, Game.asteroids[i].x-15, Game.asteroids[i].y-15, 100, 100);
+						break;
+					case 2:
+						this.ctx.drawImage(this.asteroidDeathImg, Game.asteroids[i].dFrame*100, 0, 100, 100, Game.asteroids[i].x, Game.asteroids[i].y, 100, 100);
+						break;
+					default: console.log("ERROR: Asteroid Drawing Death Size");
 				}
-				if( Game.asteroids[i].state === 3 ) {
-					if( Game.asteroids[i].astSize === 2 ) {
-						this.ctx.drawImage(this.asteroidImpact2Img, Game.asteroids[i].iFrame*100, 0, 100, 100, Game.asteroids[i].x, Game.asteroids[i].y, 100, 100);
-					} else {
-						this.ctx.drawImage(this.asteroidImpactImg, Game.asteroids[i].iFrame*75, 0, 75, 75, Game.asteroids[i].x, Game.asteroids[i].y, 75, 75);
-					}
-					Game.asteroids[i].iFrame++;
-					if( Game.asteroids[i].iFrame >= 120 ) {
-						Game.asteroids[i].iFrame = 0;
+				Game.asteroids[i].dFrame++;
+				if( Game.asteroids[i].dFrame >= 60 ) {
+					Game.asteroids[i].dFrame = 0;
+					if( Game.asteroids[i].state === 2 ) {
+						Game.asteroids[i].state = 0;
+					} else if( Game.asteroids[i].state != 2 ) {
 						Game.asteroids[i].isAlive = 0;
 						Game.asteroids[i].state = 0;
-						Game.numAst--;
 					}
+				}
+			}
+			if( Game.asteroids[i].state === 3 ) {
+				if( Game.asteroids[i].astSize === 2 ) {
+					this.ctx.drawImage(this.asteroidImpact2Img, Game.asteroids[i].iFrame*100, 0, 100, 100, Game.asteroids[i].x, Game.asteroids[i].y, 100, 100);
+				} else {
+					this.ctx.drawImage(this.asteroidImpactImg, Game.asteroids[i].iFrame*75, 0, 75, 75, Game.asteroids[i].x, Game.asteroids[i].y, 75, 75);
+				}
+				Game.asteroids[i].iFrame++;
+				if( Game.asteroids[i].iFrame >= 120 ) {
+					Game.asteroids[i].iFrame = 0;
+					Game.asteroids[i].isAlive = 0;
+					Game.asteroids[i].state = 0;
+					Game.numAst--;
 				}
 			}
 		}
 		//PARTICLES
-		if( Game.particleImgLoaded != 0 ) {
-			for( var i = 0; i < Game.particles.length; i++ ) {
-				if( Game.particles[i].isAlive === 1 ) {
-					Game.particles[i].drawSelf(this.ctx, this.particleImg);
-					if( this.particleFrameTick === 1 ) {
-						Game.particles[i].frame += 1;
-						if( Game.particles[i].frame >= 7 ) {
-							Game.particles[i].frame = 0;
-						}
+		for( var i = 0; i < Game.particles.length; i++ ) {
+			if( Game.particles[i].isAlive === 1 ) {
+				Game.particles[i].drawSelf(this.ctx, this.particleImg);
+				if( this.particleFrameTick === 1 ) {
+					Game.particles[i].frame += 1;
+					if( Game.particles[i].frame >= 7 ) {
+						Game.particles[i].frame = 0;
 					}
 				}
 			}
 		}
 		//IONOSPHERE
-		if( Game.ionoImgLoaded != 0 ) {
-			this.ctx.drawImage(this.ionoImg, 0, this.ionoState*130, 1280, 130, this.earthX-10, this.earthY-30, 1280, 130);
-		}
+		this.ctx.drawImage(this.ionoImg, 0, this.ionoState*130, 1280, 130, this.earthX-10, this.earthY-30, 1280, 130);
 		//AURORA
-		if( this.auroraImgLoaded != 0 && this.gameState === this.STATE_HARVEST ) {
+		if( this.gameState === this.STATE_HARVEST ) {
 			this.ctx.drawImage(this.auroraImg, 0, this.auroraFrame*150, 1280, 150, this.earthX, this.earthY-30, 1280, 151);
 			if( this.auroraFrameTick === 1 ) {
 				this.auroraFrame++;
@@ -1001,33 +990,21 @@ var Game = {
 			}
 		}
 		//IONOSPHERE METER
-		if( Game.powerContainerImgLoaded !=0 ) {
-			this.ctx.drawImage(this.powerContainerImg, 240, 699);
-		}
-		if( Game.powerBarFillImgLoaded !=0 ) {
-			this.ctx.drawImage(this.powerBarFillImg, 0, 0, (this.pLevel*4)+1, 15, 246, 702, (this.pLevel*4)+1, 15);
-		}
-		if( Game.projectedFillImgLoaded !=0 ) {
-			this.ctx.drawImage(this.projectedFillImg, 0, 0, 788, 30, (this.pLevel*4)+246, 702, ((this.maxChargeLevel - this.chargedLevel)*4), 30 );
-		}
+		this.ctx.drawImage(this.powerContainerImg, 240, 699);
+		this.ctx.drawImage(this.powerBarFillImg, 0, 0, (this.pLevel*4)+1, 15, 246, 702, (this.pLevel*4)+1, 15);
+		this.ctx.drawImage(this.projectedFillImg, 0, 0, 788, 30, (this.pLevel*4)+246, 702, ((this.maxChargeLevel - this.chargedLevel)*4), 30 )
 		//PLASMA METER
 		if( Game.pHarvest === 0 ) {
 			//Do Nothing
-		} else if( Game.plasmaLevel != 0 && Game.plasmaLevelImgLoaded != 0 ) {
+		} else if( Game.plasmaLevel != 0 ) {
 			this.ctx.drawImage(this.plasmaLevelImg, 200-5*Game.pHarvest, 0, 5*Game.pHarvest, 36, 1265-(Game.pHarvest*5), 13, Game.pHarvest*5, 36);
 		}
-		if( Game.plasmaContainerImgLoaded != 0 ) {
-			this.ctx.drawImage(this.plasmaContainerImg, 1062, 10);
-		}
+		this.ctx.drawImage(this.plasmaContainerImg, 1062, 10);
 		//IONO ICONS
-		if( Game.leftIconImgLoaded != 0 ) {
-			this.ctx.drawImage(this.leftDangerIconImg, 0, 0, 60, 60, 200, 690, 30, 30);
-		}
-		if( Game.rightIconImgLoaded != 0 ) {
-			this.ctx.drawImage(this.rightDangerIconImg, 0, 0, 60, 60, 1060, 690, 30, 30);
-		}
+		this.ctx.drawImage(this.leftDangerIconImg, 0, 0, 60, 60, 200, 690, 30, 30);
+		this.ctx.drawImage(this.rightDangerIconImg, 0, 0, 60, 60, 1060, 690, 30, 30);
 		//HARVESTING
-		if( Game.harvestImgLoaded != 0 && Game.gameState === Game.STATE_HARVEST ){
+		if( Game.gameState === Game.STATE_HARVEST ){
 			this.ctx.save();
 			this.ctx.translate(this.playerX, this.playerY);
 			this.ctx.rotate(-this.playerTheta);
@@ -1053,7 +1030,7 @@ var Game = {
 			}
 		}
 		//PLAYER
-		if( Game.playerImgLoaded != 0 && Game.gameState != Game.STATE_DEAD ) {
+		if( Game.gameState != Game.STATE_DEAD ) {
 			//GET THE PLAYER TO THE POSITION WE WANT HIM FIRST
 			this.ctx.save();
 			this.ctx.translate(1355*Math.cos(this.playerTheta), -1355*Math.sin(this.playerTheta));
@@ -1576,15 +1553,8 @@ var Game = {
 	},
 	
 	Update: function() {
-		if( Game.gameState === Game.STATE_LOADING ) {
-			console.log("DEBUG: Prog is loading " + this.assetsReady);
-            this.assetsReady = this.assetMan.successCount + this.assetMan.errorCount;
-            Game.DrawLoadStatus();
-		} else if( Game.gameState === Game.STATE_MENU ) { //MENU UPDATE
-			//this.img = this.assetMan.getAsset(LOADING_BKG_IMG_SRC);
-			//this.menuCTX.drawImage(this.img, 0, 0);
-			//this.img = null;
-			//Game.menu.DrawMenu(Game.menuEarthSheetNum, Game.menuEarthFrame, Game.menuEarthFrameTick, Game.menuEarthImg1, Game.menuEarthImg2, Game.menuEarthImg3, Game.menuEarthImg4);
+		if( Game.gameState === Game.STATE_MENU ) { //MENU UPDATE
+			Game.menu.DrawMenu(Game.menuEarthSheetNum, Game.menuEarthFrame, Game.menuEarthFrameTick, Game.menuEarthImg1, Game.menuEarthImg2, Game.menuEarthImg3, Game.menuEarthImg4);
 			if( Game.menuEarthFrameTick === 1 ) {
 				Game.menuEarthFrame += 1;
 			}
@@ -1784,9 +1754,9 @@ var Game = {
 		} else if( Game.gameState === Game.STATE_CREDITS ) { //CREDITS UPDATE
 			Game.credits.DrawCredits();
 		} else if(Game.gameState === Game.STATE_TUTORIAL) { //TUTORIAL UPDATE
-			Game.tutorial.DrawTutorial(this.tutorialtextImg1, this.tutorialanimImg1, this.tutorialtextImg2, this.tutorialanimImg2, this.tutorialtextImg3, this.tutorialanimImg3,
-						this.tutorialtextImg4, this.tutorialanimImg4, this.tutorialtextImg5, this.tutorialanimImg5, this.tutorialtextImg6, this.tutorialanimImg6,
-						this.tutorialtextImg7, this.tutorialanimImg7, this.tutorialtextImg8);
+			Game.tutorial.DrawTutorial(this.tutorialtext1Img, this.tutorialanim1Img, this.tutorialtext2Img, this.tutorialanim2Img, this.tutorialtext3Img, this.tutorialanim3Img,
+						this.tutorialtext4Img, this.tutorialanim4Img, this.tutorialtext4Img, this.tutorialanim4Img, this.tutorialtext6Img, this.tutorialanim6Img,
+						this.tutorialtext7Img, this.tutorialanim7Img, this.tutorialtext8Img);
 		} else if(Game.gameState === Game.STATE_SCORE) { //SCORE UPDATE
 			Game.score.DrawScore();
 		} else if( (Game.gameState === Game.STATE_GAMEOVER || Game.gameState === Game.STATE_VICTORY) && Game.isGameover === 1 ) { //VICTORY UPDATE
@@ -1898,14 +1868,14 @@ window.onload = function() {
 	Game.Init();
 	doResize();
 	// Start Game Loop
-	if( Game.isInitialized === 1 ) {
-		runGame();
-	}
+	runGame();
 };
 
 function runGame() {
 	//Checks Game States
-	Game.Update();
+	if( Game.isInitialized === 1 ) {
+		Game.Update();
+	}
 	requestAnimationFrame(runGame);
 };
 //### END OF GLOBAL FUNCTIONS

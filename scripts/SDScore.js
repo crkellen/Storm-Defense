@@ -67,7 +67,6 @@ function theScore(backImage, buttonBack, buttonBackClick)
     this.scoreBckgrndImg.onload = function () { 	scoreBckgrndLoaded = 1; };
                                                 //console.log("DEBUG: menu background loaded!" + menuBckgrndLoaded); };
     this.scoreBckgrndImg.src = backImage;
-	
     var backButton = new scoreButton(buttonBack);
     backButton.text = "Play Game";
 		
@@ -79,7 +78,6 @@ function theScore(backImage, buttonBack, buttonBackClick)
 		
 		scoreCtx.drawImage(this.scoreBckgrndImg, 0, 0);
 		backButton.drawButton(scoreCtx);
-		
 	};
 	
 	this.doMouseOver = function(evt)

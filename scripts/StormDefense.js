@@ -3,7 +3,7 @@ var CANVAS_GAME_ID			= "canvasGame";
 var CANVAS_MENU_ID			= "canvasMenu";
 var CANVAS_CREDITS_ID		= "canvasCredits"
 var CANVAS_TUTORIAL_ID		= "canvasTutorial";
-var CANVAS_SCORE_ID			= "canvasScore"
+var CANVAS_SCORE_ID			= "canvasScore";
 var WORLD_HEIGHT			= 720;
 var WORLD_WIDTH				= 1280;
 var MAX_LASERS				= 20;
@@ -62,7 +62,7 @@ EARTHBURN_IMG_SRC2			= 'images/gameover/earthBurnImg2.png';
 MENU_IMG_SRC				= 'images/menus/mainMenuBgImg.png';
 CREDITS_IMG_SRC				= 'images/menus/creditsBgImg.png';
 TUTORIAL_IMG_SRC			= 'images/menus/tutorialBgImg.png';
-SCORE_IMG_SRC				= 'images/menus/topscoresBgImg.jpg';
+SCORE_IMG_SRC				= 'images/menus/topscoresBgImg.png';
 MENU_EARTH1					= 'images/menuearth/menuEarth1.jpg';
 MENU_EARTH2					= 'images/menuearth/menuEarth2.jpg';
 MENU_EARTH3					= 'images/menuearth/menuEarth3.jpg';
@@ -320,9 +320,9 @@ var Game = {
 		this.ctx = this.gameCanvas.getContext("2d");
 		this.menuCanvas = document.getElementById(CANVAS_MENU_ID);
 		this.menuCTX = this.menuCanvas.getContext("2d");
-		this.menuCanvas.style.display = 'block';
-		var loadingDiv = document.getElementById("LoadingDiv");
-		loadingDiv.style.display = 'none';
+		//this.menuCanvas.style.display = 'block';
+		//var loadingDiv = document.getElementById("LoadingDiv");
+		//loadingDiv.style.display = 'none';
 		
 		Game.gameState = Game.STATE_LOADING;
 		this.totalAssets = 0;
@@ -790,17 +790,22 @@ Game.DrawLoadStatus();
 	},
 	
 	SwitchStateToReady: function() {
+		//alert("Pause");
         Game.CreateImages();
 		console.log("DEBUG: SwitchStateToReady called");
 		Game.isInitialized = 1;
         Game.gameState = Game.STATE_MENU;
+		var loadingDiv = document.getElementById("LoadingDiv");
+		loadingDiv.style.display = 'none';
+		doResize();
+		Game.menuCanvas.style.display = 'block';
         Game.assetsReady = Game.totalAssets; // does not mean all successfully
         Game.DrawLoadStatus();
     },
 	
 	DrawLoadStatus: function() {
         // Clear the canvas
-		this.menuCanvas.style.display = 'block';
+		//this.menuCanvas.style.display = 'block';
 		this.menuCTX.fillStyle = "#FF0000";
 		this.menuCTX.fillRect(0, 0, 500, 500);
 		//alert("DDDDD");
@@ -905,7 +910,7 @@ Game.DrawLoadStatus();
 		for( var i = 0; i < Game.superlasers.length; i++ ) {
 			if( Game.superlasers[i].isAlive != 0 ) {
 				this.ctx.save();
-				Game.superlasers[i].drawSelf(this.ctx, this.superLaserImg);
+				Game.superlasers[i].drawSelf(this.ctx, this.superlaserImg);
 				this.ctx.restore();
 				if( this.laserFrameTick === 1 ) {
 					Game.superlasers[i].frame += 1;
@@ -1792,6 +1797,7 @@ window.addEventListener("keyup", doKeyup, false);
 
 //Resizing
 function doResize() {
+	//alert("Resized");
 	var canvas1 = document.getElementById(CANVAS_MENU_ID);
 	var canvas2 = document.getElementById(CANVAS_CREDITS_ID);
 	var canvas3 = document.getElementById(CANVAS_GAME_ID);

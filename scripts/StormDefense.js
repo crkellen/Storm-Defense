@@ -790,7 +790,6 @@ var Game = {
 	},
 
 	LoadingSwitchStateToReady: function() {
-		console.log("DEBUG: LoadingSwitchStateToReady called");
 		var loadingDiv = document.getElementById("LoadingDiv");
 		loadingDiv.style.display = 'none';
 		doResize();
@@ -804,7 +803,6 @@ var Game = {
 	
 	SwitchStateToReady: function() {
         Game.CreateImages();
-		console.log("DEBUG: SwitchStateToReady called");
 		Game.isInitialized = 1;
         Game.gameState = Game.STATE_MENU;
         Game.assetsReady = Game.totalAssets; // does not mean all successfully

@@ -159,6 +159,7 @@ var Game = {
 	superlasers:			[],
 	curLaser:				-1,
 	dTheta:					0,
+	earthHealth:			5,
 	gameScore:				0,
 	
 	//Time Variables
@@ -652,6 +653,7 @@ var Game = {
 		this.maxAst = 0;
 		this.dTheta = 0;
 		this.gameScore = 0;
+		earthHealth = 0;
 
 		//Power Variables
 		this.charging 		= 0;
@@ -960,11 +962,33 @@ var Game = {
 					this.ctx.drawImage(this.asteroidImpactImg, Game.asteroids[i].iFrame*75, 0, 75, 75, Game.asteroids[i].x, Game.asteroids[i].y, 75, 75);
 				}
 				Game.asteroids[i].iFrame++;
-				if( Game.asteroids[i].iFrame >= 120 ) {
-					Game.asteroids[i].iFrame = 0;
-					Game.asteroids[i].isAlive = 0;
-					Game.asteroids[i].state = 0;
-					Game.numAst--;
+				if( Game.asteroids[i].astSize === 2 ){
+					if( Game.asteroids[i].iFrame >= 120 ) {
+						Game.asteroids[i].iFrame = 0;
+						Game.asteroids[i].isAlive = 0;
+						Game.asteroids[i].state = 0;
+						Game.numAst--;
+						Game.earthHealth-=3;
+					}
+				} else if ( Game.asteroids[i].astSize === 1 ){
+					if( Game.asteroids[i].iFrame >= 120 ) {
+						Game.asteroids[i].iFrame = 0;
+						Game.asteroids[i].isAlive = 0;
+						Game.asteroids[i].state = 0;
+						Game.numAst--;
+						Game.earthHealth-=2;
+					}
+				} else{
+					if( Game.asteroids[i].iFrame >= 120 ) {
+						Game.asteroids[i].iFrame = 0;
+						Game.asteroids[i].isAlive = 0;
+						Game.asteroids[i].state = 0;
+						Game.numAst--;
+						Game.earthHealth--;
+					}
+				}
+				if( Game.earthHealth <= 0 ){
+					Game.gameState = Game.STATE_DYING;
 				}
 			}
 		}

@@ -118,79 +118,82 @@ AUDIO_GAINAMMO_SRC			= 'sounds/gainAmmo.mp3';
 
 //### START OF GAME OBJECT
 var Game = {
-	STATE_MENU:		0,	
-	STATE_PLAYING:	1,
-	STATE_CREDITS:  2,
-	STATE_TUTORIAL:	3,	
-	STATE_SCORE:	4,
-	STATE_FIRE:		5,
-	STATE_HARVEST:  6,
-	STATE_DYING:	7,
-	STATE_DEAD:		8,
-	STATE_VICTORY:	100,
-	STATE_LOADING:	255,
-	STATE_GAMEOVER:	999,
-	gameState:		0,
-	isInitialized:	0,
-	isGameover:		0,
-	profiles:		null,
+	STATE_MENU:				0,	
+	STATE_PLAYING:			1,
+	STATE_CREDITS:  		2,
+	STATE_TUTORIAL:			3,	
+	STATE_SCORE:			4,
+	STATE_FIRE:				5,
+	STATE_HARVEST:  		6,
+	STATE_DYING:			7,
+	STATE_DEAD:				8,
+	STATE_VICTORY:			100,
+	STATE_PRELOAD:			200,
+	STATE_LOADING:			255,
+	STATE_GAMEOVER:			999,
+	gameState:				0,
+	isInitialized:			0,
+	isGameover:				0,
+	profiles:				null,
 	
 	//Asset Manager Variables
-	assetMan:		null,
-	img:			null,
-	totalAssets:	0,
-	assetsLoaded:	0,
+	assetMan:				null,
+	loadingAssetMan:		null,
+	totalAssets:			0,
+	assetsLoaded:			0,
+	loadingTotalAssets:		0,
+    loadingAssetsReady:		0,
 	
 	//Canvas and Context Variables
-	gameCanvas:		null,
-	ctx:			null,
-	menuCanvas:		null,
-	menuCTX:		null,
+	gameCanvas:				null,
+	ctx:					null,
+	menuCanvas:				null,
+	menuCTX:				null,
 	
 	//General Variables
-	gameHeight:		WORLD_HEIGHT,
-	gameWidth:		WORLD_WIDTH,
-	asteroids:  	[],
-	lasers:			[],
-	particles:		[],
-	superlasers:	[],
-	curLaser:		-1,
-	dTheta:			0,
-	gameScore:		0, //Start with score of zero
+	gameHeight:				WORLD_HEIGHT,
+	gameWidth:				WORLD_WIDTH,
+	asteroids:  			[],
+	lasers:					[],
+	particles:				[],
+	superlasers:			[],
+	curLaser:				-1,
+	dTheta:					0,
+	gameScore:				0,
 	
 	//Time Variables
-	curTime:		0,
-	prevTime:		0,
-	deltaTime:		0,
-	totalTime:		0,
+	curTime:				0,
+	prevTime:				0,
+	deltaTime:				0,
+	totalTime:				0,
 	
 	//Spawning Variables
-	numAst:			0,
-	minAst:			0,
-	maxAst:			0,
-	numPar:			0,
-	minPar:			0,
-	maxPar:			0,
+	numAst:					0,
+	minAst:					0,
+	maxAst:					0,
+	numPar:					0,
+	minPar:					0,
+	maxPar:					0,
 	
 	//Harvest/Power Variables
-	charging:		0,
-	pHarvest:		10, //start out with one shot (10 per shot, max 4 shots)
-	pLevel:         100, //default 100 out of 200
-	chargedLevel:	0,
-	maxChargeLevel: 0,
-	chargeSpeed:	0,
+	charging:				0,
+	pHarvest:				10, //start out with one shot (10 per shot, max 4 shots)
+	pLevel:         		100, //default 100 out of 200
+	chargedLevel:			0,
+	maxChargeLevel: 		0,
+	chargeSpeed:			0,
 	
 	//Level Variables
-	level:			0,
-	levelShow:		0,
+	level:					0,
+	levelShow:				0,
 
-	playerTheta:	90*(Math.PI/180),
+	playerTheta:			90*(Math.PI/180),
 	//X and Y are the CENTER location of the img, not the draw
-	playerX:		0,
-	playerY:		0,
+	playerX:				0,
+	playerY:				0,
 	//X and Y are the DRAW location of the img, not the center
-	earthX:			0,
-	earthY:			620,
+	earthX:					0,
+	earthY:					620,
 	
 	//BKG Playing Check
 	bkgPlaying:				0,
@@ -320,195 +323,198 @@ var Game = {
 		this.ctx = this.gameCanvas.getContext("2d");
 		this.menuCanvas = document.getElementById(CANVAS_MENU_ID);
 		this.menuCTX = this.menuCanvas.getContext("2d");
-		//this.menuCanvas.style.display = 'block';
-		//var loadingDiv = document.getElementById("LoadingDiv");
-		//loadingDiv.style.display = 'none';
 		
-		Game.gameState = Game.STATE_LOADING;
+		Game.gameState = Game.STATE_PRELOAD;
 		this.totalAssets = 0;
         this.assetsReady = 0;
 		this.assetMan = new AssetManager();
 
+		//Loading Manager
+		this.loadingTotalAssets = 0;
+        this.loadingAssetsReady = 0;
+		this.loadingAssetMan = new AssetManager();
 		//Loading Images
-		this.assetMan.queueDownload(LOADING_BKG_IMG_SRC);
-		this.totalAssetCount++;
-		this.assetMan.queueDownload(LOADING_CONTAINER_IMG_SRC);
-		this.totalAssetCount++;
-		this.assetMan.queueDownload(LOADING_BAR_IMG_SRC);
-		this.totalAssetCount++;
+		this.loadingAssetMan.queueDownload(LOADING_BKG_IMG_SRC);
+		this.loadingTotalAssets++;
+		this.loadingAssetMan.queueDownload(LOADING_CONTAINER_IMG_SRC);
+		this.loadingTotalAssets++;
+		this.loadingAssetMan.queueDownload(LOADING_BAR_IMG_SRC);
+		this.loadingTotalAssets++;
+		//Loading Download Call
+		this.loadingAssetMan.downloadAll(Game.LoadingSwitchStateToReady);
 		
 		//Menu Images
 			//Main Menu
 			this.assetMan.queueDownload(MENU_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(BUTTON_PLAY_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(BUTTON_PLAY_HOVER);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(BUTTON_TUTORIAL_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(BUTTON_TUTORIAL_HOVER);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(BUTTON_CREDITS_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(BUTTON_CREDITS_HOVER);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(BUTTON_SCORE_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(BUTTON_SCORE_HOVER);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(BUTTON_OPTIONS_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(BUTTON_OPTIONS_HOVER);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			//Other Menus
 			this.assetMan.queueDownload(TUTORIAL_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(CREDITS_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(SCORE_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(BUTTON_BACK_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(BUTTON_BACK_HOVER);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(BUTTON_NEXT_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(BUTTON_NEXT_HOVER);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(BUTTON_PREV_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(BUTTON_PREV_HOVER);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			//this.assetMan.queueDownload(BUTTON_MENU_IMG_SRC);
-			//this.totalAssetCount++;
+			//this.totalAssets++;
 			//this.assetMan.queueDownload(BUTTON_MENU_HOVER);
-			//this.totalAssetCount++;
+			//this.totalAssets++;
 			//Menu Earth
 			this.assetMan.queueDownload(MENU_EARTH1);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(MENU_EARTH2);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(MENU_EARTH3);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(MENU_EARTH4);
-			this.totalAssetCount++;
+			this.totalAssets++;
 		
 		//Tutorial Images
 		this.assetMan.queueDownload(TUTORIAL_TEXT1_IMG_SRC);
-		this.totalAssetCount++;
+		this.totalAssets++;
 		this.assetMan.queueDownload(TUTORIAL_ANIM1_IMG_SRC);
-		this.totalAssetCount++;
+		this.totalAssets++;
 		this.assetMan.queueDownload(TUTORIAL_TEXT2_IMG_SRC);
-		this.totalAssetCount++;
+		this.totalAssets++;
 		this.assetMan.queueDownload(TUTORIAL_ANIM2_IMG_SRC);
-		this.totalAssetCount++;
+		this.totalAssets++;
 		this.assetMan.queueDownload(TUTORIAL_TEXT3_IMG_SRC);
-		this.totalAssetCount++;
+		this.totalAssets++;
 		this.assetMan.queueDownload(TUTORIAL_ANIM3_IMG_SRC);
-		this.totalAssetCount++;
+		this.totalAssets++;
 		this.assetMan.queueDownload(TUTORIAL_TEXT4_IMG_SRC);
-		this.totalAssetCount++;
+		this.totalAssets++;
 		this.assetMan.queueDownload(TUTORIAL_ANIM4_IMG_SRC);
-		this.totalAssetCount++;
+		this.totalAssets++;
 		this.assetMan.queueDownload(TUTORIAL_TEXT5_IMG_SRC);
-		this.totalAssetCount++;
+		this.totalAssets++;
 		this.assetMan.queueDownload(TUTORIAL_ANIM5_IMG_SRC);
-		this.totalAssetCount++;
+		this.totalAssets++;
 		this.assetMan.queueDownload(TUTORIAL_TEXT6_IMG_SRC);
-		this.totalAssetCount++;
+		this.totalAssets++;
 		this.assetMan.queueDownload(TUTORIAL_ANIM6_IMG_SRC);
-		this.totalAssetCount++;
+		this.totalAssets++;
 		this.assetMan.queueDownload(TUTORIAL_TEXT7_IMG_SRC);
-		this.totalAssetCount++;
+		this.totalAssets++;
 		this.assetMan.queueDownload(TUTORIAL_ANIM7_IMG_SRC);
-		this.totalAssetCount++;
+		this.totalAssets++;
 		this.assetMan.queueDownload(TUTORIAL_TEXT8_IMG_SRC);
-		this.totalAssetCount++;
+		this.totalAssets++;
 		
 		//InGame Images
 			//Overlays
 			this.assetMan.queueDownload(BKG_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 				//Levels
 				this.assetMan.queueDownload(LEVEL1_IMG_SRC);
-				this.totalAssetCount++;
+				this.totalAssets++;
 				this.assetMan.queueDownload(LEVEL2_IMG_SRC);
-				this.totalAssetCount++;
+				this.totalAssets++;
 				this.assetMan.queueDownload(LEVEL3_IMG_SRC);
-				this.totalAssetCount++;
+				this.totalAssets++;
 				this.assetMan.queueDownload(LEVEL4_IMG_SRC);
-				this.totalAssetCount++;
+				this.totalAssets++;
 				this.assetMan.queueDownload(LEVEL5_IMG_SRC);
-				this.totalAssetCount++;
+				this.totalAssets++;
 				//Gameover
 				this.assetMan.queueDownload(GAMEOVER_IMG_SRC);
-				this.totalAssetCount++;
+				this.totalAssets++;
 				this.assetMan.queueDownload(VICTORY_IMG_SRC);
-				this.totalAssetCount++;
+				this.totalAssets++;
 				this.assetMan.queueDownload(PRESSANY_IMG_SRC);
-				this.totalAssetCount++;
+				this.totalAssets++;
 				this.assetMan.queueDownload(EARTHBURN_IMG_SRC1);
-				this.totalAssetCount++;
+				this.totalAssets++;
 				this.assetMan.queueDownload(EARTHBURN_IMG_SRC2);
-				this.totalAssetCount++;	
+				this.totalAssets++;	
 			//Player
 			this.assetMan.queueDownload(PLAYER_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(AIMING_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			//Lasers
 			this.assetMan.queueDownload(LASER_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(SUPERLASER_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			//Asteroids
 			this.assetMan.queueDownload(ASTEROID1_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(ASTEROID2_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(ASTEROID3_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(ASTEROID_DEATH_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(ASTEROID_IMPACT_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(ASTEROID_IMPACT2_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			//Particles
 			this.assetMan.queueDownload(PARTICLE_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			//Earth
 			this.assetMan.queueDownload(EARTH_IMG_SRC1);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(EARTH_IMG_SRC2);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(EARTH_IMG_SRC3);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(EARTH_IMG_SRC4);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			//Ionosphere
 			this.assetMan.queueDownload(IONO_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(AURORA_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(POWER_LEVEL_IMG);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(POWER_CONTAINER_IMG);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			//Harvesting and Related
 			this.assetMan.queueDownload(PROJECTED_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(PLASMA_CONTAINER_IMG);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(PLASMA_LEVEL_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(LEFTICON_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(RIGHTICON_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 			this.assetMan.queueDownload(HARVEST_IMG_SRC);
-			this.totalAssetCount++;
+			this.totalAssets++;
 		
 		//SOUND CREATION AND LOAD
 		//Background Music
@@ -592,10 +598,8 @@ var Game = {
 		var scoreCanvas = document.getElementById(CANVAS_SCORE_ID);
         scoreCanvas.addEventListener('click', this.score.doMenuClick, false);
 		scoreCanvas.addEventListener('mousemove', this.score.doMouseOver, false);
-Game.DrawLoadStatus();
 		//Begin Download
 		this.assetMan.downloadAll(Game.SwitchStateToReady);
-		//Game.DrawLoadStatus();
 	},
 	
 	ReInit: function() {
@@ -667,10 +671,6 @@ Game.DrawLoadStatus();
 	},
 	
 	CreateImages: function() {
-	//LOADING IMAGES
-		//this.loadingBKGImg 			= this.assetMan.getAsset(LOADING_BKG_IMG_SRC);
-		this.loadingBarImg 			= this.assetMan.getAsset(LOADING_BAR_IMG_SRC);
-		this.loadingContainerImg 	= this.assetMan.getAsset(LOADING_CONTAINER_IMG_SRC);
 	//MENU IMAGES	
 		//MAIN MENU
 			//BKG
@@ -788,36 +788,26 @@ Game.DrawLoadStatus();
 		this.earthBurnImg1			= this.assetMan.getAsset(EARTHBURN_IMG_SRC1);
 		this.earthBurnImg2			= this.assetMan.getAsset(EARTHBURN_IMG_SRC2);
 	},
-	
-	SwitchStateToReady: function() {
-		//alert("Pause");
-        Game.CreateImages();
-		console.log("DEBUG: SwitchStateToReady called");
-		Game.isInitialized = 1;
-        Game.gameState = Game.STATE_MENU;
+
+	LoadingSwitchStateToReady: function() {
+		console.log("DEBUG: LoadingSwitchStateToReady called");
 		var loadingDiv = document.getElementById("LoadingDiv");
 		loadingDiv.style.display = 'none';
 		doResize();
 		Game.menuCanvas.style.display = 'block';
-        Game.assetsReady = Game.totalAssets; // does not mean all successfully
-        Game.DrawLoadStatus();
-    },
+		//LOADING IMAGES
+		Game.loadingBKGImg 			= Game.loadingAssetMan.getAsset(LOADING_BKG_IMG_SRC);
+		Game.loadingBarImg 			= Game.loadingAssetMan.getAsset(LOADING_BAR_IMG_SRC);
+		Game.loadingContainerImg 	= Game.loadingAssetMan.getAsset(LOADING_CONTAINER_IMG_SRC);
+		Game.gameState = Game.STATE_LOADING;
+	},
 	
-	DrawLoadStatus: function() {
-        // Clear the canvas
-		//this.menuCanvas.style.display = 'block';
-		this.menuCTX.fillStyle = "#FF0000";
-		this.menuCTX.fillRect(0, 0, 500, 500);
-		//alert("DDDDD");
-        //this.menuCTX.clearRect(0, 0, this.menuCanvas.width, this.menuCanvas.height);
-        //this.img = this.assetMan.getAsset(LOADING_BKG_IMG_SRC);
-		this.loadingBKGImg = new Image();
-		this.loadingBKGImg.src = LOADING_BKG_IMG_SRC;
-		
-        this.menuCTX.drawImage(this.loadingBKGImg, 0, 0);
-		//this.img = null;
-        // calculate percentage complete
-        //var percentDone = Math.floor( (this.assetsReady / this.totalAssets) * 100); 
+	SwitchStateToReady: function() {
+        Game.CreateImages();
+		console.log("DEBUG: SwitchStateToReady called");
+		Game.isInitialized = 1;
+        Game.gameState = Game.STATE_MENU;
+        Game.assetsReady = Game.totalAssets; // does not mean all successfully
     },
 
 	DrawScreen: function() {
@@ -1773,6 +1763,13 @@ Game.DrawLoadStatus();
 		}
 	},
 	
+	Loading: function() {
+		this.menuCTX.fillStyle = "#333333";
+		this.menuCTX.drawImage(this.loadingBKGImg, 0, 0);
+		this.menuCTX.drawImage(this.loadingContainerImg, 0, 500);
+		this.menuCTX.drawImage(this.loadingBarImg, 0, 0, 1280, 50, 0, 500, 16*Game.assetMan.successCount, 50);
+	},
+	
 	getMousePos: function(canvas, evt) {
 		var rect = canvas.getBoundingClientRect();
 		return 	{
@@ -1881,6 +1878,8 @@ function runGame() {
 	//Checks Game States
 	if( Game.isInitialized === 1 ) {
 		Game.Update();
+	} else if( Game.gameState === Game.STATE_LOADING ) {
+		Game.Loading();
 	}
 	requestAnimationFrame(runGame);
 };

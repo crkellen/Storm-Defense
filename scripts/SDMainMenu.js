@@ -61,7 +61,6 @@ function theMainMenu(backImage, buttonMenuImg, buttonCreditsImg, buttonScoreImg,
     this.menuBckgrndImg = new Image();
     this.menuBckgrndImg.onload = function () { 	menuBckgrndLoaded = 1; };                        
     this.menuBckgrndImg.src = backImage;
-	
     var playButton = new menuButton(buttonMenuImg);
     playButton.text = "Play Game";
 	

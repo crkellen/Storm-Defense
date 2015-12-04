@@ -20,7 +20,7 @@
 	<script src="scripts/StormDefense.js" type="text/javascript"></script>
   </head>
 
-  <body>
+  <body oncontextmenu="return false;">
     <!-- This loops through the profiles stored and prints out the username score
           and no. of times that particular user visited the webpage 
     {% for profile in profiles %}
@@ -33,7 +33,7 @@
 			<div style="text-align:center; display:block;" id="LoadingDiv">
 				<img src="images/loading/loadingBkgImg.png" alt="Loading Background">
 			</div>
-			<div>
+			<div style="cursor:crosshair">
 				<canvas id="canvasMenu" style="border:5px solid #333333; display:none;" height="720" width="1280">
 					Your browser does not support HTML 5 Canvas Tag
 				</canvas>

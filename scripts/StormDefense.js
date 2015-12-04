@@ -134,7 +134,7 @@ var Game = {
 	gameState:				0,
 	isInitialized:			0,
 	isGameover:				0,
-	profiles:				null,
+	//profiles:				null, //TODO - Remove or use
 	
 	//Asset Manager Variables
 	assetMan:				null,
@@ -159,6 +159,7 @@ var Game = {
 	superlasers:			[],
 	curLaser:				-1,
 	dTheta:					0,
+	earthHealth:			5,
 	gameScore:				0,
 	
 	//Time Variables
@@ -186,6 +187,13 @@ var Game = {
 	//Level Variables
 	level:					0,
 	levelShow:				0,
+	
+	//Mouse Controls Variables
+	mousePositionX: 0,
+	mouseOnScreen:  0,
+	mouseLeft:		0,
+	mouseRight:		2,
+	mouseMiddle:	1,
 
 	playerTheta:			90*(Math.PI/180),
 	//X and Y are the CENTER location of the img, not the draw
@@ -598,6 +606,9 @@ var Game = {
 		var scoreCanvas = document.getElementById(CANVAS_SCORE_ID);
         scoreCanvas.addEventListener('click', this.score.doMenuClick, false);
 		scoreCanvas.addEventListener('mousemove', this.score.doMouseOver, false);
+		
+		this.gameCanvas.addEventListener('mousemove', this.ProcessMouseMove, false);
+		
 		//Begin Download
 		this.assetMan.downloadAll(Game.SwitchStateToReady);
 	},
@@ -642,6 +653,7 @@ var Game = {
 		this.maxAst = 0;
 		this.dTheta = 0;
 		this.gameScore = 0;
+		earthHealth = 0;
 
 		//Power Variables
 		this.charging 		= 0;
@@ -950,11 +962,33 @@ var Game = {
 					this.ctx.drawImage(this.asteroidImpactImg, Game.asteroids[i].iFrame*75, 0, 75, 75, Game.asteroids[i].x, Game.asteroids[i].y, 75, 75);
 				}
 				Game.asteroids[i].iFrame++;
-				if( Game.asteroids[i].iFrame >= 120 ) {
-					Game.asteroids[i].iFrame = 0;
-					Game.asteroids[i].isAlive = 0;
-					Game.asteroids[i].state = 0;
-					Game.numAst--;
+				if( Game.asteroids[i].astSize === 2 ){
+					if( Game.asteroids[i].iFrame >= 120 ) {
+						Game.asteroids[i].iFrame = 0;
+						Game.asteroids[i].isAlive = 0;
+						Game.asteroids[i].state = 0;
+						Game.numAst--;
+						Game.earthHealth-=3;
+					}
+				} else if ( Game.asteroids[i].astSize === 1 ){
+					if( Game.asteroids[i].iFrame >= 120 ) {
+						Game.asteroids[i].iFrame = 0;
+						Game.asteroids[i].isAlive = 0;
+						Game.asteroids[i].state = 0;
+						Game.numAst--;
+						Game.earthHealth-=2;
+					}
+				} else{
+					if( Game.asteroids[i].iFrame >= 120 ) {
+						Game.asteroids[i].iFrame = 0;
+						Game.asteroids[i].isAlive = 0;
+						Game.asteroids[i].state = 0;
+						Game.numAst--;
+						Game.earthHealth--;
+					}
+				}
+				if( Game.earthHealth <= 0 ){
+					Game.gameState = Game.STATE_DYING;
 				}
 			}
 		}
@@ -1183,6 +1217,71 @@ var Game = {
 				Game.dTheta = 0;
 				break;
 			default: break;
+		}
+	},
+	
+	ProcessMouseClick: function(event) {
+		if( Game.gameState != Game.STATE_FIRE ) {
+			Game.ShootLaser();
+		}
+	},
+	
+	ProcessMouseDown: function(event) {
+		if( Game.gameState === Game.STATE_GAMEOVER ){
+			if( event != null ) {
+				this.menuCanvas.style.display = 'block';
+				this.gameCanvas.style.display = 'none';
+				Game.gameState = Game.STATE_MENU;
+			}
+		} else {
+			if( event.button === Game.mouseLeft && Game.gameState != Game.STATE_FIRE ) {
+				Game.ShootLaser();
+			} else if( event.button === Game.mouseRight && Game.gameState != Game.STATE_DYING ) {
+				if( Game.gameState === Game.STATE_HARVEST ) {
+					Game.gameState = Game.STATE_PLAYING;
+					Game.harvestTick = 0;
+					Game.auroraFrame = 0;
+					this.audioHarvesting.pause();
+					this.audioHarvesting.currentTime = 0;
+				} else if( Game.gameState === Game.STATE_PLAYING && Game.pHarvest < MAX_CHARGE) {
+					Game.gameState = Game.STATE_HARVEST;
+					this.audioHarvesting.play();
+					this.audioHarvesting.loop = true;
+				} else {
+					//Charges Full
+					if( Game.gameState === Game.STATE_PLAYING ) {
+						this.audioAmmoFull.pause();
+						this.audioAmmoFull.currentTime = 0;
+						this.audioAmmoFull.play();
+					}
+				}
+			} else if( event.button === Game.mouseMiddle && Game.gameState === Game.STATE_PLAYING ) {
+				this.audioCharge.pause();
+				this.audioCharge.currentTime = 0;
+				this.audioCharge.play();
+				if( Game.charging === 0 ) {
+					Game.charging = 1;
+					Game.maxChargeLevel += 15;
+					Game.chargeSpeed = 1;
+				} else if (Game.charging === 1 && Game.chargeSpeed === 4) {
+					//TODO - REMOVE THIS USELESS LINE?
+				} else if( Game.charging === 1 && Game.chargeSpeed < 4) {
+					Game.maxChargeLevel *= 2;
+					Game.chargeSpeed *= 2;
+				}
+			}
+		}
+	},
+
+	ProcessMouseMove: function(event) {
+		var gameCanvas = document.getElementById(CANVAS_GAME_ID);
+		var mousePos = Game.getMousePos(gameCanvas, event);
+		Game.mousePositionX = mousePos.x;
+		if(Game.mousePositionX >=5 && Game.mousePositionX <= Game.gameWidth){
+			Game.mouseOnScreen = 1;
+		}
+		else{
+			Game.mouseOnScreen = 0;
 		}
 	},
 	
@@ -1617,6 +1716,19 @@ var Game = {
 				Game.playerTheta = (3.0/8.0)*Math.PI;
 			}
 			
+			//PLAYER MOUSE MOVE
+			if(Game.mouseOnScreen === 1){
+				if( Game.mousePositionX > Game.playerX + 20) {
+					Game.dTheta = -0.4*Math.PI/180.0;
+				}
+				else if( Game.mousePositionX <= Game.playerX - 20 ) {
+					Game.dTheta = 0.4*Math.PI/180.0;
+				}
+				else {
+					Game.dTheta = 0;
+				}
+			}
+			
 			//NUMBER OF ASTEROIDS CHECK
 			if( Game.numAst < 0 ) {
 				Game.numAst = 0;
@@ -1789,6 +1901,7 @@ window.addEventListener("resize", doResize, false);
 window.addEventListener("click", doClick, false);
 window.addEventListener("keydown", doKeydown, false);
 window.addEventListener("keyup", doKeyup, false);
+window.addEventListener("mousedown", doMouseDown, false);
 
 //Resizing
 function doResize() {
@@ -1851,6 +1964,14 @@ function doClick(e) {
     e.preventDefault();
     
     return false;		
+};
+
+function doMouseDown(e) {
+	if( Game.gameState === Game.STATE_PLAYING || Game.gameState === Game.STATE_HARVEST || Game.gameState === Game.STATE_GAMEOVER ) {
+		Game.ProcessMouseDown(e);
+	} else {
+		return;
+	}
 };
 
 function doKeydown(e) {

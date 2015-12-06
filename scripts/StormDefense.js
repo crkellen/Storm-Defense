@@ -130,8 +130,10 @@ var Game = {
 	STATE_VICTORY:			100,
 	STATE_PRELOAD:			200,
 	STATE_LOADING:			255,
+	STATE_PAUSED:			500,
 	STATE_GAMEOVER:			999,
 	gameState:				0,
+	prevState:				0,
 	isInitialized:			0,
 	isGameover:				0,
 	//profiles:				null, //TODO - Remove or use
@@ -1166,6 +1168,7 @@ var Game = {
 				//A -- Left
 				case 65:
 					if( Game.gameState != Game.STATE_FIRE ) {
+						Game.mouseOnScreen = 0;
 						Game.dTheta += 0.4*Math.PI/180.0;
 						if( Game.dTheta > 0.6*Math.PI/180.0 ) {
 							Game.dTheta = 0.5*Math.PI/180.0;
@@ -1193,10 +1196,21 @@ var Game = {
 				//D -- Right
 				case 68:
 					if( Game.gameState != Game.STATE_FIRE ) {
+						Game.mouseOnScreen = 0;
 						Game.dTheta -= 0.4*Math.PI/180.0;
 						if( Game.dTheta < -0.6*Math.PI/180.0 ) {
 							Game.dTheta = -0.5*Math.PI/180.0;
 						}
+					}
+					break;
+				case 27:
+					if( Game.gameState === Game.STATE_PLAYING || Game.gameState === Game.STATE_FIRE || Game.gameState === Game.STATE_HARVEST ) {
+						Game.prevState = Game.gameState;
+						Game.gameState = Game.STATE_PAUSED;
+					} else if( Game.gameState === Game.STATE_PAUSED ) {
+						Game.gameState = Game.prevState;
+						Game.prevTime = newDate.getTime() / 1000.0;
+						Game.curTime = newDate.getTime() / 1000.0;
 					}
 					break;
 				default: break;

@@ -1726,6 +1726,11 @@ var Game = {
 			}
 			this.totalTime += this.deltaTime; //Total playtime in seconds
 			
+			//STOP CHARGING IF DEAD
+			if( Game.gameState === Game.STATE_DYING && Game.charging === 1 ) {
+				Game.charging = 0;
+			}
+			
 			//IONO STATE UPDATE
 			if( Game.pLevel < 10 ) {
 				Game.ionoState = 0;

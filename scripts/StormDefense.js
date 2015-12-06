@@ -26,6 +26,7 @@ AIMING_IMG_SRC				= 'images/player/aimingImg.png';
 IONO_IMG_SRC				= 'images/ionosphere/ionoImg.png';
 AURORA_IMG_SRC				= 'images/ionosphere/auroraImg.png';
 PARTICLE_IMG_SRC			= 'images/particles/particleImg.png';
+PAUSED_IMG_SRC				= 'images/ingamebg/pausedImg.png';
 //CONSTANT ASTEROID IMGS
 ASTEROID1_IMG_SRC 			= 'images/asteroids/asteroid1Img.png';
 ASTEROID2_IMG_SRC			= 'images/asteroids/asteroid2Img.png';
@@ -234,6 +235,7 @@ var Game = {
 	asteroidDeathImg:		null,
 	asteroidImpactImg:		null,
 	asteroidImpact2Img:		null,
+	pausedImg:				null,
 	//Particle Image Checks
 	particleImg:			null,
 	//Loading Image Checks
@@ -445,6 +447,8 @@ var Game = {
 		//InGame Images
 			//Overlays
 			this.assetMan.queueDownload(BKG_IMG_SRC);
+			this.totalAssets++;
+			this.assetMan.queueDownload(PAUSED_IMG_SRC);
 			this.totalAssets++;
 				//Levels
 				this.assetMan.queueDownload(LEVEL1_IMG_SRC);
@@ -754,6 +758,7 @@ var Game = {
 	//INGAME IMAGES
 		//BKG
 		this.bkgImg					= this.assetMan.getAsset(BKG_IMG_SRC);
+		this.pausedImg				= this.assetMan.getAsset(PAUSED_IMG_SRC);
 		//LEVELS
 		this.level1Img				= this.assetMan.getAsset(LEVEL1_IMG_SRC);
 		this.level2Img				= this.assetMan.getAsset(LEVEL2_IMG_SRC);
@@ -1130,6 +1135,10 @@ var Game = {
 		}
 	},
 	
+	DrawPauseScreen: function() {
+		
+	},
+	
 	ProcessInputDown: function(event) {
 		if( Game.gameState === Game.STATE_GAMEOVER ) {
 			if( event != null ) {
@@ -1206,12 +1215,16 @@ var Game = {
 						}
 					}
 					break;
+				//ESC -- Pause
 				case 27:
 					if( Game.gameState === Game.STATE_PLAYING || Game.gameState === Game.STATE_FIRE || Game.gameState === Game.STATE_HARVEST ) {
 						Game.prevState = Game.gameState;
+						Game.audioBKG.pause();
 						Game.gameState = Game.STATE_PAUSED;
+						this.ctx.drawImage(this.pausedImg, 530, 300);
 					} else if( Game.gameState === Game.STATE_PAUSED ) {
 						Game.gameState = Game.prevState;
+						Game.audioBKG.play();
 						Game.prevTime = newDate.getTime() / 1000.0;
 						Game.curTime = newDate.getTime() / 1000.0;
 					}
@@ -1662,7 +1675,9 @@ var Game = {
 	},
 	
 	Update: function() {
-		if( Game.gameState === Game.STATE_MENU ) { //MENU UPDATE
+		if( Game.gameState === Game.STATE_PAUSED ) {
+			Game.DrawPauseScreen();
+		} else if( Game.gameState === Game.STATE_MENU ) { //MENU UPDATE
 			Game.menu.DrawMenu(Game.menuEarthSheetNum, Game.menuEarthFrame, Game.menuEarthFrameTick, Game.menuEarthImg1, Game.menuEarthImg2, Game.menuEarthImg3, Game.menuEarthImg4);
 			if( Game.menuEarthFrameTick === 1 ) {
 				Game.menuEarthFrame += 1;

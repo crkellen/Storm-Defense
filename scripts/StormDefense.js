@@ -662,7 +662,7 @@ var Game = {
 		this.maxPar = 0;
 		this.dTheta = 0;
 		this.gameScore = 0;
-		earthHealth = 0;
+		this.earthHealth = 5;
 
 		//Power Variables
 		this.charging 		= 0;
@@ -686,6 +686,11 @@ var Game = {
 		this.playerTheta = 90*(Math.PI/180);
 		this.playerX	= 0;
 		this.playerY	= 0;
+		
+		//Animation Frame Variables
+		this.playerFrame      = 0,
+		this.playerFireFrame  = 70;
+		this.playerDeathFrame = 60;
 	
 		//BKG Playing Check
 		this.bkgPlaying = 0;

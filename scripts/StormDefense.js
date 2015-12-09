@@ -398,8 +398,8 @@ var Game = {
 			this.totalAssets++;
 			this.assetMan.queueDownload(BUTTON_PREV_HOVER);
 			this.totalAssets++;
-			//this.assetMan.queueDownload(BUTTON_MENU_IMG_SRC);
-			//this.totalAssets++;
+			this.assetMan.queueDownload(BUTTON_MENU_IMG_SRC);
+			this.totalAssets++;
 			//this.assetMan.queueDownload(BUTTON_MENU_HOVER);
 			//this.totalAssets++;
 			//Menu Earth
@@ -764,6 +764,7 @@ var Game = {
 		//BKG
 		this.bkgImg					= this.assetMan.getAsset(BKG_IMG_SRC);
 		this.pausedImg				= this.assetMan.getAsset(PAUSED_IMG_SRC);
+		this.menuButtonImg				= this.assetMan.getAsset(BUTTON_MENU_IMG_SRC);
 		//LEVELS
 		this.level1Img				= this.assetMan.getAsset(LEVEL1_IMG_SRC);
 		this.level2Img				= this.assetMan.getAsset(LEVEL2_IMG_SRC);
@@ -1140,10 +1141,6 @@ var Game = {
 		}
 	},
 	
-	DrawPauseScreen: function() {
-		
-	},
-	
 	ProcessInputDown: function(event) {
 		if( Game.gameState === Game.STATE_GAMEOVER ) {
 			if( event != null ) {
@@ -1226,6 +1223,7 @@ var Game = {
 						Game.prevState = Game.gameState;
 						Game.audioBKG.pause();
 						Game.gameState = Game.STATE_PAUSED;
+						this.ctx.drawImage(this.menuButtonImg, 535, 400);
 						this.ctx.drawImage(this.pausedImg, 530, 300);
 					} else if( Game.gameState === Game.STATE_PAUSED ) {
 						Game.gameState = Game.prevState;
@@ -1267,6 +1265,14 @@ var Game = {
 				this.menuCanvas.style.display = 'block';
 				this.gameCanvas.style.display = 'none';
 				Game.gameState = Game.STATE_MENU;
+			}
+		} else if( Game.gameState === Game.STATE_PAUSED ){
+			var mousePos = Game.getMousePos(this.gameCanvas, event);
+			if( mousePos.x > 535 && mousePos.x < 745 && mousePos.y > 400 && mousePos.y <460 ){
+				Game.ReInit();
+				Game.gameState = Game.STATE_MENU;
+				Game.gameCanvas.style.display    = "none";
+				Game.menuCanvas.style.display    = "block";
 			}
 		} else {
 			if( event.button === Game.mouseLeft && Game.gameState != Game.STATE_FIRE ) {
@@ -1681,7 +1687,7 @@ var Game = {
 	
 	Update: function() {
 		if( Game.gameState === Game.STATE_PAUSED ) {
-			Game.DrawPauseScreen();
+			//Do Nothing
 		} else if( Game.gameState === Game.STATE_MENU ) { //MENU UPDATE
 			Game.menu.DrawMenu(Game.menuEarthSheetNum, Game.menuEarthFrame, Game.menuEarthFrameTick, Game.menuEarthImg1, Game.menuEarthImg2, Game.menuEarthImg3, Game.menuEarthImg4);
 			if( Game.menuEarthFrameTick === 1 ) {
@@ -2009,7 +2015,7 @@ function doClick(e) {
 };
 
 function doMouseDown(e) {
-	if( Game.gameState === Game.STATE_PLAYING || Game.gameState === Game.STATE_HARVEST || Game.gameState === Game.STATE_GAMEOVER ) {
+	if( Game.gameState === Game.STATE_PLAYING || Game.gameState === Game.STATE_HARVEST || Game.gameState === Game.STATE_GAMEOVER || Game.gameState === Game.STATE_PAUSED ) {
 		Game.ProcessMouseDown(e);
 	} else {
 		return;

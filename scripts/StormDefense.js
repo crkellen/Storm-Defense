@@ -84,6 +84,8 @@ TUTORIAL_ANIM6_IMG_SRC		= 'images/tutorial/tutorialanimWarningImg.png';
 TUTORIAL_TEXT7_IMG_SRC		= 'images/tutorial/tutorialtext7Img.png';
 TUTORIAL_ANIM7_IMG_SRC		= 'images/tutorial/tutorialanimParticlesImg.png';
 TUTORIAL_TEXT8_IMG_SRC		= 'images/tutorial/tutorialtext8Img.png';
+TUTORIAL_TEXT_MOUSE_IMG_SRC = 'images/tutorial/tutorialtextMouseImg.png';
+TUTORIAL_ANIM_MOUSE_IMG_SRC = 'images/tutorial/tutorialanimMouseImg.png';
 //CONSTANT BUTTON IMGS
 BUTTON_PLAY_IMG_SRC			= 'images/buttons/playButtonImg.png';
 BUTTON_CREDITS_IMG_SRC		= 'images/buttons/creditsButtonImg.png';
@@ -443,6 +445,10 @@ var Game = {
 		this.totalAssets++;
 		this.assetMan.queueDownload(TUTORIAL_TEXT8_IMG_SRC);
 		this.totalAssets++;
+		this.assetMan.queueDownload(TUTORIAL_TEXT_MOUSE_IMG_SRC);
+		this.totalAssets++;
+		this.assetMan.queueDownload(TUTORIAL_ANIM_MOUSE_IMG_SRC);
+		this.totalAssets++;
 		
 		//InGame Images
 			//Overlays
@@ -756,6 +762,9 @@ var Game = {
 		this.tutorialanim7Img		= this.assetMan.getAsset(TUTORIAL_ANIM7_IMG_SRC);
 			//TUTORIAL8
 		this.tutorialtext8Img		= this.assetMan.getAsset(TUTORIAL_TEXT8_IMG_SRC);
+			//TUTORIAL MOUSE
+		this.tutorialtextMouseImg	= this.assetMan.getAsset(TUTORIAL_TEXT_MOUSE_IMG_SRC);
+		this.tutorialanimMouseImg	= this.assetMan.getAsset(TUTORIAL_ANIM_MOUSE_IMG_SRC);
 		//CREDITS
 		this.creditsBKGImg			= this.assetMan.getAsset(CREDITS_IMG_SRC);
 		//SCORE
@@ -1909,7 +1918,7 @@ var Game = {
 		} else if(Game.gameState === Game.STATE_TUTORIAL) { //TUTORIAL UPDATE
 			Game.tutorial.DrawTutorial(this.tutorialtext1Img, this.tutorialanim1Img, this.tutorialtext2Img, this.tutorialanim2Img, this.tutorialtext3Img, this.tutorialanim3Img,
 						this.tutorialtext4Img, this.tutorialanim4Img, this.tutorialtext4Img, this.tutorialanim4Img, this.tutorialtext6Img, this.tutorialanim6Img,
-						this.tutorialtext7Img, this.tutorialanim7Img, this.tutorialtext8Img);
+						this.tutorialtext7Img, this.tutorialanim7Img, this.tutorialtext8Img, this.tutorialtextMouseImg, this.tutorialanimMouseImg);
 		} else if(Game.gameState === Game.STATE_SCORE) { //SCORE UPDATE
 			Game.score.DrawScore();
 		} else if( (Game.gameState === Game.STATE_GAMEOVER || Game.gameState === Game.STATE_VICTORY) && Game.isGameover === 1 ) { //VICTORY UPDATE

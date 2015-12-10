@@ -54,6 +54,10 @@ Particle.prototype.movePar = function(dT) {
 	//Earth Collision Detection
 	if( this.y >= 620 ) {
 		Game.pLevel -= 5;
+		if( Game.pLevel <= 0 ) {
+			Game.gameState = Game.STATE_DYING;
+			Game.pLevel = 1;
+		}
 		this.isAlive = 0;
 		this.x = -200;
 		this.y = -200;

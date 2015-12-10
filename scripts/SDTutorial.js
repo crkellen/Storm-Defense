@@ -76,7 +76,7 @@ function theTutorial(backImage, buttonBack, buttonBackHover, buttonNext, buttonN
     // ----------------------------------------------------------------------------
     // Draw the Menu Screen
     // ----------------------------------------------------------------------------
-    this.DrawTutorial = function(tt1, ta1, tt2, ta2, tt3, ta3, tt4, ta4, tt5, ta5, tt6, ta6, tt7, ta7, tt8) {
+    this.DrawTutorial = function(tt1, ta1, tt2, ta2, tt3, ta3, tt4, ta4, tt5, ta5, tt6, ta6, tt7, ta7, tt8, ttm, tam) {
         // Init Local Canvas variables
         var tutorialCanvas = document.getElementById(CANVAS_TUTORIAL_ID);
         var tutorialCTX = tutorialCanvas.getContext("2d");
@@ -131,6 +131,12 @@ function theTutorial(backImage, buttonBack, buttonBackHover, buttonNext, buttonN
 				tutorialCTX.drawImage(tt8, 350, 50);
 				tutorialCTX.drawImage(ta7, this.tutanimFrame*640, 0, 640, 360, 350, 360, 640, 360);
 				break;
+			case 8:
+				//Mouse Controls
+				this.numFrames = 1;
+				tutorialCTX.drawImage(ttm, 500, 50);
+				tutorialCTX.drawImage(tam, 0, 0, 640, 360, 350, 360, 640, 350);
+				break;
 			default: console.log("ERROR: Current Tutorial Selection");
 		}
 		
@@ -178,13 +184,13 @@ function theTutorial(backImage, buttonBack, buttonBackHover, buttonNext, buttonN
 			Game.gameState = Game.STATE_MENU;
 		} else if( nextButton.coordsAreInside(mousePos.x, mousePos.y) ) {
 			Game.tutorial.curTut++;
-			if( Game.tutorial.curTut >= 8 ) {
+			if( Game.tutorial.curTut >= 9 ) {
 				Game.tutorial.curTut = 0;
 			}
 		} else if( prevButton.coordsAreInside(mousePos.x, mousePos.y) ) {
 			Game.tutorial.curTut--;
 			if( Game.tutorial.curTut <= -1 ) {
-				Game.tutorial.curTut = 7;
+				Game.tutorial.curTut = 8;
 			}
 		}
 	};

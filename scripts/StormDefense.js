@@ -1645,7 +1645,7 @@ var Game = {
 			this.spawnLargeAsts = 1;
 			this.minAst = 2;
 			this.maxAst = 6;
-			this.minPar = 2;
+			this.minPar = 3;
 			this.maxPar = Math.floor((Math.random()*3)+1);
 		} else if( tTime >= 160 && tTime <= 165 ) {
 			this.level = 5;
@@ -1655,7 +1655,7 @@ var Game = {
 			this.minAst = 3;
 			this.maxAst = 6;
 			this.minPar = 3;
-			this.maxPar = Math.floor((Math.random()*4)+1);
+			this.maxPar = Math.floor((Math.random()*5)+1);
 		} else {
 			Game.isGameover = 1;
 			this.gameState = this.STATE_VICTORY;
@@ -1775,11 +1775,11 @@ var Game = {
 			
 			//PLAYER MOUSE MOVE
 			if(Game.mouseOnScreen === 1){
-				if( Game.mousePositionX > Game.playerX + 20) {
-					Game.dTheta = -0.4*Math.PI/180.0;
+				if( Game.mousePositionX > Game.playerX + 10) {
+					Game.dTheta = -0.3*Math.PI/180.0;
 				}
-				else if( Game.mousePositionX <= Game.playerX - 20 ) {
-					Game.dTheta = 0.4*Math.PI/180.0;
+				else if( Game.mousePositionX <= Game.playerX - 10 ) {
+					Game.dTheta = 0.3*Math.PI/180.0;
 				}
 				else {
 					Game.dTheta = 0;
@@ -1944,18 +1944,12 @@ var Game = {
 					y: Math.round( (evt.clientY-rect.top)/(rect.bottom-rect.top)*canvas.height )
 				};
 	},
-	
-	ProcessOnClick: function(evt) {
-        var gameCanvas = document.getElementById(CANVAS_GAME_ID);
-        var mousePos = Game.getMousePos(gameCanvas, evt);
-    },
 };
 //### END OF GAME OBJECT
 
 //### START OF GLOBAL FUNCTIONS
 //EVENT HANDLERS
 window.addEventListener("resize", doResize, false);
-window.addEventListener("click", doClick, false);
 window.addEventListener("keydown", doKeydown, false);
 window.addEventListener("keyup", doKeyup, false);
 window.addEventListener("mousedown", doMouseDown, false);
@@ -2012,15 +2006,6 @@ function UpdateCanvas(canvas) {
 	}
     
     canvas.style.display = tempDisplay;
-};
-
-function doClick(e) {
-    Game.ProcessOnClick(e);
-    
-     //Disable browser's default behaviour and prevent multiple event triggers
-    e.preventDefault();
-    
-    return false;		
 };
 
 function doMouseDown(e) {
